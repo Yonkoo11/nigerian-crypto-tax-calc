@@ -4,7 +4,9 @@
 
 ## Live Demo
 
-**URL**: [Coming soon - deploying to Netlify]
+**🔗 https://nigerian-crypto-tax-calc.netlify.app**
+
+Calculate your 2026 crypto tax in 60 seconds!
 
 ## Overview
 
@@ -12,9 +14,9 @@ A web-based calculator that helps Nigerian crypto traders, freelancers, and inve
 
 ## Features
 
-- ✅ **Nigeria-Specific**: Based on the actual 2026 tax law with progressive brackets (0% to 24%)
+- ✅ **Nigeria-Specific**: Based on Nigeria Tax Act, 2025 with progressive brackets (0% to 25%)
 - ✅ **5 Income Types**: Trading, Staking, Airdrops, Freelance, NFT Sales
-- ✅ **SME Comparison**: See how much you'd save by registering as SME (0% on first ₦25M)
+- ✅ **Small Player Exemption**: Qualify if gains < ₦10M AND proceeds < ₦150M
 - ✅ **Instant Results**: Complete tax breakdown in under 60 seconds
 - ✅ **Optimization Tips**: Legal strategies to minimize your tax liability
 - ✅ **Mobile Responsive**: Works perfectly on all devices
@@ -22,19 +24,22 @@ A web-based calculator that helps Nigerian crypto traders, freelancers, and inve
 
 ## Progressive Tax Brackets (2026)
 
+**Official rates from Nigeria Tax Act, 2025:**
+
 | Income Range | Tax Rate |
 |--------------|----------|
-| ₦0 - ₦800,000 | 0% |
-| ₦800,001 - ₦3,200,000 | 7% |
-| ₦3,200,001 - ₦6,400,000 | 11% |
-| ₦6,400,001 - ₦12,800,000 | 15% |
-| ₦12,800,001 - ₦25,600,000 | 19% |
-| ₦25,600,001 - ₦51,200,000 | 21% |
-| Above ₦51,200,000 | 24% |
+| ₦0 - ₦800,000 | 0% (tax-free) |
+| ₦800,001 - ₦3,000,000 | 15% |
+| ₦3,000,001 - ₦12,000,000 | 18% |
+| ₦12,000,001 - ₦25,000,000 | 21% |
+| ₦25,000,001 - ₦50,000,000 | 23% |
+| Above ₦50,000,000 | 25% |
 
-### SME Exemption
+### Small Player Exemption
 
-SME businesses pay **0% tax on first ₦25M** of income.
+Pay **₦0 tax** if BOTH conditions are met:
+- Total gains (profit) under **₦10 million** in 12 months
+- Total sale proceeds under **₦150 million** in 12 months
 
 ## Tech Stack
 
@@ -55,9 +60,27 @@ open index.html
 
 No build step, no dependencies needed!
 
+## Data Sources
+
+All tax rates verified against official sources:
+- [Nigeria Tax Act, 2025 (Official PDF)](https://tat.gov.ng/Nigeria-Tax-Act-2025.pdf)
+- [EY Global Tax Alert](https://www.ey.com/en_gl/technical/tax-alerts/nigeria-tax-act-2025-has-been-signed-highlights)
+- [PWC Nigeria Analysis](https://www.pwc.com/ng/en/publications/the-nigerian-tax-reform-acts.html)
+- [Africa Check Fact-Checking](https://africacheck.org/fact-checks/factsheets/factsheet-vat-income-tax-how-nigerias-new-tax-rules-affect-you)
+
+## Bug Reports & Feedback
+
+Found an issue? Have suggestions?
+- **GitHub Issues**: [Report a bug](https://github.com/Yonkoo11/nigerian-crypto-tax-calc/issues)
+- **GitHub Repo**: [View source code](https://github.com/Yonkoo11/nigerian-crypto-tax-calc)
+
 ## Disclaimer
 
-⚠️ **Important**: This calculator is an educational tool only and does not constitute professional tax, legal, or financial advice. For specific tax advice, consult a qualified tax professional familiar with Nigerian crypto taxation.
+⚠️ **Important**: This calculator is an educational tool only and does not constitute professional tax, legal, or financial advice.
+
+**Limitations**: This calculator does not account for business expenses, capital losses, token swaps, mining income, or other complex scenarios. The small player exemption requires BOTH thresholds to be met - you must verify your eligibility independently.
+
+For specific tax advice tailored to your situation, consult a qualified tax professional familiar with Nigerian crypto taxation.
 
 ## License
 
@@ -65,4 +88,6 @@ MIT License - Free to use, modify, and distribute.
 
 ---
 
-Built for Nigerian crypto users 🇳🇬
+**Built for Nigerian crypto users 🇳🇬**
+
+Verified against Nigeria Tax Act, 2025 | Live since January 1, 2026
