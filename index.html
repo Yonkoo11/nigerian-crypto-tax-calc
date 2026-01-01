@@ -215,8 +215,8 @@
             <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                     <div class="text-3xl mb-3">🎯</div>
-                    <h3 class="font-semibold text-lg mb-2">100% Accurate</h3>
-                    <p class="text-green-100 text-sm">Based on official 2026 progressive tax brackets (0% to 24%)</p>
+                    <h3 class="font-semibold text-lg mb-2">Verified Calculations</h3>
+                    <p class="text-green-100 text-sm">Based on official Nigeria Tax Act, 2025 progressive brackets (0% to 25%)</p>
                 </div>
                 <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                     <div class="text-3xl mb-3">🔒</div>
@@ -226,7 +226,7 @@
                 <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                     <div class="text-3xl mb-3">💰</div>
                     <h3 class="font-semibold text-lg mb-2">Save Thousands</h3>
-                    <p class="text-green-100 text-sm">Learn SME registration trick to pay ₦0 on first ₦25M legally</p>
+                    <p class="text-green-100 text-sm">Learn small player exemption to pay ₦0 if gains &lt; ₦10M</p>
                 </div>
             </div>
         </div>
@@ -325,10 +325,13 @@
                         <input type="checkbox" id="isSME" class="mt-1 w-6 h-6 text-green-600 border-2 border-gray-300 rounded focus:ring-green-500 cursor-pointer">
                         <div class="flex-1">
                             <div class="text-sm font-semibold text-gray-900 group-hover:text-green-600 transition">
-                                ✅ My gains are under ₦10M (small player exemption)
+                                ✅ Small player exemption (BOTH conditions required)
                             </div>
                             <p class="text-sm text-gray-600 mt-1">
-                                If your crypto gains are <strong class="text-green-600">under ₦10M annually</strong>, you may qualify for small player exemption. Check to see if you're exempt!
+                                You qualify ONLY if <strong class="text-green-600">BOTH</strong> conditions are met:<br>
+                                1️⃣ Total gains (profit) under <strong>₦10M</strong> in 12 months<br>
+                                2️⃣ Total sale proceeds under <strong>₦150M</strong> in 12 months<br>
+                                <span class="text-xs text-gray-500 mt-1 block italic">Proceeds = total amount you received from selling crypto (before subtracting costs)</span>
                             </p>
                         </div>
                     </label>
@@ -445,7 +448,7 @@
 
                 <div class="border-b border-gray-200 pb-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-3">Is this calculator accurate?</h3>
-                    <p class="text-gray-600">Yes. The calculator uses Nigeria's official 2026 progressive tax brackets (0% to 24%) as published in the tax law. However, this is an educational tool - for your specific situation, please consult a qualified tax professional.</p>
+                    <p class="text-gray-600">Yes. The calculator uses Nigeria's official 2026 progressive tax brackets (0% to 25%) from the Nigeria Tax Act, 2025, verified against EY, PWC, and KPMG analyses. However, this is an educational tool - for your specific situation, please consult a qualified tax professional.</p>
                 </div>
 
                 <div class="border-b border-gray-200 pb-6">
@@ -455,7 +458,12 @@
 
                 <div id="faq-sme" class="border-b border-gray-200 pb-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-3">What is the small player exemption?</h3>
-                    <p class="text-gray-600">If your crypto gains are under ₦10 million annually (and proceeds under ₦150 million), you may qualify for the small player exemption. This means you could pay ₦0 in tax. The first ₦800,000 is also tax-free for everyone. Consult a tax professional to confirm if you qualify.</p>
+                    <p class="text-gray-600 mb-3">To qualify for the small player exemption (pay ₦0 tax), you must meet <strong>BOTH</strong> conditions in any 12-month period:</p>
+                    <ul class="text-gray-600 space-y-2 text-sm mb-3 ml-4">
+                        <li>✅ <strong>Gains under ₦10 million</strong> (your profit = sale price - purchase cost)</li>
+                        <li>✅ <strong>Proceeds under ₦150 million</strong> (total amount you received from selling)</li>
+                    </ul>
+                    <p class="text-gray-600 text-sm"><strong>Example:</strong> If you sold ₦200M of crypto but only made ₦5M profit, you do NOT qualify (proceeds too high). Both thresholds must be met. Consult a tax professional to confirm your eligibility.</p>
                 </div>
 
                 <div class="border-b border-gray-200 pb-6">
@@ -496,9 +504,11 @@
                     <h3 class="text-xl font-bold text-amber-900 mb-3">Important Disclaimer</h3>
                     <div class="text-sm text-gray-700 space-y-2 leading-relaxed">
                         <p><strong>This calculator is an educational tool only</strong> and does not constitute professional tax, legal, or financial advice.</p>
-                        <p>Tax laws are complex and individual circumstances vary. The calculations provided are estimates based on the 2026 Nigerian tax law as publicly available. Tax regulations may change or be subject to interpretation.</p>
+                        <p><strong>Limitations:</strong> This calculator provides simplified estimates and does not account for: business expenses, capital losses carried forward, token-to-token swaps, staking rewards timing, mining income, international tax treaties, or other complex scenarios that may affect your actual tax liability.</p>
+                        <p><strong>Small player exemption:</strong> The exemption requires BOTH conditions to be met (gains &lt; ₦10M AND proceeds &lt; ₦150M). This calculator cannot verify your total sale proceeds - you must determine your eligibility independently.</p>
+                        <p>Tax laws are complex and individual circumstances vary. The calculations are based on the Nigeria Tax Act, 2025 as publicly available. Tax regulations may change or be subject to interpretation.</p>
                         <p>For specific tax advice tailored to your situation, please consult a qualified tax professional or accountant familiar with Nigerian crypto taxation.</p>
-                        <p>By using this calculator, you acknowledge that you understand this is not professional advice and you are responsible for your own tax compliance and decisions.</p>
+                        <p>By using this calculator, you acknowledge that you understand this is not professional advice and you are solely responsible for your own tax compliance and decisions.</p>
                     </div>
                 </div>
             </div>
@@ -515,8 +525,9 @@
                     Not affiliated with any government agency.
                 </p>
                 <p class="text-xs text-gray-500 max-w-2xl mx-auto">
-                    Tax rates based on official sources: <a href="https://techcabal.com/2025/10/06/nigeria-crypto-tax-2026-law-firs-oyedele/" target="_blank" class="hover:text-gray-300 underline">TechCabal</a>,
-                    <a href="https://nairametrics.com/2025/10/05/new-tax-laws-provide-clarity-not-higher-burden-on-crypto-traders-taiwo-oyedele/" target="_blank" class="hover:text-gray-300 underline">Nairametrics</a>,
+                    Tax rates verified from official sources: <a href="https://tat.gov.ng/Nigeria-Tax-Act-2025.pdf" target="_blank" class="hover:text-gray-300 underline">Nigeria Tax Act, 2025 (Official PDF)</a>,
+                    <a href="https://www.ey.com/en_gl/technical/tax-alerts/nigeria-tax-act-2025-has-been-signed-highlights" target="_blank" class="hover:text-gray-300 underline">EY Analysis</a>,
+                    <a href="https://www.pwc.com/ng/en/publications/the-nigerian-tax-reform-acts.html" target="_blank" class="hover:text-gray-300 underline">PWC Nigeria</a>,
                     <a href="https://africacheck.org/fact-checks/factsheets/factsheet-vat-income-tax-how-nigerias-new-tax-rules-affect-you" target="_blank" class="hover:text-gray-300 underline">Africa Check</a>
                 </p>
                 <div class="flex justify-center gap-4 text-sm">
