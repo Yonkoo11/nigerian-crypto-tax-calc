@@ -325,10 +325,10 @@
                         <input type="checkbox" id="isSME" class="mt-1 w-6 h-6 text-green-600 border-2 border-gray-300 rounded focus:ring-green-500 cursor-pointer">
                         <div class="flex-1">
                             <div class="text-sm font-semibold text-gray-900 group-hover:text-green-600 transition">
-                                ✅ I'm registered as an SME business (Small/Medium Enterprise)
+                                ✅ My gains are under ₦10M (small player exemption)
                             </div>
                             <p class="text-sm text-gray-600 mt-1">
-                                SMEs pay <strong class="text-green-600">0% tax on first ₦25M</strong>. Not registered? See how much you could save below!
+                                If your crypto gains are <strong class="text-green-600">under ₦10M annually</strong>, you may qualify for small player exemption. Check to see if you're exempt!
                             </p>
                         </div>
                     </label>
@@ -454,8 +454,8 @@
                 </div>
 
                 <div id="faq-sme" class="border-b border-gray-200 pb-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Should I register as an SME business?</h3>
-                    <p class="text-gray-600">If your crypto income is under ₦25M, registering as an SME can save you thousands (potentially 100% of your tax). SMEs pay 0% tax on their first ₦25M. Consult a business registration service or tax professional to understand the requirements and process.</p>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">What is the small player exemption?</h3>
+                    <p class="text-gray-600">If your crypto gains are under ₦10 million annually (and proceeds under ₦150 million), you may qualify for the small player exemption. This means you could pay ₦0 in tax. The first ₦800,000 is also tax-free for everyone. Consult a tax professional to confirm if you qualify.</p>
                 </div>
 
                 <div class="border-b border-gray-200 pb-6">
@@ -470,16 +470,16 @@
 
                 <div class="pb-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-3">What are the 2026 tax brackets?</h3>
-                    <p class="text-gray-600 mb-3">Nigeria's 2026 crypto tax uses progressive brackets:</p>
+                    <p class="text-gray-600 mb-3">Nigeria's 2026 crypto tax uses progressive brackets (official rates):</p>
                     <ul class="text-gray-600 space-y-1 text-sm">
                         <li>• ₦0 - ₦800k: <strong>0%</strong> (tax-free)</li>
-                        <li>• ₦800k - ₦3.2M: <strong>7%</strong></li>
-                        <li>• ₦3.2M - ₦6.4M: <strong>11%</strong></li>
-                        <li>• ₦6.4M - ₦12.8M: <strong>15%</strong></li>
-                        <li>• ₦12.8M - ₦25.6M: <strong>19%</strong></li>
-                        <li>• ₦25.6M - ₦51.2M: <strong>21%</strong></li>
-                        <li>• Above ₦51.2M: <strong>24%</strong></li>
+                        <li>• ₦800k - ₦3M: <strong>15%</strong></li>
+                        <li>• ₦3M - ₦12M: <strong>18%</strong></li>
+                        <li>• ₦12M - ₦25M: <strong>21%</strong></li>
+                        <li>• ₦25M - ₦50M: <strong>23%</strong></li>
+                        <li>• Above ₦50M: <strong>25%</strong></li>
                     </ul>
+                    <p class="text-gray-600 mt-3 text-sm">Source: Taiwo Oyedele, Presidential Fiscal Policy and Tax Reforms Committee</p>
                 </div>
 
             </div>
@@ -513,6 +513,11 @@
                 <p class="text-sm max-w-2xl mx-auto">
                     This is a free community tool to help Nigerian crypto traders understand the 2026 tax law.
                     Not affiliated with any government agency.
+                </p>
+                <p class="text-xs text-gray-500 max-w-2xl mx-auto">
+                    Tax rates based on official sources: <a href="https://techcabal.com/2025/10/06/nigeria-crypto-tax-2026-law-firs-oyedele/" target="_blank" class="hover:text-gray-300 underline">TechCabal</a>,
+                    <a href="https://nairametrics.com/2025/10/05/new-tax-laws-provide-clarity-not-higher-burden-on-crypto-traders-taiwo-oyedele/" target="_blank" class="hover:text-gray-300 underline">Nairametrics</a>,
+                    <a href="https://africacheck.org/fact-checks/factsheets/factsheet-vat-income-tax-how-nigerias-new-tax-rules-affect-you" target="_blank" class="hover:text-gray-300 underline">Africa Check</a>
                 </p>
                 <div class="flex justify-center gap-4 text-sm">
                     <a href="https://twitter.com/intent/tweet?text=Just%20calculated%20my%202026%20crypto%20tax%20with%20this%20free%20Nigerian%20calculator%20%F0%9F%87%B3%F0%9F%87%AC&url=https://nigerian-crypto-tax-calc.netlify.app"
@@ -582,18 +587,20 @@
             update();
         }
 
-        // Tax bracket structure (2026 Nigerian law)
+        // Tax bracket structure (2026 Nigerian law - OFFICIAL)
+        // Source: Taiwo Oyedele, Presidential Fiscal Policy and Tax Reforms Committee
         const TAX_BRACKETS = [
             { min: 0, max: 800000, rate: 0.00, label: '₦0 - ₦800k', color: 'bg-gray-400' },
-            { min: 800000, max: 3200000, rate: 0.07, label: '₦800k - ₦3.2M', color: 'bg-green-400' },
-            { min: 3200000, max: 6400000, rate: 0.11, label: '₦3.2M - ₦6.4M', color: 'bg-green-500' },
-            { min: 6400000, max: 12800000, rate: 0.15, label: '₦6.4M - ₦12.8M', color: 'bg-blue-500' },
-            { min: 12800000, max: 25600000, rate: 0.19, label: '₦12.8M - ₦25.6M', color: 'bg-purple-500' },
-            { min: 25600000, max: 51200000, rate: 0.21, label: '₦25.6M - ₦51.2M', color: 'bg-orange-500' },
-            { min: 51200000, max: Infinity, rate: 0.24, label: 'Above ₦51.2M', color: 'bg-red-500' }
+            { min: 800000, max: 3000000, rate: 0.15, label: '₦800k - ₦3M', color: 'bg-green-400' },
+            { min: 3000000, max: 12000000, rate: 0.18, label: '₦3M - ₦12M', color: 'bg-green-500' },
+            { min: 12000000, max: 25000000, rate: 0.21, label: '₦12M - ₦25M', color: 'bg-blue-500' },
+            { min: 25000000, max: 50000000, rate: 0.23, label: '₦25M - ₦50M', color: 'bg-purple-500' },
+            { min: 50000000, max: Infinity, rate: 0.25, label: 'Above ₦50M', color: 'bg-red-500' }
         ];
 
-        const SME_THRESHOLD = 25000000;
+        // Small player exemption threshold (gains, not total income)
+        const SMALL_PLAYER_GAINS_THRESHOLD = 10000000; // ₦10M in gains
+        const SME_THRESHOLD = 10000000; // Keep for compatibility, but represents gains exemption
 
         // Calculate tax using progressive brackets
         function calculateTax(income, isSME) {
@@ -639,15 +646,15 @@
             if (!isSME && totalIncome < SME_THRESHOLD && totalIncome > 0) {
                 const savings = calculateTax(totalIncome, false) - 0;
                 tips.push({
-                    icon: '🏢',
-                    text: `Register as an SME business to pay 0% tax and save ${formatCurrency(savings)} on this income level.`
+                    icon: '🎯',
+                    text: `If your gains are under ₦10M, you may qualify for small player exemption and save ${formatCurrency(savings)} in taxes. Check with a tax professional.`
                 });
             }
 
             if (totalIncome > SME_THRESHOLD) {
                 tips.push({
                     icon: '📊',
-                    text: 'For income above ₦25M, consider incorporating to access corporate tax benefits and structures.'
+                    text: 'For gains above ₦10M, professional tax planning becomes important. Consider consulting a crypto-savvy tax advisor for optimization strategies.'
                 });
             }
 
