@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nigerian Crypto Tax Calculator 2026 - Calculate Your Tax in 60 Seconds</title>
+    <meta name="description" content="Free Nigerian crypto tax calculator for the 2026 law. Instant results, SME savings comparison, and legal optimization tips.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .result-card {
+            transition: all 0.3s ease;
+        }
+        .result-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Header -->
+    <header class="gradient-bg text-white py-12 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">🇳🇬 Calculate Your 2026 Crypto Tax in 60 Seconds</h1>
+            <p class="text-xl md:text-2xl text-green-50 mb-6">Free, Nigeria-specific calculator for the new crypto tax law (effective Jan 1, 2026).<br>Instant results + legal strategies to minimize what you owe.</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center text-left md:text-center">
+                <div class="flex items-start md:items-center gap-2">
+                    <span class="text-green-300">✓</span>
+                    <span>Nigeria-Specific: Based on the actual 2026 tax law progressive brackets</span>
+                </div>
+                <div class="flex items-start md:items-center gap-2">
+                    <span class="text-green-300">✓</span>
+                    <span>Free & Instant: Get your exact tax liability in under 60 seconds</span>
+                </div>
+                <div class="flex items-start md:items-center gap-2">
+                    <span class="text-green-300">✓</span>
+                    <span>Optimization Tips: Learn legal ways to reduce your tax (like SME registration)</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+
+        <!-- Input Section -->
+        <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">Enter Your 2025 Crypto Income (in Naira)</h2>
+
+            <form id="taxForm" class="space-y-6">
+
+                <!-- Trading Profit -->
+                <div>
+                    <label for="tradingProfit" class="block text-sm font-semibold text-gray-700 mb-2">Trading Profit</label>
+                    <input type="number" id="tradingProfit" min="0" step="0.01" placeholder="5000000"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition">
+                    <p class="mt-1 text-sm text-gray-500">Total profit from buying/selling crypto on exchanges (Binance, Bybit, etc.)</p>
+                </div>
+
+                <!-- Staking/Interest -->
+                <div>
+                    <label for="stakingIncome" class="block text-sm font-semibold text-gray-700 mb-2">Staking & Interest Income</label>
+                    <input type="number" id="stakingIncome" min="0" step="0.01" placeholder="500000"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition">
+                    <p class="mt-1 text-sm text-gray-500">Earnings from staking, DeFi interest, liquidity pools, yield farming</p>
+                </div>
+
+                <!-- Airdrops/Bounties -->
+                <div>
+                    <label for="airdropsIncome" class="block text-sm font-semibold text-gray-700 mb-2">Airdrops & Bounties</label>
+                    <input type="number" id="airdropsIncome" min="0" step="0.01" placeholder="2000000"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition">
+                    <p class="mt-1 text-sm text-gray-500">Value of tokens received from airdrops, bounties, rewards, testnet incentives</p>
+                </div>
+
+                <!-- Freelance/Salary -->
+                <div>
+                    <label for="freelanceIncome" class="block text-sm font-semibold text-gray-700 mb-2">Freelance & Salary (in crypto)</label>
+                    <input type="number" id="freelanceIncome" min="0" step="0.01" placeholder="3000000"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition">
+                    <p class="mt-1 text-sm text-gray-500">Crypto payments for services, DAO work, remote jobs, consulting</p>
+                </div>
+
+                <!-- NFT Sales -->
+                <div>
+                    <label for="nftIncome" class="block text-sm font-semibold text-gray-700 mb-2">NFT Sales Profit</label>
+                    <input type="number" id="nftIncome" min="0" step="0.01" placeholder="1000000"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition">
+                    <p class="mt-1 text-sm text-gray-500">Profit from selling NFTs (sale price minus purchase cost)</p>
+                </div>
+
+                <!-- SME Checkbox -->
+                <div class="pt-4 border-t border-gray-200">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="isSME" class="mt-1 w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                        <div>
+                            <span class="text-sm font-semibold text-gray-700">I'm registered as an SME business (Small/Medium Enterprise)</span>
+                            <p class="text-sm text-gray-500 mt-1">SMEs pay 0% tax on first ₦25M. Not registered? See how much you could save below!</p>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Calculate Button -->
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg transition transform hover:scale-105 shadow-lg">
+                    Calculate My Tax →
+                </button>
+
+            </form>
+        </section>
+
+        <!-- Results Section (Hidden by default) -->
+        <div id="results" class="hidden space-y-8">
+
+            <!-- Summary Card -->
+            <section class="gradient-bg text-white rounded-lg shadow-lg p-8 result-card">
+                <h2 class="text-2xl font-bold mb-6">Your 2026 Tax Summary</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div>
+                        <p class="text-green-100 text-sm mb-1">Total Crypto Income</p>
+                        <p id="totalIncome" class="text-3xl font-bold font-mono">₦0</p>
+                    </div>
+                    <div>
+                        <p class="text-green-100 text-sm mb-1">Total Tax Owed</p>
+                        <p id="totalTax" class="text-3xl font-bold font-mono">₦0</p>
+                    </div>
+                    <div>
+                        <p class="text-green-100 text-sm mb-1">Effective Tax Rate</p>
+                        <p id="effectiveRate" class="text-3xl font-bold font-mono">0%</p>
+                    </div>
+                </div>
+                <div id="smeBadge" class="hidden mt-4 inline-block bg-white text-green-600 px-4 py-2 rounded-full text-sm font-semibold">
+                    ✓ SME Exemption Applied
+                </div>
+            </section>
+
+            <!-- Income Breakdown -->
+            <section class="bg-white rounded-lg shadow-lg p-8 result-card">
+                <h3 class="text-xl font-bold mb-4 text-gray-900">Tax Breakdown by Income Type</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b-2 border-gray-200">
+                                <th class="text-left py-3 px-4 font-semibold text-gray-700">Income Type</th>
+                                <th class="text-right py-3 px-4 font-semibold text-gray-700">Amount</th>
+                                <th class="text-right py-3 px-4 font-semibold text-gray-700">Tax Owed</th>
+                            </tr>
+                        </thead>
+                        <tbody id="incomeBreakdown">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tax Bracket Breakdown -->
+            <section class="bg-white rounded-lg shadow-lg p-8 result-card">
+                <h3 class="text-xl font-bold mb-4 text-gray-900">How Progressive Tax Brackets Work</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b-2 border-gray-200">
+                                <th class="text-left py-3 px-4 font-semibold text-gray-700">Tax Bracket</th>
+                                <th class="text-center py-3 px-4 font-semibold text-gray-700">Rate</th>
+                                <th class="text-right py-3 px-4 font-semibold text-gray-700">Income in Bracket</th>
+                                <th class="text-right py-3 px-4 font-semibold text-gray-700">Tax</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bracketBreakdown">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SME Comparison -->
+            <section id="smeComparison" class="hidden bg-green-50 border-2 border-green-200 rounded-lg p-8 result-card">
+                <h3 class="text-xl font-bold mb-4 text-green-900">💡 Potential SME Savings</h3>
+                <p class="text-gray-700 mb-4">If you register as an SME business:</p>
+                <div class="space-y-2">
+                    <p class="text-lg"><span class="font-semibold">Tax as SME:</span> <span id="smeTax" class="font-mono font-bold text-green-600">₦0</span></p>
+                    <p class="text-lg"><span class="font-semibold">You would save:</span> <span id="smeSavings" class="font-mono font-bold text-green-600">₦0</span> <span id="smePercent" class="text-gray-600"></span></p>
+                </div>
+                <a href="#" class="inline-block mt-4 text-green-600 hover:text-green-700 font-semibold underline">Learn how to register as SME →</a>
+            </section>
+
+            <!-- Optimization Tips -->
+            <section class="bg-white rounded-lg shadow-lg p-8 result-card">
+                <h3 class="text-xl font-bold mb-4 text-gray-900">Legal Ways to Reduce Your Tax</h3>
+                <div id="optimizationTips" class="space-y-3">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Copy Results Button -->
+            <div class="text-center no-print">
+                <button id="copyButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition transform hover:scale-105 shadow-lg">
+                    📋 Copy Results to Clipboard
+                </button>
+                <p id="copyConfirmation" class="hidden mt-2 text-green-600 font-semibold">✓ Copied to clipboard!</p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Disclaimer -->
+    <section class="bg-amber-50 border-t-4 border-amber-400 py-8 px-4 mt-12">
+        <div class="max-w-4xl mx-auto">
+            <h3 class="text-lg font-bold text-amber-900 mb-3">⚠️ Important Disclaimer</h3>
+            <div class="text-sm text-gray-700 space-y-2">
+                <p>This calculator is an educational tool only and does not constitute professional tax, legal, or financial advice.</p>
+                <p>Tax laws are complex and individual circumstances vary. The calculations provided are estimates based on the 2026 Nigerian tax law as publicly available.</p>
+                <p>For specific tax advice, please consult a qualified tax professional or accountant familiar with Nigerian crypto taxation.</p>
+                <p>By using this calculator, you acknowledge that you understand this is not professional advice and you are responsible for your own tax compliance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 px-4 mt-12">
+        <div class="max-w-4xl mx-auto text-center space-y-4">
+            <p class="text-white font-semibold">Built for Nigerian crypto users</p>
+            <p class="text-sm">
+                <a href="https://twitter.com/intent/tweet?text=Just%20calculated%20my%202026%20crypto%20tax%20with%20this%20free%20calculator%20%F0%9F%87%B3%F0%9F%87%AC&url=" class="hover:text-white underline">Share on Twitter</a>
+            </p>
+            <p class="text-xs">© 2026 • Not affiliated with any government agency</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Utility: Format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-NG', {
+                style: 'currency',
+                currency: 'NGN',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Utility: Format number with commas
+        function formatNumber(num, decimals = 0) {
+            return new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }).format(num);
+        }
+
+        // Tax bracket structure (2026 Nigerian law)
+        const TAX_BRACKETS = [
+            { min: 0, max: 800000, rate: 0.00, label: '₦0 - ₦800k' },
+            { min: 800000, max: 3200000, rate: 0.07, label: '₦800k - ₦3.2M' },
+            { min: 3200000, max: 6400000, rate: 0.11, label: '₦3.2M - ₦6.4M' },
+            { min: 6400000, max: 12800000, rate: 0.15, label: '₦6.4M - ₦12.8M' },
+            { min: 12800000, max: 25600000, rate: 0.19, label: '₦12.8M - ₦25.6M' },
+            { min: 25600000, max: 51200000, rate: 0.21, label: '₦25.6M - ₦51.2M' },
+            { min: 51200000, max: Infinity, rate: 0.24, label: 'Above ₦51.2M' }
+        ];
+
+        const SME_THRESHOLD = 25000000; // ₦25M
+
+        // Calculate tax using progressive brackets
+        function calculateTax(income, isSME) {
+            // SME exemption for income under threshold
+            if (isSME && income <= SME_THRESHOLD) {
+                return 0;
+            }
+
+            let totalTax = 0;
+
+            for (let bracket of TAX_BRACKETS) {
+                if (income > bracket.min) {
+                    const taxableInBracket = Math.min(income, bracket.max) - bracket.min;
+                    const taxForBracket = taxableInBracket * bracket.rate;
+                    totalTax += taxForBracket;
+                }
+            }
+
+            return totalTax;
+        }
+
+        // Get tax breakdown by bracket
+        function getTaxBreakdown(income) {
+            const breakdown = [];
+
+            for (let bracket of TAX_BRACKETS) {
+                if (income > bracket.min) {
+                    const amountInBracket = Math.min(income, bracket.max) - bracket.min;
+                    const taxForBracket = amountInBracket * bracket.rate;
+
+                    breakdown.push({
+                        bracket: bracket.label,
+                        rate: (bracket.rate * 100).toFixed(0) + '%',
+                        amount: amountInBracket,
+                        tax: taxForBracket
+                    });
+                } else {
+                    // Include all brackets even if unused (show ₦0)
+                    breakdown.push({
+                        bracket: bracket.label,
+                        rate: (bracket.rate * 100).toFixed(0) + '%',
+                        amount: 0,
+                        tax: 0
+                    });
+                }
+            }
+
+            return breakdown;
+        }
+
+        // Get optimization tips
+        function getOptimizationTips(totalIncome, isSME, incomeData) {
+            const tips = [];
+
+            // SME registration tip
+            if (!isSME && totalIncome < SME_THRESHOLD && totalIncome > 0) {
+                const savings = calculateTax(totalIncome, false) - 0;
+                tips.push(`Register as an SME business to pay 0% tax and save ${formatCurrency(savings)} on this income level.`);
+            }
+
+            // High income tip
+            if (totalIncome > SME_THRESHOLD) {
+                tips.push('For income above ₦25M, consider incorporating to access corporate tax benefits and structures.');
+            }
+
+            // Staking-heavy tip
+            const stakingPercent = totalIncome > 0 ? (incomeData.staking / totalIncome) : 0;
+            if (stakingPercent > 0.3 && incomeData.staking > 1000000) {
+                tips.push('Your staking income is significant. Consult a tax professional about potential different treatment under certain business structures.');
+            }
+
+            // Large airdrops tip
+            if (incomeData.airdrops > 3000000) {
+                tips.push('For large airdrops, consult a tax professional about proper cost basis valuation and timing of recognition.');
+            }
+
+            // General tip (always show)
+            tips.push('Keep detailed records of all crypto transactions, including dates, amounts, and sources. This is essential for tax filing and potential audits.');
+
+            // Very high income tip
+            if (totalIncome > 51200000) {
+                tips.push('At your income level, professional tax planning can save significant amounts. Consider consulting a crypto-savvy tax advisor.');
+            }
+
+            return tips.slice(0, 4); // Max 4 tips
+        }
+
+        // Calculate SME savings
+        function calculateSMESavings(income) {
+            const taxNonSME = calculateTax(income, false);
+            const taxSME = calculateTax(income, true);
+            const savings = taxNonSME - taxSME;
+            const percentSaved = taxNonSME > 0 ? (savings / taxNonSME * 100).toFixed(1) : 0;
+
+            return { savings, percentSaved, taxSME };
+        }
+
+        // Handle form submission
+        document.getElementById('taxForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get input values
+            const tradingProfit = parseFloat(document.getElementById('tradingProfit').value) || 0;
+            const stakingIncome = parseFloat(document.getElementById('stakingIncome').value) || 0;
+            const airdropsIncome = parseFloat(document.getElementById('airdropsIncome').value) || 0;
+            const freelanceIncome = parseFloat(document.getElementById('freelanceIncome').value) || 0;
+            const nftIncome = parseFloat(document.getElementById('nftIncome').value) || 0;
+            const isSME = document.getElementById('isSME').checked;
+
+            // Calculate total income
+            const totalIncome = tradingProfit + stakingIncome + airdropsIncome + freelanceIncome + nftIncome;
+
+            // Validate
+            if (totalIncome === 0) {
+                alert('Please enter at least one income amount to calculate your tax.');
+                return;
+            }
+
+            // Calculate total tax
+            const totalTax = calculateTax(totalIncome, isSME);
+            const effectiveRate = totalIncome > 0 ? (totalTax / totalIncome * 100).toFixed(1) : 0;
+
+            // Get breakdowns
+            const incomeData = {
+                trading: tradingProfit,
+                staking: stakingIncome,
+                airdrops: airdropsIncome,
+                freelance: freelanceIncome,
+                nft: nftIncome
+            };
+
+            const bracketBreakdown = getTaxBreakdown(totalIncome);
+            const optimizationTips = getOptimizationTips(totalIncome, isSME, incomeData);
+            const smeSavings = calculateSMESavings(totalIncome);
+
+            // Update summary card
+            document.getElementById('totalIncome').textContent = formatCurrency(totalIncome);
+            document.getElementById('totalTax').textContent = formatCurrency(totalTax);
+            document.getElementById('effectiveRate').textContent = effectiveRate + '%';
+
+            // Show/hide SME badge
+            const smeBadge = document.getElementById('smeBadge');
+            if (isSME && totalIncome <= SME_THRESHOLD) {
+                smeBadge.classList.remove('hidden');
+            } else {
+                smeBadge.classList.add('hidden');
+            }
+
+            // Populate income breakdown table
+            const incomeBreakdownHtml = [
+                { label: 'Trading Profit', amount: tradingProfit },
+                { label: 'Staking & Interest', amount: stakingIncome },
+                { label: 'Airdrops & Bounties', amount: airdropsIncome },
+                { label: 'Freelance & Salary', amount: freelanceIncome },
+                { label: 'NFT Sales', amount: nftIncome }
+            ].map((item, index) => {
+                const itemTax = item.amount > 0 ? calculateTax(item.amount, isSME) : 0;
+                const bgClass = index % 2 === 0 ? 'bg-gray-50' : 'bg-white';
+                return `
+                    <tr class="${bgClass}">
+                        <td class="py-3 px-4">${item.label}</td>
+                        <td class="py-3 px-4 text-right font-mono">${formatCurrency(item.amount)}</td>
+                        <td class="py-3 px-4 text-right font-mono font-semibold">${formatCurrency(itemTax)}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('incomeBreakdown').innerHTML = incomeBreakdownHtml;
+
+            // Populate bracket breakdown table
+            const bracketBreakdownHtml = bracketBreakdown.map((item, index) => {
+                const bgClass = index % 2 === 0 ? 'bg-gray-50' : 'bg-white';
+                return `
+                    <tr class="${bgClass}">
+                        <td class="py-2 px-4">${item.bracket}</td>
+                        <td class="py-2 px-4 text-center font-semibold">${item.rate}</td>
+                        <td class="py-2 px-4 text-right font-mono">${formatCurrency(item.amount)}</td>
+                        <td class="py-2 px-4 text-right font-mono font-semibold">${formatCurrency(item.tax)}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('bracketBreakdown').innerHTML = bracketBreakdownHtml;
+
+            // Show/hide SME comparison
+            const smeComparisonSection = document.getElementById('smeComparison');
+            if (!isSME && totalIncome > 0) {
+                smeComparisonSection.classList.remove('hidden');
+                document.getElementById('smeTax').textContent = formatCurrency(smeSavings.taxSME);
+                document.getElementById('smeSavings').textContent = formatCurrency(smeSavings.savings);
+                document.getElementById('smePercent').textContent = `(${smeSavings.percentSaved}% savings)`;
+            } else {
+                smeComparisonSection.classList.add('hidden');
+            }
+
+            // Populate optimization tips
+            const tipsHtml = optimizationTips.map((tip, index) => `
+                <div class="flex gap-3 items-start">
+                    <span class="flex-shrink-0 w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-sm font-bold">${index + 1}</span>
+                    <p class="text-gray-700">${tip}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('optimizationTips').innerHTML = tipsHtml;
+
+            // Show results section
+            document.getElementById('results').classList.remove('hidden');
+
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Update button text
+            document.querySelector('button[type="submit"]').textContent = 'Recalculate';
+        });
+
+        // Copy results to clipboard
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const totalIncome = document.getElementById('totalIncome').textContent;
+            const totalTax = document.getElementById('totalTax').textContent;
+            const effectiveRate = document.getElementById('effectiveRate').textContent;
+            const isSME = document.getElementById('isSME').checked;
+
+            const copyText = `
+=================================
+NIGERIAN CRYPTO TAX CALCULATION
+2026 Tax Law
+=================================
+
+TOTAL INCOME: ${totalIncome}
+TOTAL TAX OWED: ${totalTax}
+EFFECTIVE TAX RATE: ${effectiveRate}
+SME STATUS: ${isSME ? 'Yes' : 'No'}
+
+⚠️ Disclaimer: Educational estimate only. Consult tax professional.
+
+Calculated using: nigerian-crypto-tax-calc.netlify.app
+=================================
+            `.trim();
+
+            navigator.clipboard.writeText(copyText).then(() => {
+                const confirmation = document.getElementById('copyConfirmation');
+                confirmation.classList.remove('hidden');
+                setTimeout(() => {
+                    confirmation.classList.add('hidden');
+                }, 3000);
+            }).catch(err => {
+                alert('Failed to copy to clipboard. Please copy manually.');
+            });
+        });
+    </script>
+
+</body>
+</html>
