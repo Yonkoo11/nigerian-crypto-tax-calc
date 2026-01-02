@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nigerian Crypto Tax Calculator 2026</title>
+    <meta name="description" content="Calculate your exact Nigerian cryptocurrency tax liability for 2026 in real-time">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Custom Design System for Split-Screen Layout */
+        :root {
+            /* Colors */
+            --primary: #059669;
+            --primary-dark: #047857;
+            --primary-light: #10b981;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+
+            /* Typography */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+
+            /* Spacing */
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-12: 48px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--gray-900);
+            background: white;
+            overflow-x: hidden;
+        }
+
+        /* Split-screen layout */
+        .split-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
+        }
+
+        /* Left panel - Inputs */
+        .left-panel {
+            background: var(--gray-50);
+            padding: var(--space-12);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        /* Right panel - Results */
+        .right-panel {
+            background: white;
+            padding: var(--space-12);
+            border-left: 1px solid var(--gray-200);
+        }
+
+        /* Input styling */
+        .input-group {
+            margin-bottom: var(--space-6);
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: var(--space-2);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            font-family: var(--font-mono);
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        /* Result cards */
+        .result-card {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .result-card.highlight {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border: none;
+        }
+
+        .result-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            opacity: 0.7;
+            margin-bottom: var(--space-2);
+        }
+
+        .result-value {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            line-height: 1.2;
+        }
+
+        .result-value.large {
+            font-size: 48px;
+        }
+
+        /* Live update indicator */
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(5, 150, 105, 0.1);
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: var(--space-4);
+        }
+
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Breakdown table */
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--space-4);
+        }
+
+        .breakdown-table th {
+            text-align: left;
+            padding: 12px;
+            background: var(--gray-50);
+            border-bottom: 2px solid var(--gray-200);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-600);
+        }
+
+        .breakdown-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--gray-200);
+            font-family: var(--font-mono);
+            font-size: 14px;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .split-container {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                position: relative;
+                height: auto;
+                padding: var(--space-6);
+            }
+
+            .right-panel {
+                padding: var(--space-6);
+                border-left: none;
+                border-top: 1px solid var(--gray-200);
+            }
+
+            .result-value.large {
+                font-size: 36px;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Split-Screen Layout -->
+    <div class="split-container">
+
+        <!-- LEFT PANEL: Inputs -->
+        <div class="left-panel">
+            <div style="max-width: 480px; margin: 0 auto;">
+
+                <!-- Header -->
+                <div style="margin-bottom: var(--space-8);">
+                    <div style="display: inline-block; padding: 4px 12px; background: rgba(5, 150, 105, 0.1); border-radius: 9999px; font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: var(--space-4);">
+                        Law Effective: Jan 1, 2026
+                    </div>
+                    <h1 style="font-size: 28px; font-weight: 700; line-height: 1.2; margin-bottom: var(--space-3); color: var(--gray-900);">
+                        Nigerian Crypto Tax Calculator
+                    </h1>
+                    <p style="font-size: 15px; color: var(--gray-600); line-height: 1.5;">
+                        Enter your crypto income below. Your tax calculation updates in real-time on the right.
+                    </p>
+                </div>
+
+                <!-- Income Inputs Form -->
+                <form id="taxForm" style="margin-bottom: var(--space-8);">
+
+                    <!-- Trading Profit -->
+                    <div class="input-group">
+                        <label for="tradingProfit" class="input-label">
+                            Trading Profit
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Binance, Bybit, Coinbase, etc.
+                        </p>
+                        <input
+                            type="number"
+                            id="tradingProfit"
+                            class="input-field"
+                            value="0"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                            aria-label="Trading profit from crypto exchanges"
+                            oninput="calculateTaxLive()"
+                        >
+                    </div>
+
+                    <!-- Staking & Interest -->
+                    <div class="input-group">
+                        <label for="stakingIncome" class="input-label">
+                            Staking & Interest
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            DeFi protocols, lending platforms
+                        </p>
+                        <input
+                            type="number"
+                            id="stakingIncome"
+                            class="input-field"
+                            value="0"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                            aria-label="Staking and interest income from DeFi"
+                            oninput="calculateTaxLive()"
+                        >
+                    </div>
+
+                    <!-- Airdrops & Bounties -->
+                    <div class="input-group">
+                        <label for="airdropsIncome" class="input-label">
+                            Airdrops & Bounties
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Free tokens, rewards, campaigns
+                        </p>
+                        <input
+                            type="number"
+                            id="airdropsIncome"
+                            class="input-field"
+                            value="0"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                            aria-label="Income from airdrops and bounties"
+                            oninput="calculateTaxLive()"
+                        >
+                    </div>
+
+                    <!-- Freelance & Salary -->
+                    <div class="input-group">
+                        <label for="freelanceIncome" class="input-label">
+                            Freelance & Salary
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Paid in crypto for work
+                        </p>
+                        <input
+                            type="number"
+                            id="freelanceIncome"
+                            class="input-field"
+                            value="0"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                            aria-label="Freelance and salary income in crypto"
+                            oninput="calculateTaxLive()"
+                        >
+                    </div>
+
+                    <!-- NFT Sales -->
+                    <div class="input-group">
+                        <label for="nftIncome" class="input-label">
+                            NFT Sales
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Profit from NFT trading
+                        </p>
+                        <input
+                            type="number"
+                            id="nftIncome"
+                            class="input-field"
+                            value="0"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                            aria-label="Profit from NFT sales"
+                            oninput="calculateTaxLive()"
+                        >
+                    </div>
+
+                </form>
+
+                <!-- Data Privacy Note -->
+                <div style="padding: var(--space-4); background: rgba(5, 150, 105, 0.05); border-radius: 8px; border-left: 3px solid var(--primary);">
+                    <p style="font-size: 13px; color: var(--gray-700); line-height: 1.5;">
+                        <strong>100% Private:</strong> All calculations happen in your browser. No data is sent to any server.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL: Live Results -->
+        <div class="right-panel">
+            <div style="max-width: 540px;">
+
+                <!-- Live Update Badge -->
+                <div class="live-badge">
+                    <span class="live-dot"></span>
+                    <span>Live Calculation</span>
+                </div>
+
+                <!-- Main Tax Result (Highlighted) -->
+                <div class="result-card highlight">
+                    <div class="result-label">Total Tax Owed</div>
+                    <div class="result-value large" id="totalTax">₦0</div>
+                </div>
+
+                <!-- Secondary Results Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-8);">
+
+                    <div class="result-card">
+                        <div class="result-label" style="color: var(--gray-600);">Total Income</div>
+                        <div class="result-value" id="totalIncome" style="color: var(--gray-900);">₦0</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label" style="color: var(--gray-600);">Take Home</div>
+                        <div class="result-value" id="takeHome" style="color: var(--gray-900);">₦0</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label" style="color: var(--gray-600);">Effective Rate</div>
+                        <div class="result-value" id="effectiveRate" style="color: var(--gray-900);">0%</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label" style="color: var(--gray-600);">Tax Bracket</div>
+                        <div class="result-value" id="taxBracket" style="color: var(--gray-900); font-size: 24px;">0%</div>
+                    </div>
+
+                </div>
+
+                <!-- SME Exemption Notice -->
+                <div id="smeNotice" style="display: none; padding: var(--space-4); background: rgba(5, 150, 105, 0.1); border-radius: 8px; margin-bottom: var(--space-8); border: 1px solid var(--primary);">
+                    <div style="font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 4px;">
+                        ✓ SME Tax Exemption Applies
+                    </div>
+                    <p style="font-size: 13px; color: var(--gray-700); line-height: 1.5;">
+                        Your gains are under ₦10M and revenue under ₦150M. You qualify for full tax exemption.
+                    </p>
+                </div>
+
+                <!-- Detailed Breakdown -->
+                <div style="margin-top: var(--space-8);">
+                    <h2 style="font-size: 18px; font-weight: 600; margin-bottom: var(--space-4); color: var(--gray-900);">
+                        Tax Breakdown by Bracket
+                    </h2>
+
+                    <table class="breakdown-table">
+                        <thead>
+                            <tr>
+                                <th>Income Range</th>
+                                <th>Rate</th>
+                                <th>Tax Owed</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdownTable">
+                            <tr>
+                                <td colspan="3" style="text-align: center; color: var(--gray-600); font-family: var(--font-sans);">
+                                    Enter income to see breakdown
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Legal Disclaimer -->
+                <div style="margin-top: var(--space-12); padding-top: var(--space-6); border-top: 1px solid var(--gray-200);">
+                    <p style="font-size: 12px; color: var(--gray-600); line-height: 1.6;">
+                        <strong>DISCLAIMER:</strong> This calculator provides estimates based on Nigeria Tax Act 2025. It is not legal or financial advice. Consult a licensed tax professional for your specific situation. Sources: <a href="#" style="color: var(--primary);">FIRS</a>, <a href="#" style="color: var(--primary);">PWC Nigeria</a>, <a href="#" style="color: var(--primary);">EY Tax Guide</a>.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // TAX CALCULATION LOGIC (copied from old file, NOT layout code)
+
+        // Official 2026 tax brackets (Nigeria Tax Act 2025)
+        const TAX_BRACKETS = [
+            { limit: 800000, rate: 0 },       // First ₦800k exempt
+            { limit: 3000000, rate: 0.15 },   // ₦800k - ₦3M: 15%
+            { limit: 12000000, rate: 0.18 },  // ₦3M - ₦12M: 18%
+            { limit: 25000000, rate: 0.21 },  // ₦12M - ₦25M: 21%
+            { limit: 50000000, rate: 0.23 },  // ₦25M - ₦50M: 23%
+            { limit: Infinity, rate: 0.25 }   // Above ₦50M: 25%
+        ];
+
+        // SME exemption thresholds
+        const SME_GAIN_EXEMPTION = 10000000;   // ₦10M
+        const SME_REVENUE_EXEMPTION = 150000000; // ₦150M
+
+        // Format currency
+        function formatCurrency(amount) {
+            return '₦' + Math.round(amount).toLocaleString('en-NG');
+        }
+
+        // Calculate progressive tax
+        function calculateProgressiveTax(totalIncome) {
+            if (totalIncome <= 0) return { totalTax: 0, breakdown: [] };
+
+            let remainingIncome = totalIncome;
+            let totalTax = 0;
+            let breakdown = [];
+            let previousLimit = 0;
+
+            for (let bracket of TAX_BRACKETS) {
+                if (remainingIncome <= 0) break;
+
+                const bracketIncome = Math.min(remainingIncome, bracket.limit - previousLimit);
+                const bracketTax = bracketIncome * bracket.rate;
+
+                totalTax += bracketTax;
+
+                if (bracketIncome > 0) {
+                    breakdown.push({
+                        range: previousLimit === 0
+                            ? `First ${formatCurrency(bracket.limit)}`
+                            : `${formatCurrency(previousLimit)} - ${formatCurrency(bracket.limit)}`,
+                        rate: (bracket.rate * 100).toFixed(0) + '%',
+                        tax: formatCurrency(bracketTax)
+                    });
+                }
+
+                remainingIncome -= bracketIncome;
+                previousLimit = bracket.limit;
+            }
+
+            return { totalTax, breakdown };
+        }
+
+        // Live calculation (runs on every input change)
+        function calculateTaxLive() {
+            // Get all income values
+            const tradingProfit = parseFloat(document.getElementById('tradingProfit').value) || 0;
+            const stakingIncome = parseFloat(document.getElementById('stakingIncome').value) || 0;
+            const airdropsIncome = parseFloat(document.getElementById('airdropsIncome').value) || 0;
+            const freelanceIncome = parseFloat(document.getElementById('freelanceIncome').value) || 0;
+            const nftIncome = parseFloat(document.getElementById('nftIncome').value) || 0;
+
+            // Calculate total income
+            const totalIncome = tradingProfit + stakingIncome + airdropsIncome + freelanceIncome + nftIncome;
+
+            // Check SME exemption
+            const smeExempt = totalIncome > 0 && totalIncome < SME_GAIN_EXEMPTION;
+
+            // Calculate tax
+            const { totalTax, breakdown } = smeExempt ? { totalTax: 0, breakdown: [] } : calculateProgressiveTax(totalIncome);
+
+            // Calculate metrics
+            const effectiveRate = totalIncome > 0 ? (totalTax / totalIncome * 100).toFixed(1) : 0;
+            const takeHome = totalIncome - totalTax;
+            const topBracket = totalIncome > 50000000 ? 25 :
+                               totalIncome > 25000000 ? 23 :
+                               totalIncome > 12000000 ? 21 :
+                               totalIncome > 3000000 ? 18 :
+                               totalIncome > 800000 ? 15 : 0;
+
+            // Update UI
+            document.getElementById('totalTax').textContent = formatCurrency(totalTax);
+            document.getElementById('totalIncome').textContent = formatCurrency(totalIncome);
+            document.getElementById('takeHome').textContent = formatCurrency(takeHome);
+            document.getElementById('effectiveRate').textContent = effectiveRate + '%';
+            document.getElementById('taxBracket').textContent = topBracket + '%';
+
+            // Show/hide SME notice
+            document.getElementById('smeNotice').style.display = smeExempt ? 'block' : 'none';
+
+            // Update breakdown table
+            const breakdownTableBody = document.getElementById('breakdownTable');
+            if (breakdown.length === 0) {
+                breakdownTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: var(--gray-600); font-family: var(--font-sans);">
+                            ${totalIncome === 0 ? 'Enter income to see breakdown' : 'Tax exempt (SME exemption applies)'}
+                        </td>
+                    </tr>
+                `;
+            } else {
+                breakdownTableBody.innerHTML = breakdown.map(item => `
+                    <tr>
+                        <td>${item.range}</td>
+                        <td>${item.rate}</td>
+                        <td>${item.tax}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            calculateTaxLive();
+        });
+    </script>
+
+</body>
+</html>

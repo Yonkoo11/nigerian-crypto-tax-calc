@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nigerian Crypto Tax Calculator 2026 | Calculate Your Tax in 30 Seconds</title>
+    <meta name="description" content="Calculate your Nigerian cryptocurrency tax in 30 seconds. Free, accurate, 100% private. Based on Nigeria Tax Act 2026.">
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';
+                   script-src 'self' 'unsafe-inline' https://plausible.io;
+                   style-src 'self' 'unsafe-inline';
+                   img-src 'self' data:;
+                   connect-src https://plausible.io;
+                   font-src 'self';
+                   frame-ancestors 'none';
+                   base-uri 'self';
+                   form-action 'none';">
+
+    <!-- Plausible Analytics -->
+    <script defer data-domain="nigerian-crypto-tax-calc.netlify.app" src="https://plausible.io/js/script.js"></script>
+
+    <style>
+        /* Hero Layout Design System */
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --primary-light: #10b981;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f5e9 100%);
+            color: var(--gray-900);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 48px 24px;
+            margin-bottom: 32px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(5, 150, 105, 0.1);
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .hero-title {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            color: var(--gray-900);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--gray-600);
+            margin-bottom: 32px;
+        }
+
+        /* Quick Estimate Box */
+        .quick-estimate {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+        }
+
+        .quick-estimate-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .quick-estimate-input-wrapper {
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .quick-estimate-currency {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--gray-600);
+            font-family: var(--font-mono);
+        }
+
+        .quick-estimate-input {
+            width: 100%;
+            padding: 16px 16px 16px 44px;
+            font-size: 24px;
+            font-family: var(--font-mono);
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .quick-estimate-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        .quick-estimate-hint {
+            font-size: 13px;
+            color: var(--gray-600);
+            text-align: center;
+        }
+
+        /* Big Result Card */
+        .result-card-big {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 12px;
+            padding: 32px;
+            color: white;
+            text-align: center;
+            margin-bottom: 24px;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card-big.visible {
+            display: block;
+        }
+
+        .result-label-big {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .result-value-big {
+            font-size: 48px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            margin-bottom: 12px;
+        }
+
+        .result-subtitle {
+            font-size: 15px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Savings Prompt */
+        .savings-prompt {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 24px;
+            display: none;
+            border: 2px solid #FCD34D;
+        }
+
+        .savings-prompt.visible {
+            display: block;
+        }
+
+        .savings-prompt-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #92400E;
+            margin-bottom: 12px;
+        }
+
+        .btn-yellow {
+            background: #FBBF24;
+            color: #78350F;
+            font-weight: 700;
+        }
+
+        .btn-yellow:hover {
+            background: #F59E0B;
+            transform: translateY(-1px);
+        }
+
+        /* Expandable Sections */
+        .expandable-section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .expandable-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .expandable-header:hover {
+            background: var(--gray-50);
+        }
+
+        .expandable-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .expandable-icon {
+            font-size: 20px;
+            color: var(--gray-600);
+            transition: transform 0.3s;
+        }
+
+        .expandable-section.expanded .expandable-icon {
+            transform: rotate(180deg);
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .expandable-section.expanded .expandable-content {
+            max-height: 2000px;
+        }
+
+        .expandable-inner {
+            padding: 0 20px 20px 20px;
+        }
+
+        /* Form Inputs */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 16px;
+            font-family: var(--font-mono);
+            border: 1px solid var(--gray-200);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        .input-hint {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-top: 4px;
+        }
+
+        .deduction-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 4px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 32px 20px;
+            color: var(--gray-600);
+            font-size: 13px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: 28px;
+            }
+            .result-value-big {
+                font-size: 36px;
+            }
+            .quick-estimate {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-badge">Law Effective: Jan 1, 2026</div>
+            <h1 class="hero-title">🇳🇬 Nigerian Crypto Tax Calculator</h1>
+            <p class="hero-subtitle">Calculate your 2026 tax liability in 30 seconds</p>
+        </div>
+
+        <!-- Quick Estimate Input -->
+        <div class="quick-estimate">
+            <label class="quick-estimate-label">How much crypto income did you make in 2025?</label>
+            <div class="quick-estimate-input-wrapper">
+                <span class="quick-estimate-currency">₦</span>
+                <input 
+                    type="number" 
+                    id="quickEstimate"
+                    class="quick-estimate-input"
+                    placeholder="10000000"
+                    oninput="calculateQuick()"
+                    autocomplete="off"
+                >
+            </div>
+            <p class="quick-estimate-hint">Enter your total crypto income for an instant estimate</p>
+        </div>
+
+        <!-- Big Result Card (Hidden initially) -->
+        <div id="resultCardBig" class="result-card-big">
+            <div class="result-label-big">💰 YOUR TAX LIABILITY</div>
+            <div id="taxOwedBig" class="result-value-big">₦0</div>
+            <div class="result-subtitle">
+                <span id="effectiveRateBig">0%</span> of your <span id="incomeDisplayBig">₦0</span> income
+            </div>
+            <div class="result-subtitle">
+                Take home: <strong id="takeHomeBig">₦0</strong>
+            </div>
+            <div class="result-actions">
+                <button class="btn btn-white" onclick="window.print()">📄 Export PDF</button>
+                <button class="btn btn-white" onclick="copyURL()">🔗 Share Link</button>
+            </div>
+        </div>
+
+        <!-- Savings Prompt (Hidden initially) -->
+        <div id="savingsPrompt" class="savings-prompt">
+            <div class="savings-prompt-text">💡 You could save ₦400,000+ with deductions!</div>
+            <button class="btn btn-yellow" onclick="expandSection('deductions')">Show me how →</button>
+        </div>
+
+        <!-- Expandable: Detailed Income Breakdown -->
+        <div class="expandable-section" id="section-income">
+            <div class="expandable-header" onclick="toggleSection('income')">
+                <div class="expandable-title">▶ Break down by income type (Optional)</div>
+                <div class="expandable-icon">▼</div>
+            </div>
+            <div class="expandable-content">
+                <div class="expandable-inner">
+                    <p style="color: var(--gray-600); font-size: 14px; margin-bottom: 16px;">
+                        For more accurate calculations, break down your income by source:
+                    </p>
+                    
+                    <!-- Exchange Rate -->
+                    <div class="input-group">
+                        <label class="input-label">💱 Exchange Rate (for USD entries)</label>
+                        <input type="number" id="exchangeRate" class="input-field" value="1650" placeholder="1650">
+                        <div class="input-hint">₦ per $1 USD</div>
+                    </div>
+
+                    <!-- Trading Profit -->
+                    <div class="input-group">
+                        <label class="input-label">Trading Profit</label>
+                        <input type="number" id="tradingProfit" class="input-field" value="0" oninput="calculateDetailed()">
+                        <div class="input-hint">Binance, Bybit, Coinbase, etc.</div>
+                    </div>
+
+                    <!-- Staking -->
+                    <div class="input-group">
+                        <label class="input-label">Staking & Interest</label>
+                        <input type="number" id="stakingIncome" class="input-field" value="0" oninput="calculateDetailed()">
+                        <div class="input-hint">DeFi protocols, lending platforms</div>
+                    </div>
+
+                    <!-- Airdrops -->
+                    <div class="input-group">
+                        <label class="input-label">Airdrops & Bounties</label>
+                        <input type="number" id="airdropsIncome" class="input-field" value="0" oninput="calculateDetailed()">
+                        <div class="input-hint">Free tokens, rewards, campaigns</div>
+                    </div>
+
+                    <!-- Freelance -->
+                    <div class="input-group">
+                        <label class="input-label">Freelance & Salary</label>
+                        <input type="number" id="freelanceIncome" class="input-field" value="0" oninput="calculateDetailed()">
+                        <div class="input-hint">Paid in crypto for work</div>
+                    </div>
+
+                    <!-- NFT Sales -->
+                    <div class="input-group">
+                        <label class="input-label">NFT Sales</label>
+                        <input type="number" id="nftIncome" class="input-field" value="0" oninput="calculateDetailed()">
+                        <div class="input-hint">Profit from NFT trading</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expandable: Deductions -->
+        <div class="expandable-section" id="section-deductions">
+            <div class="expandable-header" onclick="toggleSection('deductions')">
+                <div class="expandable-title">▶ Add deductions (Save tax legally!)</div>
+                <div class="expandable-icon">▼</div>
+            </div>
+            <div class="expandable-content">
+                <div class="expandable-inner">
+                    <p style="color: var(--gray-600); font-size: 14px; margin-bottom: 16px;">
+                        Reduce your taxable income by claiming eligible deductions:
+                    </p>
+
+                    <!-- Pension -->
+                    <div class="input-group">
+                        <label class="input-label">Pension Contributions</label>
+                        <input type="number" id="pensionDeduction" class="input-field" value="0" oninput="calculateDetailed()">
+                        <div class="deduction-badge">✅ 100% deductible</div>
+                    </div>
+
+                    <!-- Housing -->
+                    <div class="input-group">
+                        <label class="input-label">NHF / Housing Contributions</label>
+                        <input type="number" id="housingDeduction" class="input-field" value="0" oninput="calculateDetailed()">
+                        <div class="deduction-badge">✅ 100% deductible</div>
+                    </div>
+
+                    <!-- Health -->
+                    <div class="input-group">
+                        <label class="input-label">Health Insurance Premiums</label>
+                        <input type="number" id="healthDeduction" class="input-field" value="0" oninput="calculateDetailed()">
+                        <div class="deduction-badge">✅ 100% deductible</div>
+                    </div>
+
+                    <!-- Rent -->
+                    <div class="input-group">
+                        <label class="input-label">Annual Rent Paid</label>
+                        <input type="number" id="rentPaid" class="input-field" value="0" oninput="calculateDetailed()">
+                        <div class="deduction-badge">✅ 20% deductible (max ₦500k)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expandable: Full Results -->
+        <div class="expandable-section" id="section-results">
+            <div class="expandable-header" onclick="toggleSection('results')">
+                <div class="expandable-title">▶ View full tax breakdown</div>
+                <div class="expandable-icon">▼</div>
+            </div>
+            <div class="expandable-content">
+                <div class="expandable-inner">
+                    <div id="fullResults">
+                        <!-- Populated by JavaScript -->
+                        <p style="color: var(--gray-600); text-align: center;">Enter income to see detailed breakdown</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>100% Private • All calculations happen in your browser</p>
+            <p style="margin-top: 8px;">
+                <a href="https://github.com/yourusername/nigerian-crypto-tax-calc" style="color: var(--primary);">View Source</a> • 
+                <strong>Version 1.3.0</strong> • Jan 2, 2026
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // We'll add the JavaScript here from the original file
+        console.log('Hero layout loaded');
+    </script>
+
+</body>
+</html>
