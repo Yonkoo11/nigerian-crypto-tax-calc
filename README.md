@@ -18,9 +18,33 @@ A web-based calculator that helps Nigerian crypto traders, freelancers, and inve
 - ✅ **5 Income Types**: Trading, Staking, Airdrops, Freelance, NFT Sales
 - ✅ **Small Player Exemption**: Qualify if gains < ₦10M AND proceeds < ₦150M
 - ✅ **Instant Results**: Complete tax breakdown in under 60 seconds
+- ✅ **Save & Share**: Email calculation link to yourself or copy to clipboard (optional)
 - ✅ **Optimization Tips**: Legal strategies to minimize your tax liability
 - ✅ **Mobile Responsive**: Works perfectly on all devices
 - ✅ **Privacy-First**: 100% client-side, no data stored or transmitted
+
+## How to Save Your Calculation
+
+After completing your tax calculation, you'll see an optional prompt to save your results. **No account required!**
+
+### Two Ways to Save:
+
+1. **Email Yourself** - Click "Email Me This Link" to send the calculation URL to your email
+   - Opens your default email client (Gmail, Outlook, etc.)
+   - Pre-filled subject and body with calculation link
+   - Access your results anytime by clicking the link
+
+2. **Copy Link** - Click "copy the link" to copy the URL to your clipboard
+   - Bookmark it in your browser
+   - Share with your accountant
+   - Save to notes app
+
+### Privacy Notes:
+- **Zero friction** - Calculator works perfectly without saving
+- **Dismissible** - Close the prompt once, never see it again
+- **No tracking** - Your choice is remembered locally (localStorage)
+- **No signup** - No email, password, or account creation required
+- **Your data stays yours** - All calculation data is encoded in the URL, nothing stored on our servers
 
 ## Progressive Tax Brackets (2026)
 
