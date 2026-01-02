@@ -536,6 +536,140 @@
 
                 </form>
 
+                <!-- Tax Deductions Section -->
+                <div style="margin-bottom: var(--space-8);">
+                    <div style="margin-bottom: var(--space-4);">
+                        <h3 style="font-size: 16px; font-weight: 700; color: var(--gray-900); margin-bottom: var(--space-2);">
+                            💰 Tax Deductions
+                        </h3>
+                        <p style="font-size: 13px; color: var(--gray-600); line-height: 1.5;">
+                            Reduce your taxable income by claiming eligible deductions from the 2026 Tax Reform.
+                        </p>
+                    </div>
+
+                    <!-- Pension Contributions -->
+                    <div class="input-group">
+                        <label for="pensionDeduction" class="input-label">
+                            Pension Contributions
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Contributions to approved pension schemes
+                        </p>
+                        <div style="position: relative;">
+                            <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; color: var(--gray-600);">₦</span>
+                            <input
+                                type="number"
+                                id="pensionDeduction"
+                                class="input-field"
+                                style="padding-left: 28px;"
+                                value="0"
+                                min="0"
+                                step="0.01"
+                                placeholder="0"
+                                aria-label="Pension contributions (100% deductible)"
+                                oninput="calculateTaxLive()"
+                            >
+                        </div>
+                        <p style="font-size: 11px; color: var(--primary); margin-top: 4px; font-weight: 600;">
+                            100% deductible
+                        </p>
+                    </div>
+
+                    <!-- Housing/NHF Contributions -->
+                    <div class="input-group">
+                        <label for="housingDeduction" class="input-label">
+                            NHF / Housing Contributions
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            National Housing Fund or other housing schemes
+                        </p>
+                        <div style="position: relative;">
+                            <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; color: var(--gray-600);">₦</span>
+                            <input
+                                type="number"
+                                id="housingDeduction"
+                                class="input-field"
+                                style="padding-left: 28px;"
+                                value="0"
+                                min="0"
+                                step="0.01"
+                                placeholder="0"
+                                aria-label="Housing contributions (100% deductible)"
+                                oninput="calculateTaxLive()"
+                            >
+                        </div>
+                        <p style="font-size: 11px; color: var(--primary); margin-top: 4px; font-weight: 600;">
+                            100% deductible
+                        </p>
+                    </div>
+
+                    <!-- Health Insurance -->
+                    <div class="input-group">
+                        <label for="healthDeduction" class="input-label">
+                            Health Insurance Premiums
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Approved health insurance or HMO premiums
+                        </p>
+                        <div style="position: relative;">
+                            <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; color: var(--gray-600);">₦</span>
+                            <input
+                                type="number"
+                                id="healthDeduction"
+                                class="input-field"
+                                style="padding-left: 28px;"
+                                value="0"
+                                min="0"
+                                step="0.01"
+                                placeholder="0"
+                                aria-label="Health insurance premiums (100% deductible)"
+                                oninput="calculateTaxLive()"
+                            >
+                        </div>
+                        <p style="font-size: 11px; color: var(--primary); margin-top: 4px; font-weight: 600;">
+                            100% deductible
+                        </p>
+                    </div>
+
+                    <!-- Rent Paid -->
+                    <div class="input-group">
+                        <label for="rentPaid" class="input-label">
+                            Annual Rent Paid
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Total rent paid for your primary residence
+                        </p>
+                        <div style="position: relative;">
+                            <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; color: var(--gray-600);">₦</span>
+                            <input
+                                type="number"
+                                id="rentPaid"
+                                class="input-field"
+                                style="padding-left: 28px;"
+                                value="0"
+                                min="0"
+                                step="0.01"
+                                placeholder="0"
+                                aria-label="Annual rent paid (20% deductible, capped at ₦500k)"
+                                oninput="calculateTaxLive()"
+                            >
+                        </div>
+                        <p style="font-size: 11px; color: var(--primary); margin-top: 4px; font-weight: 600;">
+                            20% deductible (max ₦500,000 deduction)
+                        </p>
+                    </div>
+
+                    <!-- Deductions Summary Display -->
+                    <div id="deductionsSummary" style="display: none; margin-top: var(--space-4); padding: var(--space-3); background: rgba(5, 150, 105, 0.08); border-radius: 6px; border: 1px solid rgba(5, 150, 105, 0.2);">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--gray-700); margin-bottom: 4px;">
+                            Total Deductions
+                        </div>
+                        <div style="font-size: 18px; font-weight: 700; color: var(--primary); font-family: var(--font-mono);">
+                            ₦<span id="totalDeductionsDisplay">0</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Data Privacy Note -->
                 <div style="padding: var(--space-4); background: rgba(5, 150, 105, 0.05); border-radius: 8px; border-left: 3px solid var(--primary);">
                     <p style="font-size: 13px; color: var(--gray-700); line-height: 1.5; margin-bottom: var(--space-2);">
@@ -580,13 +714,28 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-8);">
 
                     <div class="result-card">
-                        <div class="result-label" style="color: var(--gray-600);">Total Income</div>
+                        <div class="result-label" style="color: var(--gray-600);">Gross Income</div>
                         <div class="result-value" id="totalIncome" style="color: var(--gray-900);" aria-live="polite">₦0</div>
                     </div>
 
-                    <div class="result-card">
+                    <div class="result-card" id="deductionsCard" style="display: none;">
+                        <div class="result-label" style="color: var(--gray-600);">Total Deductions</div>
+                        <div class="result-value" id="totalDeductionsResult" style="color: var(--primary);" aria-live="polite">₦0</div>
+                    </div>
+
+                    <div class="result-card" id="takeHomeCardNoDeductions">
                         <div class="result-label" style="color: var(--gray-600);">Take Home</div>
                         <div class="result-value" id="takeHome" style="color: var(--gray-900);" aria-live="polite">₦0</div>
+                    </div>
+
+                    <div class="result-card" id="taxableIncomeCard" style="display: none;">
+                        <div class="result-label" style="color: var(--gray-600);">Taxable Income</div>
+                        <div class="result-value" id="taxableIncome" style="color: var(--gray-900); font-weight: 700;" aria-live="polite">₦0</div>
+                    </div>
+
+                    <div class="result-card" id="takeHomeCardWithDeductions" style="display: none;">
+                        <div class="result-label" style="color: var(--gray-600);">Take Home</div>
+                        <div class="result-value" id="takeHome2" style="color: var(--gray-900);" aria-live="polite">₦0</div>
                     </div>
 
                     <div class="result-card">
@@ -776,7 +925,7 @@
                             Found a bug? <a href="https://github.com/yourusername/nigerian-crypto-tax-calc/issues" style="color: var(--primary); text-decoration: underline;" target="_blank" rel="noopener noreferrer">Report it on GitHub</a>
                         </p>
                         <p style="margin-top: var(--space-4); color: var(--gray-500); font-size: 11px;">
-                            <strong>Version 1.1.0</strong> • Last updated: January 2, 2026<br>
+                            <strong>Version 1.2.0</strong> • Last updated: January 2, 2026<br>
                             100% client-side • Zero dependencies • <a href="https://github.com/yourusername/nigerian-crypto-tax-calc" style="color: var(--primary); text-decoration: underline;" target="_blank" rel="noopener noreferrer">Verify source code</a>
                         </p>
                     </div>
@@ -966,8 +1115,30 @@
                     document.getElementById('nftConversion').style.display = 'none';
                 }
 
-                // Calculate total income
+                // Calculate total income (gross income before deductions)
                 const totalIncome = tradingProfit + stakingIncome + airdropsIncome + freelanceIncome + nftIncome;
+
+                // Calculate tax deductions
+                const pensionDeduction = parseFloat(document.getElementById('pensionDeduction').value) || 0;
+                const housingDeduction = parseFloat(document.getElementById('housingDeduction').value) || 0;
+                const healthDeduction = parseFloat(document.getElementById('healthDeduction').value) || 0;
+                const rentPaid = parseFloat(document.getElementById('rentPaid').value) || 0;
+
+                // Rent: 20% deductible, capped at ₦500,000 max deduction
+                const rentDeduction = Math.min(rentPaid * 0.2, 500000);
+
+                const totalDeductions = pensionDeduction + housingDeduction + healthDeduction + rentDeduction;
+
+                // Calculate taxable income (after deductions)
+                const taxableIncome = Math.max(0, totalIncome - totalDeductions);
+
+                // Show/hide and update deductions summary
+                if (totalDeductions > 0) {
+                    document.getElementById('deductionsSummary').style.display = 'block';
+                    document.getElementById('totalDeductionsDisplay').textContent = Math.round(totalDeductions).toLocaleString('en-NG');
+                } else {
+                    document.getElementById('deductionsSummary').style.display = 'none';
+                }
 
                 // Check for unrealistic inputs (> ₦1 billion)
                 const isUnrealistic = totalIncome > 1000000000;
@@ -981,27 +1152,49 @@
                     nft: nftIncome
                 };
 
-                // Check SME exemption
-                const smeExempt = totalIncome > 0 && totalIncome < SME_GAIN_EXEMPTION;
+                // Check SME exemption (based on taxable income after deductions)
+                const smeExempt = taxableIncome > 0 && taxableIncome < SME_GAIN_EXEMPTION;
 
-                // Calculate tax
-                const { totalTax, breakdown } = smeExempt ? { totalTax: 0, breakdown: [] } : calculateProgressiveTax(totalIncome);
+                // Calculate tax on taxable income (after deductions)
+                const { totalTax, breakdown } = smeExempt ? { totalTax: 0, breakdown: [] } : calculateProgressiveTax(taxableIncome);
 
                 // Calculate metrics
-                const effectiveRate = totalIncome > 0 ? (totalTax / totalIncome * 100).toFixed(1) : 0;
+                const effectiveRate = taxableIncome > 0 ? (totalTax / taxableIncome * 100).toFixed(1) : 0;
                 const takeHome = totalIncome - totalTax;
-                const topBracket = totalIncome > 50000000 ? 25 :
-                                   totalIncome > 25000000 ? 23 :
-                                   totalIncome > 12000000 ? 21 :
-                                   totalIncome > 3000000 ? 18 :
-                                   totalIncome > 800000 ? 15 : 0;
+                const topBracket = taxableIncome > 50000000 ? 25 :
+                                   taxableIncome > 25000000 ? 23 :
+                                   taxableIncome > 12000000 ? 21 :
+                                   taxableIncome > 3000000 ? 18 :
+                                   taxableIncome > 800000 ? 15 : 0;
 
                 // Update UI
                 document.getElementById('totalTax').textContent = formatCurrency(totalTax);
                 document.getElementById('totalIncome').textContent = formatCurrency(totalIncome);
-                document.getElementById('takeHome').textContent = formatCurrency(takeHome);
                 document.getElementById('effectiveRate').textContent = effectiveRate + '%';
                 document.getElementById('taxBracket').textContent = topBracket + '%';
+
+                // Show/hide deductions cards based on whether deductions exist
+                if (totalDeductions > 0) {
+                    // Show deduction-aware layout
+                    document.getElementById('deductionsCard').style.display = 'block';
+                    document.getElementById('taxableIncomeCard').style.display = 'block';
+                    document.getElementById('takeHomeCardWithDeductions').style.display = 'block';
+                    document.getElementById('takeHomeCardNoDeductions').style.display = 'none';
+
+                    // Update values
+                    document.getElementById('totalDeductionsResult').textContent = formatCurrency(totalDeductions);
+                    document.getElementById('taxableIncome').textContent = formatCurrency(taxableIncome);
+                    document.getElementById('takeHome2').textContent = formatCurrency(takeHome);
+                } else {
+                    // Show simple layout (no deductions)
+                    document.getElementById('deductionsCard').style.display = 'none';
+                    document.getElementById('taxableIncomeCard').style.display = 'none';
+                    document.getElementById('takeHomeCardWithDeductions').style.display = 'none';
+                    document.getElementById('takeHomeCardNoDeductions').style.display = 'block';
+
+                    // Update take home
+                    document.getElementById('takeHome').textContent = formatCurrency(takeHome);
+                }
 
                 // Show/hide SME notice
                 document.getElementById('smeNotice').style.display = smeExempt ? 'block' : 'none';
@@ -1086,6 +1279,11 @@
             const freelanceCurrency = document.getElementById('freelanceCurrency').value;
             const nftCurrency = document.getElementById('nftCurrency').value;
 
+            const pensionDeduction = document.getElementById('pensionDeduction').value;
+            const housingDeduction = document.getElementById('housingDeduction').value;
+            const healthDeduction = document.getElementById('healthDeduction').value;
+            const rentPaid = document.getElementById('rentPaid').value;
+
             // Save exchange rate if not default
             if (exchangeRate && exchangeRate !== '1650') {
                 params.set('rate', exchangeRate);
@@ -1111,6 +1309,20 @@
             if (nftIncome && nftIncome !== '0') {
                 params.set('nft', nftIncome);
                 if (nftCurrency === 'USD') params.set('nftCur', 'USD');
+            }
+
+            // Save deductions (only if non-zero)
+            if (pensionDeduction && pensionDeduction !== '0') {
+                params.set('pension', pensionDeduction);
+            }
+            if (housingDeduction && housingDeduction !== '0') {
+                params.set('housing', housingDeduction);
+            }
+            if (healthDeduction && healthDeduction !== '0') {
+                params.set('health', healthDeduction);
+            }
+            if (rentPaid && rentPaid !== '0') {
+                params.set('rent', rentPaid);
             }
 
             // Update URL without reloading page
@@ -1140,6 +1352,12 @@
             if (params.has('airdropsCur')) document.getElementById('airdropsCurrency').value = params.get('airdropsCur');
             if (params.has('freelanceCur')) document.getElementById('freelanceCurrency').value = params.get('freelanceCur');
             if (params.has('nftCur')) document.getElementById('nftCurrency').value = params.get('nftCur');
+
+            // Load deductions
+            if (params.has('pension')) document.getElementById('pensionDeduction').value = params.get('pension');
+            if (params.has('housing')) document.getElementById('housingDeduction').value = params.get('housing');
+            if (params.has('health')) document.getElementById('healthDeduction').value = params.get('health');
+            if (params.has('rent')) document.getElementById('rentPaid').value = params.get('rent');
         }
 
         // Initialize on page load
