@@ -393,6 +393,85 @@
             color: var(--gray-900);
         }
 
+        /* Did You Know Facts Box */
+        .facts-box {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border: 2px solid #FCD34D;
+            border-radius: 12px;
+            padding: var(--space-4);
+            margin: var(--space-6) 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .facts-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #F59E0B 0%, #FCD34D 50%, #F59E0B 100%);
+        }
+
+        .facts-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .facts-icon {
+            font-size: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .facts-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #92400E;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .fact-content {
+            font-size: 14px;
+            color: #78350F;
+            line-height: 1.6;
+            font-weight: 500;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+        }
+
+        .fact-content strong {
+            color: #92400E;
+            font-weight: 700;
+        }
+
+        .fact-nav {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+            justify-content: center;
+        }
+
+        .fact-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #D97706;
+            opacity: 0.3;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .fact-dot.active {
+            opacity: 1;
+            width: 20px;
+            border-radius: 3px;
+        }
+
         /* Mobile responsive */
         @media (max-width: 768px) {
             .split-container {
@@ -979,6 +1058,20 @@
                         <div class="result-value" id="taxBracket" style="color: var(--gray-900); font-size: 24px;" aria-live="polite">0%</div>
                     </div>
 
+                </div>
+
+                <!-- Did You Know? Facts Box -->
+                <div class="facts-box">
+                    <div class="facts-header">
+                        <span class="facts-icon">💡</span>
+                        <span class="facts-title">Did You Know?</span>
+                    </div>
+                    <div class="fact-content" id="factContent">
+                        The first ₦800,000 you earn is completely <strong>TAX-FREE</strong> under Nigeria's 2026 tax law!
+                    </div>
+                    <div class="fact-nav" id="factNav">
+                        <!-- Dots added by JavaScript -->
+                    </div>
                 </div>
 
                 <!-- SME Exemption Notice -->
@@ -1768,10 +1861,67 @@
             }
         });
 
+        // Did You Know? Facts System
+        const taxFacts = [
+            'The first ₦800,000 you earn is completely <strong>TAX-FREE</strong> under Nigeria\'s 2026 tax law!',
+            'Pension contributions are <strong>100% deductible</strong> with no limit - save up to ₦500,000 in taxes!',
+            'Progressive tax means only the income <strong>above each threshold</strong> is taxed at the higher rate, not all your income.',
+            'Small traders with gains under ₦10M and proceeds under ₦150M pay <strong>₦0 tax</strong> (SME exemption).',
+            'The rent you pay can reduce your taxes! <strong>20% of rent</strong> is deductible, capped at ₦500,000.',
+            'Health insurance premiums are <strong>100% tax deductible</strong> - your HMO can save you money!',
+            'Nigeria\'s new tax law became effective on <strong>January 1, 2026</strong> - it\'s the law now!',
+            'Cryptocurrency is now <strong>explicitly taxed</strong> under "digital assets" in the Nigeria Tax Act 2025.',
+            'Your <strong>effective tax rate</strong> (average) is usually much lower than your top bracket rate.',
+            'At ₦10M income, you\'re in the 18% bracket, but your effective rate is only <strong>16%</strong>!',
+            'The top tax bracket is <strong>25%</strong> and only applies to income above ₦50 million.',
+            'NHF (National Housing Fund) contributions are <strong>100% deductible</strong> from your taxable income.',
+            'Deductions reduce your <strong>taxable income</strong>, not the tax you owe - this multiplies their value!',
+            'If you earn ₦13M, only the <strong>₦1M above ₦12M</strong> is taxed at 21% - the rest is taxed at lower rates.',
+            'Keep detailed records of all crypto transactions - <strong>dates, amounts, and sources</strong> are essential for tax filing.',
+            'Professional tax planning becomes crucial at <strong>₦50M+ income</strong> - consult a tax advisor!',
+            'Trading, staking, airdrops, NFTs, and freelance crypto income <strong>all count</strong> toward your total taxable income.',
+            'You can save <strong>₦400,000+</strong> in taxes by claiming all eligible deductions - don\'t leave money on the table!'
+        ];
+
+        let currentFactIndex = 0;
+        let factRotationInterval;
+
+        function initializeFacts() {
+            const factNav = document.getElementById('factNav');
+            factNav.innerHTML = taxFacts.map((_, index) =>
+                `<span class="fact-dot ${index === 0 ? 'active' : ''}" onclick="showFact(${index})"></span>`
+            ).join('');
+
+            startFactRotation();
+        }
+
+        function showFact(index) {
+            currentFactIndex = index;
+            const factContent = document.getElementById('factContent');
+            factContent.innerHTML = taxFacts[index];
+
+            // Update dots
+            document.querySelectorAll('.fact-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            // Restart rotation timer
+            clearInterval(factRotationInterval);
+            startFactRotation();
+        }
+
+        function startFactRotation() {
+            factRotationInterval = setInterval(() => {
+                currentFactIndex = (currentFactIndex + 1) % taxFacts.length;
+                showFact(currentFactIndex);
+            }, 8000); // Rotate every 8 seconds
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             loadStateFromURL(); // Load from URL first
             calculateTaxLive(); // Then calculate with loaded values
+            initializeFacts(); // Initialize fact rotation
         });
     </script>
 
