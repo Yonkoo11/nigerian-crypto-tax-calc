@@ -357,14 +357,44 @@
                     </p>
                 </div>
 
+                <!-- Exchange Rate Input -->
+                <div style="margin-bottom: var(--space-6); padding: var(--space-4); background: rgba(5, 150, 105, 0.05); border-radius: 8px; border: 1px solid rgba(5, 150, 105, 0.2);">
+                    <label for="exchangeRate" style="display: block; font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-2);">
+                        💱 Exchange Rate (for USD entries)
+                    </label>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 14px; color: var(--gray-600);">₦</span>
+                        <input
+                            type="number"
+                            id="exchangeRate"
+                            style="flex: 1; padding: 8px 12px; font-size: 14px; font-family: var(--font-mono); border: 1px solid var(--gray-200); border-radius: 6px; background: white;"
+                            value="1650"
+                            min="0"
+                            step="0.01"
+                            placeholder="1650"
+                            oninput="calculateTaxLive()"
+                        >
+                        <span style="font-size: 14px; color: var(--gray-600);">per $1 USD</span>
+                    </div>
+                    <p style="font-size: 11px; color: var(--gray-600); margin-top: 4px;">
+                        Enter the NGN/USD exchange rate you'll use for tax reporting
+                    </p>
+                </div>
+
                 <!-- Income Inputs Form -->
                 <form id="taxForm" style="margin-bottom: var(--space-8);">
 
                     <!-- Trading Profit -->
                     <div class="input-group">
-                        <label for="tradingProfit" class="input-label">
-                            Trading Profit
-                        </label>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                            <label for="tradingProfit" class="input-label" style="margin: 0;">
+                                Trading Profit
+                            </label>
+                            <select id="tradingCurrency" onchange="calculateTaxLive()" style="padding: 4px 8px; border: 1px solid var(--gray-200); border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--primary); background: white; cursor: pointer;">
+                                <option value="NGN">NGN (₦)</option>
+                                <option value="USD">USD ($)</option>
+                            </select>
+                        </div>
                         <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
                             Binance, Bybit, Coinbase, etc.
                         </p>
@@ -379,13 +409,22 @@
                             aria-label="Trading profit from crypto exchanges"
                             oninput="calculateTaxLive()"
                         >
+                        <div id="tradingConversion" style="font-size: 12px; color: var(--gray-600); margin-top: 4px; display: none;">
+                            ≈ ₦<span id="tradingNGN">0</span>
+                        </div>
                     </div>
 
                     <!-- Staking & Interest -->
                     <div class="input-group">
-                        <label for="stakingIncome" class="input-label">
-                            Staking & Interest
-                        </label>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                            <label for="stakingIncome" class="input-label" style="margin: 0;">
+                                Staking & Interest
+                            </label>
+                            <select id="stakingCurrency" onchange="calculateTaxLive()" style="padding: 4px 8px; border: 1px solid var(--gray-200); border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--primary); background: white; cursor: pointer;">
+                                <option value="NGN">NGN (₦)</option>
+                                <option value="USD">USD ($)</option>
+                            </select>
+                        </div>
                         <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
                             DeFi protocols, lending platforms
                         </p>
@@ -400,13 +439,22 @@
                             aria-label="Staking and interest income from DeFi"
                             oninput="calculateTaxLive()"
                         >
+                        <div id="stakingConversion" style="font-size: 12px; color: var(--gray-600); margin-top: 4px; display: none;">
+                            ≈ ₦<span id="stakingNGN">0</span>
+                        </div>
                     </div>
 
                     <!-- Airdrops & Bounties -->
                     <div class="input-group">
-                        <label for="airdropsIncome" class="input-label">
-                            Airdrops & Bounties
-                        </label>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                            <label for="airdropsIncome" class="input-label" style="margin: 0;">
+                                Airdrops & Bounties
+                            </label>
+                            <select id="airdropsCurrency" onchange="calculateTaxLive()" style="padding: 4px 8px; border: 1px solid var(--gray-200); border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--primary); background: white; cursor: pointer;">
+                                <option value="NGN">NGN (₦)</option>
+                                <option value="USD">USD ($)</option>
+                            </select>
+                        </div>
                         <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
                             Free tokens, rewards, campaigns
                         </p>
@@ -421,13 +469,22 @@
                             aria-label="Income from airdrops and bounties"
                             oninput="calculateTaxLive()"
                         >
+                        <div id="airdropsConversion" style="font-size: 12px; color: var(--gray-600); margin-top: 4px; display: none;">
+                            ≈ ₦<span id="airdropsNGN">0</span>
+                        </div>
                     </div>
 
                     <!-- Freelance & Salary -->
                     <div class="input-group">
-                        <label for="freelanceIncome" class="input-label">
-                            Freelance & Salary
-                        </label>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                            <label for="freelanceIncome" class="input-label" style="margin: 0;">
+                                Freelance & Salary
+                            </label>
+                            <select id="freelanceCurrency" onchange="calculateTaxLive()" style="padding: 4px 8px; border: 1px solid var(--gray-200); border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--primary); background: white; cursor: pointer;">
+                                <option value="NGN">NGN (₦)</option>
+                                <option value="USD">USD ($)</option>
+                            </select>
+                        </div>
                         <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
                             Paid in crypto for work
                         </p>
@@ -442,13 +499,22 @@
                             aria-label="Freelance and salary income in crypto"
                             oninput="calculateTaxLive()"
                         >
+                        <div id="freelanceConversion" style="font-size: 12px; color: var(--gray-600); margin-top: 4px; display: none;">
+                            ≈ ₦<span id="freelanceNGN">0</span>
+                        </div>
                     </div>
 
                     <!-- NFT Sales -->
                     <div class="input-group">
-                        <label for="nftIncome" class="input-label">
-                            NFT Sales
-                        </label>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                            <label for="nftIncome" class="input-label" style="margin: 0;">
+                                NFT Sales
+                            </label>
+                            <select id="nftCurrency" onchange="calculateTaxLive()" style="padding: 4px 8px; border: 1px solid var(--gray-200); border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--primary); background: white; cursor: pointer;">
+                                <option value="NGN">NGN (₦)</option>
+                                <option value="USD">USD ($)</option>
+                            </select>
+                        </div>
                         <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
                             Profit from NFT trading
                         </p>
@@ -463,6 +529,9 @@
                             aria-label="Profit from NFT sales"
                             oninput="calculateTaxLive()"
                         >
+                        <div id="nftConversion" style="font-size: 12px; color: var(--gray-600); margin-top: 4px; display: none;">
+                            ≈ ₦<span id="nftNGN">0</span>
+                        </div>
                     </div>
 
                 </form>
@@ -707,7 +776,7 @@
                             Found a bug? <a href="https://github.com/yourusername/nigerian-crypto-tax-calc/issues" style="color: var(--primary); text-decoration: underline;" target="_blank" rel="noopener noreferrer">Report it on GitHub</a>
                         </p>
                         <p style="margin-top: var(--space-4); color: var(--gray-500); font-size: 11px;">
-                            <strong>Version 1.0.0</strong> • Last updated: January 2, 2026<br>
+                            <strong>Version 1.1.0</strong> • Last updated: January 2, 2026<br>
                             100% client-side • Zero dependencies • <a href="https://github.com/yourusername/nigerian-crypto-tax-calc" style="color: var(--primary); text-decoration: underline;" target="_blank" rel="noopener noreferrer">Verify source code</a>
                         </p>
                     </div>
@@ -828,12 +897,74 @@
         // Live calculation (runs on every input change)
         function calculateTaxLive() {
             try {
-                // Get all income values
-                const tradingProfit = parseFloat(document.getElementById('tradingProfit').value) || 0;
-                const stakingIncome = parseFloat(document.getElementById('stakingIncome').value) || 0;
-                const airdropsIncome = parseFloat(document.getElementById('airdropsIncome').value) || 0;
-                const freelanceIncome = parseFloat(document.getElementById('freelanceIncome').value) || 0;
-                const nftIncome = parseFloat(document.getElementById('nftIncome').value) || 0;
+                // Get exchange rate for USD conversions
+                const exchangeRate = parseFloat(document.getElementById('exchangeRate').value) || 1650;
+
+                // Get all income values with currency conversion
+                // Trading Profit
+                const tradingCurrency = document.getElementById('tradingCurrency').value;
+                const tradingValue = parseFloat(document.getElementById('tradingProfit').value) || 0;
+                const tradingProfit = tradingCurrency === 'USD' ? tradingValue * exchangeRate : tradingValue;
+
+                // Update conversion display
+                if (tradingCurrency === 'USD' && tradingValue > 0) {
+                    document.getElementById('tradingConversion').style.display = 'block';
+                    document.getElementById('tradingNGN').textContent = Math.round(tradingProfit).toLocaleString('en-NG');
+                } else {
+                    document.getElementById('tradingConversion').style.display = 'none';
+                }
+
+                // Staking Income
+                const stakingCurrency = document.getElementById('stakingCurrency').value;
+                const stakingValue = parseFloat(document.getElementById('stakingIncome').value) || 0;
+                const stakingIncome = stakingCurrency === 'USD' ? stakingValue * exchangeRate : stakingValue;
+
+                // Update conversion display
+                if (stakingCurrency === 'USD' && stakingValue > 0) {
+                    document.getElementById('stakingConversion').style.display = 'block';
+                    document.getElementById('stakingNGN').textContent = Math.round(stakingIncome).toLocaleString('en-NG');
+                } else {
+                    document.getElementById('stakingConversion').style.display = 'none';
+                }
+
+                // Airdrops Income
+                const airdropsCurrency = document.getElementById('airdropsCurrency').value;
+                const airdropsValue = parseFloat(document.getElementById('airdropsIncome').value) || 0;
+                const airdropsIncome = airdropsCurrency === 'USD' ? airdropsValue * exchangeRate : airdropsValue;
+
+                // Update conversion display
+                if (airdropsCurrency === 'USD' && airdropsValue > 0) {
+                    document.getElementById('airdropsConversion').style.display = 'block';
+                    document.getElementById('airdropsNGN').textContent = Math.round(airdropsIncome).toLocaleString('en-NG');
+                } else {
+                    document.getElementById('airdropsConversion').style.display = 'none';
+                }
+
+                // Freelance Income
+                const freelanceCurrency = document.getElementById('freelanceCurrency').value;
+                const freelanceValue = parseFloat(document.getElementById('freelanceIncome').value) || 0;
+                const freelanceIncome = freelanceCurrency === 'USD' ? freelanceValue * exchangeRate : freelanceValue;
+
+                // Update conversion display
+                if (freelanceCurrency === 'USD' && freelanceValue > 0) {
+                    document.getElementById('freelanceConversion').style.display = 'block';
+                    document.getElementById('freelanceNGN').textContent = Math.round(freelanceIncome).toLocaleString('en-NG');
+                } else {
+                    document.getElementById('freelanceConversion').style.display = 'none';
+                }
+
+                // NFT Sales
+                const nftCurrency = document.getElementById('nftCurrency').value;
+                const nftValue = parseFloat(document.getElementById('nftIncome').value) || 0;
+                const nftIncome = nftCurrency === 'USD' ? nftValue * exchangeRate : nftValue;
+
+                // Update conversion display
+                if (nftCurrency === 'USD' && nftValue > 0) {
+                    document.getElementById('nftConversion').style.display = 'block';
+                    document.getElementById('nftNGN').textContent = Math.round(nftIncome).toLocaleString('en-NG');
+                } else {
+                    document.getElementById('nftConversion').style.display = 'none';
+                }
 
                 // Calculate total income
                 const totalIncome = tradingProfit + stakingIncome + airdropsIncome + freelanceIncome + nftIncome;
@@ -948,12 +1079,39 @@
             const freelanceIncome = document.getElementById('freelanceIncome').value;
             const nftIncome = document.getElementById('nftIncome').value;
 
+            const exchangeRate = document.getElementById('exchangeRate').value;
+            const tradingCurrency = document.getElementById('tradingCurrency').value;
+            const stakingCurrency = document.getElementById('stakingCurrency').value;
+            const airdropsCurrency = document.getElementById('airdropsCurrency').value;
+            const freelanceCurrency = document.getElementById('freelanceCurrency').value;
+            const nftCurrency = document.getElementById('nftCurrency').value;
+
+            // Save exchange rate if not default
+            if (exchangeRate && exchangeRate !== '1650') {
+                params.set('rate', exchangeRate);
+            }
+
             // Only add non-zero values to keep URL clean
-            if (tradingProfit && tradingProfit !== '0') params.set('trading', tradingProfit);
-            if (stakingIncome && stakingIncome !== '0') params.set('staking', stakingIncome);
-            if (airdropsIncome && airdropsIncome !== '0') params.set('airdrops', airdropsIncome);
-            if (freelanceIncome && freelanceIncome !== '0') params.set('freelance', freelanceIncome);
-            if (nftIncome && nftIncome !== '0') params.set('nft', nftIncome);
+            if (tradingProfit && tradingProfit !== '0') {
+                params.set('trading', tradingProfit);
+                if (tradingCurrency === 'USD') params.set('tradingCur', 'USD');
+            }
+            if (stakingIncome && stakingIncome !== '0') {
+                params.set('staking', stakingIncome);
+                if (stakingCurrency === 'USD') params.set('stakingCur', 'USD');
+            }
+            if (airdropsIncome && airdropsIncome !== '0') {
+                params.set('airdrops', airdropsIncome);
+                if (airdropsCurrency === 'USD') params.set('airdropsCur', 'USD');
+            }
+            if (freelanceIncome && freelanceIncome !== '0') {
+                params.set('freelance', freelanceIncome);
+                if (freelanceCurrency === 'USD') params.set('freelanceCur', 'USD');
+            }
+            if (nftIncome && nftIncome !== '0') {
+                params.set('nft', nftIncome);
+                if (nftCurrency === 'USD') params.set('nftCur', 'USD');
+            }
 
             // Update URL without reloading page
             const newURL = params.toString() ? `?${params.toString()}` : window.location.pathname;
@@ -964,11 +1122,24 @@
         function loadStateFromURL() {
             const params = new URLSearchParams(window.location.search);
 
+            // Load exchange rate
+            if (params.has('rate')) {
+                document.getElementById('exchangeRate').value = params.get('rate');
+            }
+
+            // Load income values
             if (params.has('trading')) document.getElementById('tradingProfit').value = params.get('trading');
             if (params.has('staking')) document.getElementById('stakingIncome').value = params.get('staking');
             if (params.has('airdrops')) document.getElementById('airdropsIncome').value = params.get('airdrops');
             if (params.has('freelance')) document.getElementById('freelanceIncome').value = params.get('freelance');
             if (params.has('nft')) document.getElementById('nftIncome').value = params.get('nft');
+
+            // Load currency preferences
+            if (params.has('tradingCur')) document.getElementById('tradingCurrency').value = params.get('tradingCur');
+            if (params.has('stakingCur')) document.getElementById('stakingCurrency').value = params.get('stakingCur');
+            if (params.has('airdropsCur')) document.getElementById('airdropsCurrency').value = params.get('airdropsCur');
+            if (params.has('freelanceCur')) document.getElementById('freelanceCurrency').value = params.get('freelanceCur');
+            if (params.has('nftCur')) document.getElementById('nftCurrency').value = params.get('nftCur');
         }
 
         // Initialize on page load
