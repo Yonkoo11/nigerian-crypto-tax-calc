@@ -308,6 +308,91 @@
             line-height: 1.5;
         }
 
+        /* Tooltip System */
+        .tooltip-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            color: var(--gray-600);
+            font-size: 11px;
+            font-weight: 700;
+            cursor: help;
+            margin-left: 6px;
+            transition: all 0.2s;
+            position: relative;
+            border: none;
+            outline: none;
+        }
+
+        .tooltip-trigger:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .tooltip-content {
+            position: absolute;
+            z-index: 1000;
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 12px 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            width: 280px;
+            display: none;
+            animation: tooltipFadeIn 0.2s ease-out;
+        }
+
+        .tooltip-content.active {
+            display: block;
+        }
+
+        @keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tooltip-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tooltip-description {
+            font-size: 12px;
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .tooltip-example {
+            font-size: 11px;
+            color: var(--gray-600);
+            background: var(--gray-50);
+            padding: 8px;
+            border-radius: 4px;
+            border-left: 2px solid var(--primary);
+            line-height: 1.5;
+        }
+
+        .tooltip-example strong {
+            color: var(--gray-900);
+        }
+
         /* Mobile responsive */
         @media (max-width: 768px) {
             .split-container {
@@ -652,8 +737,15 @@
 
                     <!-- Pension Contributions -->
                     <div class="input-group">
-                        <label for="pensionDeduction" class="input-label">
+                        <label for="pensionDeduction" class="input-label" style="display: flex; align-items: center;">
                             Pension Contributions
+                            <span class="tooltip-trigger" data-tooltip="pension-deduction" onclick="toggleTooltip(event, 'pension-deduction')">?
+                                <div class="tooltip-content" id="tooltip-pension-deduction">
+                                    <div class="tooltip-title">🏦 Pension Deduction</div>
+                                    <div class="tooltip-description">Contributions to approved Nigerian pension schemes are 100% tax deductible with no limit.</div>
+                                    <div class="tooltip-example"><strong>Example:</strong> Contribute ₦2M → Reduce taxable income by ₦2M → Save up to ₦500k in taxes!</div>
+                                </div>
+                            </span>
                         </label>
                         <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
                             Contributions to approved pension schemes
@@ -817,7 +909,16 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-8);">
 
                     <div class="result-card">
-                        <div class="result-label" style="color: var(--gray-600);">Gross Income</div>
+                        <div class="result-label" style="color: var(--gray-600); display: flex; align-items: center;">
+                            Gross Income
+                            <span class="tooltip-trigger" data-tooltip="gross-income" onclick="toggleTooltip(event, 'gross-income')">?
+                                <div class="tooltip-content" id="tooltip-gross-income">
+                                    <div class="tooltip-title">💰 Gross Income</div>
+                                    <div class="tooltip-description">Your total income BEFORE any deductions. This includes all crypto earnings from trading, staking, airdrops, etc.</div>
+                                    <div class="tooltip-example"><strong>Example:</strong> ₦5M trading + ₦2M staking + ₦1M airdrops = <strong>₦8M gross income</strong></div>
+                                </div>
+                            </span>
+                        </div>
                         <div class="result-value" id="totalIncome" style="color: var(--gray-900);" aria-live="polite">₦0</div>
                     </div>
 
@@ -832,7 +933,16 @@
                     </div>
 
                     <div class="result-card" id="taxableIncomeCard" style="display: none;">
-                        <div class="result-label" style="color: var(--gray-600);">Taxable Income</div>
+                        <div class="result-label" style="color: var(--gray-600); display: flex; align-items: center;">
+                            Taxable Income
+                            <span class="tooltip-trigger" data-tooltip="taxable-income" onclick="toggleTooltip(event, 'taxable-income')">?
+                                <div class="tooltip-content" id="tooltip-taxable-income">
+                                    <div class="tooltip-title">📊 Taxable Income</div>
+                                    <div class="tooltip-description">Your income AFTER deductions are subtracted. This is the amount that tax brackets are applied to.</div>
+                                    <div class="tooltip-example"><strong>Example:</strong> ₦10M gross income - ₦2M deductions = <strong>₦8M taxable income</strong></div>
+                                </div>
+                            </span>
+                        </div>
                         <div class="result-value" id="taxableIncome" style="color: var(--gray-900); font-weight: 700;" aria-live="polite">₦0</div>
                     </div>
 
@@ -842,12 +952,30 @@
                     </div>
 
                     <div class="result-card">
-                        <div class="result-label" style="color: var(--gray-600);">Effective Rate</div>
+                        <div class="result-label" style="color: var(--gray-600); display: flex; align-items: center;">
+                            Effective Rate
+                            <span class="tooltip-trigger" data-tooltip="effective-rate" onclick="toggleTooltip(event, 'effective-rate')">?
+                                <div class="tooltip-content" id="tooltip-effective-rate">
+                                    <div class="tooltip-title">📊 Effective Tax Rate</div>
+                                    <div class="tooltip-description">Your average tax rate across all income. This is different from your top tax bracket.</div>
+                                    <div class="tooltip-example"><strong>Example:</strong> Pay ₦1.6M tax on ₦10M income = 16% effective rate (even though top bracket is 18%)</div>
+                                </div>
+                            </span>
+                        </div>
                         <div class="result-value" id="effectiveRate" style="color: var(--gray-900);" aria-live="polite">0%</div>
                     </div>
 
                     <div class="result-card">
-                        <div class="result-label" style="color: var(--gray-600);">Tax Bracket</div>
+                        <div class="result-label" style="color: var(--gray-600); display: flex; align-items: center;">
+                            Tax Bracket
+                            <span class="tooltip-trigger" data-tooltip="tax-bracket" onclick="toggleTooltip(event, 'tax-bracket')">?
+                                <div class="tooltip-content" id="tooltip-tax-bracket">
+                                    <div class="tooltip-title">📈 Your Tax Bracket</div>
+                                    <div class="tooltip-description">The highest rate that applies to your income. Only income ABOVE this threshold is taxed at this rate.</div>
+                                    <div class="tooltip-example"><strong>Example:</strong> ₦10M income = 18% bracket. But only ₦7M is taxed at 18%, not all ₦10M.</div>
+                                </div>
+                            </span>
+                        </div>
                         <div class="result-value" id="taxBracket" style="color: var(--gray-900); font-size: 24px;" aria-live="polite">0%</div>
                     </div>
 
@@ -1545,6 +1673,100 @@
             if (params.has('health')) document.getElementById('healthDeduction').value = params.get('health');
             if (params.has('rent')) document.getElementById('rentPaid').value = params.get('rent');
         }
+
+        // Tooltip System
+        const tooltips = {
+            'taxable-income': {
+                title: '📊 Taxable Income',
+                description: 'Your income AFTER deductions are subtracted. This is the amount that tax brackets are applied to.',
+                example: '<strong>Example:</strong> ₦10M gross income - ₦2M deductions = <strong>₦8M taxable income</strong>'
+            },
+            'gross-income': {
+                title: '💰 Gross Income',
+                description: 'Your total income BEFORE any deductions. This includes all crypto earnings from trading, staking, airdrops, etc.',
+                example: '<strong>Example:</strong> ₦5M trading + ₦2M staking + ₦1M airdrops = <strong>₦8M gross income</strong>'
+            },
+            'progressive-tax': {
+                title: '📈 Progressive Tax',
+                description: 'Higher income is taxed at higher rates, but ONLY for that portion. Your entire income is NOT taxed at one rate.',
+                example: '<strong>Example:</strong> If you earn ₦13M, only the ₦1M above ₦12M is taxed at 21%. The rest is taxed at lower rates.'
+            },
+            'sme-exemption': {
+                title: '🏢 SME Exemption',
+                description: 'Small traders with low gains pay ₦0 tax. You must meet BOTH thresholds in any 12-month period.',
+                example: '<strong>Requirements:</strong> Gains <₦10M AND total proceeds <₦150M. Both must be met.'
+            },
+            'pension-deduction': {
+                title: '🏦 Pension Deduction',
+                description: 'Contributions to approved Nigerian pension schemes are 100% tax deductible with no limit.',
+                example: '<strong>Example:</strong> Contribute ₦2M → Reduce taxable income by ₦2M → Save up to ₦500k in taxes!'
+            },
+            'housing-deduction': {
+                title: '🏠 NHF/Housing Deduction',
+                description: 'Contributions to National Housing Fund or approved housing schemes are 100% deductible.',
+                example: '<strong>Example:</strong> Pay ₦500k to NHF → Deduct ₦500k → Save ₦125k in taxes (at 25% bracket)'
+            },
+            'health-deduction': {
+                title: '🏥 Health Insurance',
+                description: 'Premiums for approved health insurance or HMO plans are 100% deductible.',
+                example: '<strong>Example:</strong> ₦300k health insurance → Deduct ₦300k → Save ₦75k in taxes (at 25% bracket)'
+            },
+            'rent-deduction': {
+                title: '🏘️ Rent Relief',
+                description: '20% of annual rent paid for your primary residence is deductible, capped at ₦500,000 maximum.',
+                example: '<strong>Example:</strong> Pay ₦3M rent → Deduct 20% (₦600k) but capped at ₦500k → Save ₦125k in taxes'
+            },
+            'effective-rate': {
+                title: '📊 Effective Tax Rate',
+                description: 'Your average tax rate across all income. This is different from your top tax bracket.',
+                example: '<strong>Example:</strong> Pay ₦1.6M tax on ₦10M income = 16% effective rate (even though top bracket is 18%)'
+            },
+            'tax-bracket': {
+                title: '📈 Your Tax Bracket',
+                description: 'The highest rate that applies to your income. Only income ABOVE this threshold is taxed at this rate.',
+                example: '<strong>Example:</strong> ₦10M income = 18% bracket. But only ₦7M is taxed at 18%, not all ₦10M.'
+            }
+        };
+
+        function createTooltip(id) {
+            const tooltip = tooltips[id];
+            if (!tooltip) return '';
+
+            return `
+                <span class="tooltip-trigger" data-tooltip="${id}" onclick="toggleTooltip(event, '${id}')">?
+                    <div class="tooltip-content" id="tooltip-${id}">
+                        <div class="tooltip-title">${tooltip.title}</div>
+                        <div class="tooltip-description">${tooltip.description}</div>
+                        <div class="tooltip-example">${tooltip.example}</div>
+                    </div>
+                </span>
+            `;
+        }
+
+        function toggleTooltip(event, id) {
+            event.stopPropagation();
+            const tooltipElement = document.getElementById(`tooltip-${id}`);
+            const allTooltips = document.querySelectorAll('.tooltip-content');
+
+            // Close all other tooltips
+            allTooltips.forEach(t => {
+                if (t.id !== `tooltip-${id}`) {
+                    t.classList.remove('active');
+                }
+            });
+
+            // Toggle current tooltip
+            tooltipElement.classList.toggle('active');
+        }
+
+        // Close tooltips when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.tooltip-trigger')) {
+                document.querySelectorAll('.tooltip-content').forEach(t => {
+                    t.classList.remove('active');
+                });
+            }
+        });
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
