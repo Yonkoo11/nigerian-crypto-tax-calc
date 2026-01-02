@@ -3,701 +3,1238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nigerian Crypto Tax Calculator - Professional Tax Estimation Tool</title>
+    <title>Nigerian Crypto Tax Calculator 2026</title>
+    <meta name="description" content="Calculate your exact Nigerian cryptocurrency tax liability for 2026 in real-time">
 
-    <!-- Professional Design System -->
+    <!-- Resource hints for faster loading -->
+    <link rel="dns-prefetch" href="https://plausible.io">
+    <link rel="preconnect" href="https://plausible.io" crossorigin>
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';
+                   script-src 'self' 'unsafe-inline' https://plausible.io;
+                   style-src 'self' 'unsafe-inline';
+                   img-src 'self' data:;
+                   connect-src https://plausible.io;
+                   font-src 'self';
+                   frame-ancestors 'none';
+                   base-uri 'self';
+                   form-action 'none';">
+
+    <!-- Plausible Analytics - Privacy-friendly (no cookies, GDPR compliant) -->
+    <script defer data-domain="nigerian-crypto-tax-calc.netlify.app" src="https://plausible.io/js/script.js"></script>
+
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="/css/design-system.css">
+
     <style>
-        /* ============================================
-           DESIGN SYSTEM - Stripe/Linear Quality Level
-           ============================================ */
+        /* Calculator-specific styles */
 
-        :root {
-            /* Typography */
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
-
-            /* Colors - Nigerian Green + Neutrals */
-            --green-50: #ecfdf5;
-            --green-500: #10b981;
-            --green-600: #059669;
-            --green-700: #047857;
-
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-
-            /* Spacing (4px base unit) */
-            --space-2: 8px;
-            --space-3: 12px;
-            --space-4: 16px;
-            --space-6: 24px;
-            --space-8: 32px;
-            --space-12: 48px;
-
-            /* Typography Scale */
-            --text-xs: 12px;
-            --text-sm: 14px;
-            --text-base: 16px;
-            --text-lg: 18px;
-            --text-xl: 20px;
-            --text-2xl: 24px;
-            --text-4xl: 36px;
-            --text-5xl: 48px;
-        }
-
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-sans);
-            font-size: var(--text-base);
-            line-height: 1.5;
-            color: var(--gray-900);
+        /* Mobile-first unified vertical layout */
+        .calculator-layout {
             background: var(--gray-50);
-            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            padding-bottom: var(--space-16);
         }
 
-        /* ============================================
-           SPLIT-SCREEN LAYOUT
-           ============================================ */
+        /* Header */
+        .calculator-header {
+            background: linear-gradient(135deg, var(--green-700) 0%, var(--green-900) 100%);
+            color: white;
+            padding: var(--space-8) var(--space-4);
+            text-align: center;
+        }
 
-        .calculator-container {
+        .calculator-header h1 {
+            font-size: var(--text-2xl);
+            font-weight: var(--weight-bold);
+            margin-bottom: var(--space-2);
+        }
+
+        .calculator-header p {
+            font-size: var(--text-sm);
+            opacity: 0.9;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-header {
+                padding: var(--space-12) var(--space-8);
+            }
+
+            .calculator-header h1 {
+                font-size: var(--text-4xl);
+            }
+        }
+
+        /* Main content container */
+        .calculator-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-4);
+        }
+
+        @media (min-width: 768px) {
+            .calculator-content {
+                padding: var(--space-8);
+            }
+        }
+
+        /* Hero metric card (results-first) */
+        .hero-metric {
+            background: linear-gradient(135deg, var(--green-700) 0%, var(--green-900) 100%);
+            color: white;
+            border-radius: var(--radius-lg);
+            padding: var(--space-8);
+            text-align: center;
+            margin-top: calc(-1 * var(--space-12));
+            margin-bottom: var(--space-6);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hero-metric-label {
+            font-size: var(--text-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.9;
+            margin-bottom: var(--space-2);
+        }
+
+        .hero-metric-value {
+            font-size: var(--text-5xl);
+            font-weight: var(--weight-bold);
+            font-family: var(--font-mono);
+            line-height: 1;
+        }
+
+        /* Quick stats grid */
+        .quick-stats {
             display: grid;
-            grid-template-columns: 40% 60%;
-            min-height: 100vh;
-            max-width: 1920px;
+            grid-template-columns: 1fr;
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+
+        @media (min-width: 640px) {
+            .quick-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-500);
+            margin-bottom: var(--space-2);
+        }
+
+        .stat-value {
+            font-size: var(--text-2xl);
+            font-weight: var(--weight-bold);
+            font-family: var(--font-mono);
+            color: var(--gray-900);
+        }
+
+        /* Collapsible sections (accordion) */
+        .section {
+            margin-bottom: var(--space-6);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            box-shadow: var(--shadow-sm);
+            min-height: 56px;
+        }
+
+        .section-header:hover {
+            background: var(--green-50);
+            border-color: var(--green-500);
+        }
+
+        .section-title {
+            font-size: var(--text-lg);
+            font-weight: var(--weight-semibold);
+            color: var(--gray-900);
+        }
+
+        .section-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform var(--transition-base);
+        }
+
+        .section-header[aria-expanded="true"] .section-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-slow) ease-out;
+        }
+
+        .section-content.expanded {
+            max-height: 3000px;
+            padding-top: var(--space-4);
+        }
+
+        /* Input grid (2-column on tablet+) */
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-6);
+        }
+
+        @media (min-width: 640px) {
+            .input-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Input group */
+        .input-group {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--text-sm);
+            font-weight: var(--weight-semibold);
+            color: var(--gray-700);
+            margin-bottom: var(--space-2);
+        }
+
+        .input-helper {
+            font-size: var(--text-xs);
+            color: var(--gray-500);
+            margin-bottom: var(--space-3);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        .input-wrapper .input {
+            flex: 1;
+        }
+
+        .currency-select {
+            width: 80px;
+            padding: var(--space-3);
+            font-size: var(--text-sm);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            background: white;
+            cursor: pointer;
+        }
+
+        .currency-select:focus {
+            outline: none;
+            border-color: var(--green-500);
+        }
+
+        .conversion-display {
+            display: none;
+            font-size: var(--text-xs);
+            color: var(--gray-500);
+            margin-top: var(--space-2);
+            font-family: var(--font-mono);
+        }
+
+        /* Tax bracket visualizer */
+        .bracket-visualizer {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+            box-shadow: var(--shadow-md);
+        }
+
+        .bracket-bar-container {
+            margin-bottom: var(--space-4);
+        }
+
+        .bracket-bar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-2);
+            font-size: var(--text-xs);
+        }
+
+        .bracket-bar-label {
+            font-weight: var(--weight-semibold);
+            color: var(--gray-700);
+        }
+
+        .bracket-bar-rate {
+            color: var(--gray-500);
+        }
+
+        .bracket-bar-track {
+            height: 32px;
+            background: var(--gray-100);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .bracket-bar-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: var(--space-3);
+            font-size: var(--text-xs);
+            font-weight: var(--weight-semibold);
+            color: white;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Gradient colors for different tax brackets */
+        .bracket-0 { background: var(--gray-400); }
+        .bracket-15 { background: linear-gradient(90deg, #86efac, #4ade80); }
+        .bracket-18 { background: linear-gradient(90deg, #4ade80, #22c55e); }
+        .bracket-21 { background: linear-gradient(90deg, #22c55e, #16a34a); }
+        .bracket-23 { background: linear-gradient(90deg, #16a34a, #15803d); }
+        .bracket-25 { background: linear-gradient(90deg, #15803d, #166534); }
+
+        /* Facts card */
+        .facts-card {
+            background: linear-gradient(135deg, var(--green-50) 0%, var(--green-100) 100%);
+            border-left: 4px solid var(--green-600);
+            border-radius: var(--radius-md);
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        .facts-header {
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--green-700);
+            font-weight: var(--weight-semibold);
+            margin-bottom: var(--space-3);
+        }
+
+        .facts-content {
+            font-size: var(--text-sm);
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+
+        .facts-nav {
+            display: flex;
+            gap: var(--space-2);
+            margin-top: var(--space-4);
+            justify-content: center;
+        }
+
+        .fact-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .fact-dot.active {
+            background: var(--green-600);
+            transform: scale(1.5);
+        }
+
+        /* Tips section */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .tip-card {
+            background: white;
+            border-left: 4px solid var(--green-600);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tip-badge {
+            display: inline-block;
+            padding: var(--space-1) var(--space-3);
+            background: var(--green-100);
+            color: var(--green-700);
+            font-size: var(--text-xs);
+            font-weight: var(--weight-semibold);
+            border-radius: var(--radius-full);
+            margin-bottom: var(--space-2);
+        }
+
+        .tip-content {
+            font-size: var(--text-sm);
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+
+        /* FAQ accordion */
+        .faq-item {
+            background: white;
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-3);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .faq-question:hover {
+            background: var(--green-50);
+        }
+
+        .faq-question-text {
+            font-size: var(--text-base);
+            font-weight: var(--weight-semibold);
+            color: var(--gray-900);
+        }
+
+        .faq-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform var(--transition-base);
+        }
+
+        .faq-question[aria-expanded="true"] .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-slow) ease-out;
+        }
+
+        .faq-answer.expanded {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 0 var(--space-4) var(--space-4);
+            font-size: var(--text-sm);
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .calculator-footer {
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            padding: var(--space-8) var(--space-4);
+            margin-top: var(--space-16);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-disclaimer {
+            font-size: var(--text-xs);
+            color: var(--gray-500);
+            margin-bottom: var(--space-4);
+        }
+
+        .footer-links {
+            font-size: var(--text-xs);
+            color: var(--gray-600);
+        }
+
+        .footer-links a {
+            color: var(--green-600);
+            text-decoration: underline;
+        }
+
+        /* Desktop enhancements */
+        @media (min-width: 768px) {
+            .section-content.expanded {
+                padding: var(--space-6);
+                background: white;
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow-sm);
+            }
+
+            /* Expand accordions by default on desktop */
+            .section-header {
+                pointer-events: none;
+                opacity: 0.6;
+            }
+
+            .section-content {
+                max-height: none !important;
+                padding: var(--space-6);
+                background: white;
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow-sm);
+            }
+        }
+
+        /* ===== Enhanced Tooltip System ===== */
+
+        /* Light variant for dark backgrounds */
+        .tooltip-trigger-light {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .tooltip-trigger-light:hover {
+            background-color: white;
+            color: var(--green-700);
+        }
+
+        /* Mobile Modal Overlay */
+        .tooltip-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-4);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .tooltip-overlay.active {
+            opacity: 1;
+        }
+
+        .tooltip-modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-2xl);
+            transform: scale(0.95);
+            transition: transform 0.2s ease;
+        }
+
+        .tooltip-overlay.active .tooltip-modal {
+            transform: scale(1);
+        }
+
+        .tooltip-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-6);
+            border-bottom: 2px solid var(--green-600);
+        }
+
+        .tooltip-modal-title {
+            font-size: var(--text-lg);
+            font-weight: var(--weight-semibold);
+            color: var(--gray-900);
+        }
+
+        .tooltip-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gray-100);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tooltip-close:hover {
+            background: var(--green-600);
+            color: white;
+        }
+
+        .tooltip-modal-body {
+            padding: var(--space-6);
+        }
+
+        .tooltip-body-text {
+            font-size: var(--text-sm);
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: var(--space-4);
+        }
+
+        .tooltip-modal-body .tooltip-example {
+            font-size: var(--text-sm);
+            font-family: var(--font-mono);
+            color: var(--gray-700);
+            background-color: var(--green-50);
+            padding: var(--space-3);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--green-600);
+        }
+
+        .tooltip-modal-body .tooltip-example strong {
+            color: var(--gray-900);
+        }
+
+        /* Desktop Floating Tooltip */
+        .tooltip-popup {
+            position: fixed;
+            z-index: 1000;
+            max-width: 400px;
+            background: white;
+            border: 2px solid var(--green-600);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+
+        .tooltip-popup.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .tooltip-popup.tooltip-below {
+            transform-origin: top center;
+        }
+
+        .tooltip-popup.tooltip-above {
+            transform-origin: bottom center;
+        }
+
+        .tooltip-popup .tooltip-header {
+            font-size: var(--text-base);
+            font-weight: var(--weight-semibold);
+            color: var(--gray-900);
+            margin-bottom: var(--space-3);
+        }
+
+        .tooltip-popup .tooltip-body {
+            font-size: var(--text-sm);
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: var(--space-3);
+        }
+
+        .tooltip-popup .tooltip-example {
+            font-size: var(--text-xs);
+            font-family: var(--font-mono);
+            color: var(--gray-700);
+            background-color: var(--green-50);
+            padding: var(--space-2);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--green-600);
+        }
+
+        .tooltip-popup .tooltip-example strong {
+            color: var(--gray-900);
+        }
+
+        /* Desktop only: hide mobile modal */
+        @media (min-width: 768px) {
+            .tooltip-overlay {
+                display: none;
+            }
+        }
+
+        /* Mobile only: hide desktop popup */
+        @media (max-width: 767px) {
+            .tooltip-popup {
+                display: none;
+            }
+        }
+
+        /* Save Calculation Prompt */
+        .save-prompt {
+            margin: var(--space-6) 0;
+            animation: slideInUp 0.4s ease-out;
+        }
+
+        .save-prompt-content {
+            position: relative;
+            background: linear-gradient(135deg, var(--green-50) 0%, var(--green-100) 100%);
+            border: 2px solid var(--green-200);
+            border-radius: 12px;
+            padding: var(--space-6);
+            text-align: center;
+            max-width: 600px;
             margin: 0 auto;
         }
 
-        /* LEFT PANEL - Inputs */
-        .input-panel {
-            background: white;
-            padding: var(--space-12) var(--space-8);
-            overflow-y: auto;
-            border-right: 1px solid var(--gray-200);
-            position: sticky;
-            top: 0;
-            height: 100vh;
+        .save-prompt-close {
+            position: absolute;
+            top: var(--space-3);
+            right: var(--space-3);
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-600);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* RIGHT PANEL - Results */
-        .results-panel {
-            background: var(--gray-50);
-            padding: var(--space-12) var(--space-8);
-            overflow-y: auto;
+        .save-prompt-close:hover {
+            background: var(--gray-200);
+            color: var(--gray-900);
         }
 
-        /* ============================================
-           TYPOGRAPHY
-           ============================================ */
+        .save-prompt-icon {
+            font-size: 48px;
+            margin-bottom: var(--space-3);
+        }
 
-        .heading-1 {
-            font-size: var(--text-2xl);
+        .save-prompt-title {
+            font-size: 24px;
             font-weight: 700;
             color: var(--gray-900);
             margin-bottom: var(--space-2);
         }
 
-        .heading-2 {
-            font-size: var(--text-xl);
-            font-weight: 600;
-            color: var(--gray-800);
-            margin-bottom: var(--space-4);
-        }
-
-        .heading-3 {
-            font-size: var(--text-lg);
-            font-weight: 600;
+        .save-prompt-text {
+            font-size: 16px;
             color: var(--gray-700);
-            margin-bottom: var(--space-3);
-        }
-
-        .body-sm {
-            font-size: var(--text-sm);
-            color: var(--gray-600);
-            line-height: 1.4;
-        }
-
-        .label {
-            display: block;
-            font-size: var(--text-sm);
-            font-weight: 500;
-            color: var(--gray-700);
-            margin-bottom: var(--space-2);
-        }
-
-        .helper-text {
-            font-size: var(--text-xs);
-            color: var(--gray-500);
-            margin-top: var(--space-2);
-        }
-
-        /* ============================================
-           FORM COMPONENTS
-           ============================================ */
-
-        .form-group {
             margin-bottom: var(--space-6);
         }
 
-        .form-section {
-            margin-bottom: var(--space-12);
+        .save-prompt-actions {
+            display: flex;
+            gap: var(--space-3);
+            justify-content: center;
+            align-items: stretch;
+            margin-bottom: var(--space-4);
         }
 
-        .input {
-            width: 100%;
-            padding: var(--space-4);
-            font-size: var(--text-base);
-            font-family: var(--font-mono);
-            font-variant-numeric: tabular-nums;
-            border: 2px solid var(--gray-200);
-            border-radius: 12px;
-            background: white;
-            transition: all 0.2s ease;
+        .save-email-input {
+            flex: 1;
+            max-width: 300px;
+            padding: var(--space-3) var(--space-4);
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.2s;
         }
 
-        .input:focus {
+        .save-email-input:focus {
             outline: none;
             border-color: var(--green-500);
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
         }
 
-        .input::placeholder {
-            color: var(--gray-400);
-        }
-
-        /* Input with prefix */
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-prefix {
-            position: absolute;
-            left: var(--space-4);
-            top: 50%;
-            transform: translateY(-50%);
-            font-family: var(--font-mono);
-            font-size: var(--text-base);
-            color: var(--gray-500);
-            pointer-events: none;
-        }
-
-        .input-with-prefix {
-            padding-left: 36px;
-        }
-
-        /* ============================================
-           RESULTS COMPONENTS
-           ============================================ */
-
-        .result-hero {
-            background: linear-gradient(135deg, var(--green-600) 0%, var(--green-700) 100%);
-            border-radius: 16px;
-            padding: var(--space-12);
-            text-align: center;
-            margin-bottom: var(--space-8);
-            box-shadow: 0 4px 24px rgba(5, 150, 105, 0.2);
-        }
-
-        .result-label {
-            font-size: var(--text-sm);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: var(--space-3);
-        }
-
-        .result-number {
-            font-size: var(--text-5xl);
-            font-weight: 700;
-            font-family: var(--font-mono);
-            font-variant-numeric: tabular-nums;
-            color: white;
-        }
-
-        .result-card {
-            background: white;
-            border-radius: 16px;
-            padding: var(--space-8);
-            margin-bottom: var(--space-6);
-            border: 1px solid var(--gray-200);
-        }
-
-        .metric-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--space-6);
-            margin-bottom: var(--space-8);
-        }
-
-        .metric {
-            text-align: center;
-            padding: var(--space-6);
-            background: var(--gray-50);
-            border-radius: 12px;
-        }
-
-        .metric-label {
-            font-size: var(--text-xs);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--gray-600);
-            margin-bottom: var(--space-2);
-        }
-
-        .metric-value {
-            font-size: var(--text-2xl);
-            font-weight: 700;
-            font-family: var(--font-mono);
-            color: var(--gray-900);
-        }
-
-        /* ============================================
-           BADGE COMPONENTS
-           ============================================ */
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 12px;
-            font-size: var(--text-xs);
-            font-weight: 600;
-            border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .badge-success {
-            background: var(--green-50);
-            color: var(--green-700);
-            border: 1px solid var(--green-200);
-        }
-
-        .badge-info {
-            background: #eff6ff;
-            color: #1e40af;
-            border: 1px solid #bfdbfe;
-        }
-
-        /* ============================================
-           UTILITY CLASSES
-           ============================================ */
-
-        .text-muted {
+        .save-prompt-note {
+            font-size: 14px;
             color: var(--gray-600);
         }
 
-        .text-bold {
-            font-weight: 700;
-        }
-
-        .mb-2 { margin-bottom: var(--space-2); }
-        .mb-4 { margin-bottom: var(--space-4); }
-        .mb-6 { margin-bottom: var(--space-6); }
-        .mb-8 { margin-bottom: var(--space-8); }
-
-        /* ============================================
-           RESPONSIVE
-           ============================================ */
-
-        @media (max-width: 1024px) {
-            .calculator-container {
-                grid-template-columns: 1fr;
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-
-            .input-panel {
-                position: relative;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid var(--gray-200);
-            }
-
-            .metric-grid {
-                grid-template-columns: 1fr;
-                gap: var(--space-4);
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
+        /* Mobile responsive */
         @media (max-width: 640px) {
-            .input-panel,
-            .results-panel {
-                padding: var(--space-6) var(--space-4);
+            .save-prompt-content {
+                padding: var(--space-4);
             }
 
-            .result-hero {
-                padding: var(--space-8);
+            .save-prompt-actions {
+                flex-direction: column;
             }
 
-            .result-number {
-                font-size: var(--text-4xl);
+            .save-email-input {
+                max-width: 100%;
+            }
+
+            .save-prompt-icon {
+                font-size: 36px;
+            }
+
+            .save-prompt-title {
+                font-size: 20px;
             }
         }
     </style>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Calculator Layout -->
+    <div class="calculator-layout">
+        <!-- Header -->
+        <header class="calculator-header">
+            <h1>Nigerian Crypto Tax Calculator</h1>
+            <p>Real-time calculation for 2026 tax law compliance</p>
+        </header>
 
-    <div class="calculator-container">
-
-        <!-- ============================================
-             LEFT PANEL: INPUTS
-             ============================================ -->
-        <div class="input-panel">
-
-            <h1 class="heading-1">Nigerian Crypto Tax Calculator</h1>
-            <p class="body-sm text-muted mb-8">Enter your 2026 crypto income below. Your tax calculation updates in real-time on the right.</p>
-
-            <!-- Exchange Rate -->
-            <div class="form-section">
-                <label class="label">₦ Exchange Rate (for USD entries)</label>
-                <div class="input-wrapper">
-                    <span class="input-prefix">₦</span>
-                    <input type="number" id="exchangeRate" class="input input-with-prefix" value="1650" placeholder="1650">
+        <!-- Main Content -->
+        <main class="calculator-content">
+            <!-- Hero Metric Card (Results-First) -->
+            <div class="hero-metric slide-in">
+                <div class="hero-metric-label">
+                    Total Tax Owed
+                    <span class="tooltip-trigger tooltip-trigger-light ml-2" onclick="event.stopPropagation(); toggleTooltip(event, 'taxOwed')">i</span>
                 </div>
-                <p class="helper-text">Enter the NGN/USD exchange rate you'll use for tax reporting</p>
-            </div>
-
-            <!-- Income Section -->
-            <div class="form-section">
-                <h2 class="heading-2">Crypto Income</h2>
-
-                <div class="form-group">
-                    <label class="label">Trading Profit</label>
-                    <div class="input-wrapper">
-                        <span class="input-prefix">₦</span>
-                        <input type="number" id="tradingProfit" class="input input-with-prefix" value="0" placeholder="0">
-                    </div>
-                    <p class="helper-text">Binance, Bybit, Coinbase, etc.</p>
-                </div>
-
-                <div class="form-group">
-                    <label class="label">Staking & Interest</label>
-                    <div class="input-wrapper">
-                        <span class="input-prefix">₦</span>
-                        <input type="number" id="stakingIncome" class="input input-with-prefix" value="0" placeholder="0">
-                    </div>
-                    <p class="helper-text">DeFi protocols, lending platforms</p>
-                </div>
-
-                <div class="form-group">
-                    <label class="label">Airdrops & Bounties</label>
-                    <div class="input-wrapper">
-                        <span class="input-prefix">₦</span>
-                        <input type="number" id="airdropsIncome" class="input input-with-prefix" value="0" placeholder="0">
-                    </div>
-                    <p class="helper-text">Free tokens, rewards, campaigns</p>
-                </div>
-
-                <div class="form-group">
-                    <label class="label">Freelance & Salary</label>
-                    <div class="input-wrapper">
-                        <span class="input-prefix">₦</span>
-                        <input type="number" id="freelanceIncome" class="input input-with-prefix" value="0" placeholder="0">
-                    </div>
-                    <p class="helper-text">Paid in crypto for work</p>
-                </div>
-
-                <div class="form-group">
-                    <label class="label">NFT Sales</label>
-                    <div class="input-wrapper">
-                        <span class="input-prefix">₦</span>
-                        <input type="number" id="nftIncome" class="input input-with-prefix" value="0" placeholder="0">
-                    </div>
-                    <p class="helper-text">Profit from NFT trading</p>
+                <div class="hero-metric-value" id="heroTaxValue">₦0</div>
+                <div class="badge badge-live mt-4">
+                    <span>Live Updates</span>
                 </div>
             </div>
 
-            <!-- Deductions Section -->
-            <div class="form-section">
-                <h2 class="heading-2">Tax Deductions</h2>
-                <p class="body-sm text-muted mb-6">Reduce your taxable income by claiming eligible deductions from the 2026 Tax Reform.</p>
-
-                <div class="form-group">
-                    <label class="label">Pension Contributions</label>
-                    <div class="input-wrapper">
-                        <span class="input-prefix">₦</span>
-                        <input type="number" id="pensionDeduction" class="input input-with-prefix" value="0" placeholder="0">
+            <!-- Quick Stats Grid -->
+            <div class="quick-stats">
+                <div class="stat-card slide-in">
+                    <div class="stat-label">
+                        Gross Income
+                        <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'grossIncome')">i</span>
                     </div>
-                    <p class="helper-text">100% deductible, no limit</p>
+                    <div class="stat-value" id="statGrossIncome">₦0</div>
                 </div>
-
-                <div class="form-group">
-                    <label class="label">NHF / Housing Contributions</label>
-                    <div class="input-wrapper">
-                        <span class="input-prefix">₦</span>
-                        <input type="number" id="housingDeduction" class="input input-with-prefix" value="0" placeholder="0">
+                <div class="stat-card slide-in">
+                    <div class="stat-label">
+                        Taxable Income
+                        <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'taxableIncome')">i</span>
                     </div>
-                    <p class="helper-text">National Housing Fund or other housing schemes</p>
+                    <div class="stat-value" id="statTaxableIncome">₦0</div>
                 </div>
-
-                <div class="form-group">
-                    <label class="label">Health Insurance Premiums</label>
-                    <div class="input-wrapper">
-                        <span class="input-prefix">₦</span>
-                        <input type="number" id="healthDeduction" class="input input-with-prefix" value="0" placeholder="0">
+                <div class="stat-card slide-in">
+                    <div class="stat-label">
+                        Take Home
+                        <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'takeHome')">i</span>
                     </div>
-                    <p class="helper-text">Approved health insurance or HMO premiums</p>
+                    <div class="stat-value" id="statTakeHome">₦0</div>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label class="label">Annual Rent Paid</label>
-                    <div class="input-wrapper">
-                        <span class="input-prefix">₦</span>
-                        <input type="number" id="rentDeduction" class="input input-with-prefix" value="0" placeholder="0">
+            <!-- Save Calculation Prompt (Optional, Dismissible) -->
+            <div id="savePrompt" class="save-prompt" style="display: none;">
+                <div class="save-prompt-content">
+                    <button class="save-prompt-close" onclick="dismissSavePrompt()" aria-label="Close">×</button>
+                    <div class="save-prompt-icon">💾</div>
+                    <h3 class="save-prompt-title">Save This Calculation?</h3>
+                    <p class="save-prompt-text">Access your results anytime by emailing yourself this link</p>
+
+                    <div class="save-prompt-actions">
+                        <input type="email"
+                               id="saveEmail"
+                               class="save-email-input"
+                               placeholder="your@email.com"
+                               aria-label="Email address">
+                        <button class="btn-primary" onclick="emailCalculation()">
+                            Email Me This Link
+                        </button>
                     </div>
-                    <p class="helper-text">20% deductible (max ₦500,000 deduction)</p>
+
+                    <p class="save-prompt-note">
+                        Or <a href="#" onclick="copyCalculationURL(event)" class="text-green-600">copy the link</a> to save it yourself
+                    </p>
                 </div>
             </div>
 
-            <!-- Privacy Note -->
-            <div class="body-sm text-muted" style="padding: var(--space-4); background: var(--gray-50); border-radius: 8px; margin-top: var(--space-8);">
-                <strong style="color: var(--gray-700);">100% Private:</strong> All calculations happen in your browser. No income data is sent to any server.
-            </div>
-
-        </div>
-
-        <!-- ============================================
-             RIGHT PANEL: RESULTS
-             ============================================ -->
-        <div class="results-panel">
-
-            <!-- Hero Result -->
-            <div class="result-hero">
-                <p class="result-label">Total Tax Owed</p>
-                <p class="result-number" id="totalTaxOwed">₦0</p>
-            </div>
-
-            <!-- Summary Metrics -->
-            <div class="metric-grid">
-                <div class="metric">
-                    <p class="metric-label">Gross Income</p>
-                    <p class="metric-value" id="grossIncome">₦0</p>
+            <!-- Income Section (Collapsible) -->
+            <section class="section">
+                <div class="section-header" onclick="toggleSection('income')" aria-expanded="true">
+                    <h2 class="section-title">Income Sources</h2>
+                    <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
                 </div>
-                <div class="metric">
-                    <p class="metric-label">Taxable Income</p>
-                    <p class="metric-value" id="taxableIncome">₦0</p>
-                </div>
-                <div class="metric">
-                    <p class="metric-label">Take Home</p>
-                    <p class="metric-value" id="takeHome">₦0</p>
-                </div>
-            </div>
+                <div class="section-content expanded" id="incomeContent">
+                    <div class="input-grid">
+                        <!-- Trading Profit -->
+                        <div class="input-group">
+                            <label class="input-label">
+                                Trading Profit
+                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'trading')">i</span>
+                            </label>
+                            <p class="input-helper">Net gains from buying/selling crypto</p>
+                            <div class="input-wrapper">
+                                <input type="number"
+                                       class="input input-mono"
+                                       id="tradingProfit"
+                                       placeholder="0"
+                                       oninput="calculateTaxLive()">
+                                <select class="currency-select" id="tradingCurrency" onchange="calculateTaxLive()">
+                                    <option value="NGN">NGN</option>
+                                    <option value="USD">USD</option>
+                                </select>
+                            </div>
+                            <div class="conversion-display" id="tradingConversion">
+                                ≈ ₦<span id="tradingNGN">0</span>
+                            </div>
+                        </div>
 
-            <!-- SME Exemption Status -->
-            <div id="smeExemptionCard" style="display: none;" class="result-card">
-                <h3 class="heading-3 mb-4">SME Exemption Status</h3>
-                <div id="smeExemptionContent"></div>
-            </div>
+                        <!-- Staking Income -->
+                        <div class="input-group">
+                            <label class="input-label">
+                                Staking Income
+                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'staking')">i</span>
+                            </label>
+                            <p class="input-helper">Rewards from staking/yield farming</p>
+                            <div class="input-wrapper">
+                                <input type="number"
+                                       class="input input-mono"
+                                       id="stakingIncome"
+                                       placeholder="0"
+                                       oninput="calculateTaxLive()">
+                                <select class="currency-select" id="stakingCurrency" onchange="calculateTaxLive()">
+                                    <option value="NGN">NGN</option>
+                                    <option value="USD">USD</option>
+                                </select>
+                            </div>
+                            <div class="conversion-display" id="stakingConversion">
+                                ≈ ₦<span id="stakingNGN">0</span>
+                            </div>
+                        </div>
 
-            <!-- Tax Breakdown -->
-            <div class="result-card">
-                <h3 class="heading-3 mb-4">Tax Breakdown</h3>
+                        <!-- Airdrops Income -->
+                        <div class="input-group">
+                            <label class="input-label">
+                                Airdrops Income
+                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'airdrops')">i</span>
+                            </label>
+                            <p class="input-helper">Free tokens received from projects</p>
+                            <div class="input-wrapper">
+                                <input type="number"
+                                       class="input input-mono"
+                                       id="airdropsIncome"
+                                       placeholder="0"
+                                       oninput="calculateTaxLive()">
+                                <select class="currency-select" id="airdropsCurrency" onchange="calculateTaxLive()">
+                                    <option value="NGN">NGN</option>
+                                    <option value="USD">USD</option>
+                                </select>
+                            </div>
+                            <div class="conversion-display" id="airdropsConversion">
+                                ≈ ₦<span id="airdropsNGN">0</span>
+                            </div>
+                        </div>
 
-                <div class="mb-6">
-                    <div class="mb-4">
-                        <span class="label">Effective Tax Rate</span>
-                        <p class="text-2xl text-bold" id="effectiveRate">0%</p>
+                        <!-- Freelance Income -->
+                        <div class="input-group">
+                            <label class="input-label">
+                                Freelance Income
+                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'freelance')">i</span>
+                            </label>
+                            <p class="input-helper">Crypto payments for services</p>
+                            <div class="input-wrapper">
+                                <input type="number"
+                                       class="input input-mono"
+                                       id="freelanceIncome"
+                                       placeholder="0"
+                                       oninput="calculateTaxLive()">
+                                <select class="currency-select" id="freelanceCurrency" onchange="calculateTaxLive()">
+                                    <option value="NGN">NGN</option>
+                                    <option value="USD">USD</option>
+                                </select>
+                            </div>
+                            <div class="conversion-display" id="freelanceConversion">
+                                ≈ ₦<span id="freelanceNGN">0</span>
+                            </div>
+                        </div>
+
+                        <!-- NFT Income -->
+                        <div class="input-group">
+                            <label class="input-label">
+                                NFT Income
+                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'nft')">i</span>
+                            </label>
+                            <p class="input-helper">Profits from NFT sales</p>
+                            <div class="input-wrapper">
+                                <input type="number"
+                                       class="input input-mono"
+                                       id="nftIncome"
+                                       placeholder="0"
+                                       oninput="calculateTaxLive()">
+                                <select class="currency-select" id="nftCurrency" onchange="calculateTaxLive()">
+                                    <option value="NGN">NGN</option>
+                                    <option value="USD">USD</option>
+                                </select>
+                            </div>
+                            <div class="conversion-display" id="nftConversion">
+                                ≈ ₦<span id="nftNGN">0</span>
+                            </div>
+                        </div>
+
+                        <!-- Exchange Rate -->
+                        <div class="input-group">
+                            <label class="input-label">USD/NGN Rate</label>
+                            <p class="input-helper">Current exchange rate for conversions</p>
+                            <input type="number"
+                                   class="input input-mono"
+                                   id="exchangeRate"
+                                   value="1650"
+                                   placeholder="1650"
+                                   oninput="calculateTaxLive()">
+                        </div>
                     </div>
-                    <div>
-                        <span class="label">Top Tax Bracket</span>
-                        <p class="text-2xl text-bold" id="topBracket">0%</p>
+                </div>
+            </section>
+
+            <!-- Deductions Section (Collapsible) -->
+            <section class="section">
+                <div class="section-header" onclick="toggleSection('deductions')" aria-expanded="true">
+                    <h2 class="section-title">Tax Deductions</h2>
+                    <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </div>
+                <div class="section-content expanded" id="deductionsContent">
+                    <div class="input-grid">
+                        <!-- Pension Deduction -->
+                        <div class="input-group">
+                            <label class="input-label">
+                                Pension Contributions
+                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'pension')">i</span>
+                            </label>
+                            <p class="input-helper">100% deductible, no limit</p>
+                            <input type="number"
+                                   class="input input-mono"
+                                   id="pensionDeduction"
+                                   placeholder="0"
+                                   oninput="calculateTaxLive()">
+                        </div>
+
+                        <!-- Housing Deduction -->
+                        <div class="input-group">
+                            <label class="input-label">
+                                NHF/Housing Contributions
+                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'housing')">i</span>
+                            </label>
+                            <p class="input-helper">100% deductible</p>
+                            <input type="number"
+                                   class="input input-mono"
+                                   id="housingDeduction"
+                                   placeholder="0"
+                                   oninput="calculateTaxLive()">
+                        </div>
+
+                        <!-- Health Deduction -->
+                        <div class="input-group">
+                            <label class="input-label">
+                                Health Insurance Premiums
+                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'health')">i</span>
+                            </label>
+                            <p class="input-helper">100% deductible</p>
+                            <input type="number"
+                                   class="input input-mono"
+                                   id="healthDeduction"
+                                   placeholder="0"
+                                   oninput="calculateTaxLive()">
+                        </div>
+
+                        <!-- Rent Paid -->
+                        <div class="input-group">
+                            <label class="input-label">
+                                Annual Rent Paid
+                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'rent')">i</span>
+                            </label>
+                            <p class="input-helper">20% deductible (max ₦500k)</p>
+                            <input type="number"
+                                   class="input input-mono"
+                                   id="rentPaid"
+                                   placeholder="0"
+                                   oninput="calculateTaxLive()">
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <div id="bracketBreakdown"></div>
+            <!-- Tax Breakdown & Visualizer -->
+            <div class="bracket-visualizer" id="bracketVisualizer" style="display: none;">
+                <h3 class="heading-3 mb-4">Tax Bracket Breakdown</h3>
+                <div id="bracketBars"></div>
             </div>
 
-            <!-- Deductions Summary -->
-            <div id="deductionsCard" style="display: none;" class="result-card">
-                <h3 class="heading-3 mb-4">Deductions Applied</h3>
-                <div id="deductionsContent"></div>
+            <!-- Did You Know? Facts -->
+            <div class="facts-card fade-in">
+                <div class="facts-header">Did You Know?</div>
+                <div class="facts-content" id="factsContent">
+                    The first ₦800,000 you earn is completely <strong>TAX-FREE</strong> under Nigeria's 2026 tax law!
+                </div>
+                <div class="facts-nav" id="factNav"></div>
             </div>
 
-        </div>
+            <!-- Optimization Tips -->
+            <div id="tipsSection" style="display: none;">
+                <h3 class="heading-2 mb-4">Optimization Tips</h3>
+                <div class="tips-grid" id="tipsGrid"></div>
+            </div>
 
+            <!-- FAQ Section -->
+            <section class="section">
+                <div class="section-header" onclick="toggleSection('faq')" aria-expanded="false">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </div>
+                <div class="section-content" id="faqContent">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(0)" aria-expanded="false">
+                            <span class="faq-question-text">Is this calculator accurate?</span>
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer" id="faq0">
+                            <div class="faq-answer-content">
+                                This calculator uses official tax brackets from the Nigeria Tax Act 2025. However, tax laws can be complex. For personalized advice, consult a licensed tax professional.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(1)" aria-expanded="false">
+                            <span class="faq-question-text">What is the small player exemption?</span>
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer" id="faq1">
+                            <div class="faq-answer-content">
+                                Small traders pay ₦0 tax if BOTH conditions are met in a 12-month period: (1) Gains under ₦10M, AND (2) Total proceeds under ₦150M. Both thresholds must be satisfied.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(2)" aria-expanded="false">
+                            <span class="faq-question-text">What deductions can I claim?</span>
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer" id="faq2">
+                            <div class="faq-answer-content">
+                                Common deductions include pension contributions (100%, no limit), NHF/housing (100%), health insurance (100%), and 20% of annual rent paid (max ₦500k). All reduce your taxable income.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(3)" aria-expanded="false">
+                            <span class="faq-question-text">Do I need to report airdrops?</span>
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer" id="faq3">
+                            <div class="faq-answer-content">
+                                Yes. Airdrops are taxable income in Nigeria. The fair market value at the time you receive them is considered income. Keep records of dates and values for tax filing.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(4)" aria-expanded="false">
+                            <span class="faq-question-text">What if I made over ₦50M?</span>
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer" id="faq4">
+                            <div class="faq-answer-content">
+                                Income above ₦50M is taxed at 25% (only the amount above ₦50M). At this income level, professional tax planning can save significant amounts through legal strategies. Consult a tax advisor.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(5)" aria-expanded="false">
+                            <span class="faq-question-text">When do I pay my taxes?</span>
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer" id="faq5">
+                            <div class="faq-answer-content">
+                                Tax filing deadlines vary. Generally, individuals file annually. Check with the Federal Inland Revenue Service (FIRS) for specific deadlines and payment methods. Keep detailed transaction records year-round.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="calculator-footer">
+            <div class="footer-content">
+                <p class="footer-disclaimer">
+                    <strong>Disclaimer:</strong> This calculator is for informational purposes only. Not professional tax advice. Consult a licensed tax professional for personalized guidance.
+                </p>
+                <div class="footer-links">
+                    <p class="mb-2"><strong>Official Data Sources:</strong></p>
+                    <p>
+                        <a href="https://tat.gov.ng" target="_blank" rel="noopener noreferrer">Nigeria Tax Act 2025 (Official PDF)</a> •
+                        <a href="https://www.pwc.com/ng/en/publications/nigeria-tax-guide.html" target="_blank" rel="noopener noreferrer">PWC Nigeria Tax Guide</a> •
+                        <a href="https://www.ey.com/en_ng/tax" target="_blank" rel="noopener noreferrer">EY Nigeria Tax</a>
+                    </p>
+                    <p class="mt-4 text-gray-500">
+                        <a href="/" class="text-green-600">← Back to Home</a>
+                    </p>
+                    <p class="mt-4 text-gray-500 text-legal">
+                        <strong>Version 2.0.0</strong> • Last updated: January 2, 2026<br>
+                        100% client-side • Privacy-first • Open source
+                    </p>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <!-- ============================================
-         CALCULATION LOGIC
-         ============================================ -->
-    <script>
-        // Nigeria 2026 Tax Brackets
-        const TAX_BRACKETS = [
-            { limit: 800000, rate: 0.00, label: 'First ₦800k' },
-            { limit: 3000000, rate: 0.15, label: '₦800k - ₦3M' },
-            { limit: 12000000, rate: 0.18, label: '₦3M - ₦12M' },
-            { limit: 25000000, rate: 0.21, label: '₦12M - ₦25M' },
-            { limit: 50000000, rate: 0.23, label: '₦25M - ₦50M' },
-            { limit: Infinity, rate: 0.25, label: 'Above ₦50M' }
-        ];
-
-        // SME Exemption Thresholds
-        const SME_GAIN_THRESHOLD = 10000000;    // ₦10M
-        const SME_PROCEEDS_THRESHOLD = 150000000; // ₦150M
-
-        // Format currency
-        function formatCurrency(amount) {
-            return '₦' + Math.round(amount).toLocaleString('en-NG');
-        }
-
-        // Calculate tax
-        function calculateTax() {
-            // Get all inputs
-            const tradingProfit = parseFloat(document.getElementById('tradingProfit').value) || 0;
-            const stakingIncome = parseFloat(document.getElementById('stakingIncome').value) || 0;
-            const airdropsIncome = parseFloat(document.getElementById('airdropsIncome').value) || 0;
-            const freelanceIncome = parseFloat(document.getElementById('freelanceIncome').value) || 0;
-            const nftIncome = parseFloat(document.getElementById('nftIncome').value) || 0;
-
-            const pensionDeduction = parseFloat(document.getElementById('pensionDeduction').value) || 0;
-            const housingDeduction = parseFloat(document.getElementById('housingDeduction').value) || 0;
-            const healthDeduction = parseFloat(document.getElementById('healthDeduction').value) || 0;
-            const rentPaid = parseFloat(document.getElementById('rentDeduction').value) || 0;
-            const rentDeduction = Math.min(rentPaid * 0.20, 500000); // 20%, max ₦500k
-
-            // Calculate totals
-            const grossIncome = tradingProfit + stakingIncome + airdropsIncome + freelanceIncome + nftIncome;
-            const totalDeductions = pensionDeduction + housingDeduction + healthDeduction + rentDeduction;
-            const taxableIncome = Math.max(0, grossIncome - totalDeductions);
-
-            // Check SME Exemption
-            const qualifiesForSME = (grossIncome < SME_GAIN_THRESHOLD) && (grossIncome < SME_PROCEEDS_THRESHOLD);
-
-            // Calculate tax by bracket
-            let taxOwed = 0;
-            let remainingIncome = taxableIncome;
-            let previousLimit = 0;
-            const breakdown = [];
-
-            if (!qualifiesForSME) {
-                for (let bracket of TAX_BRACKETS) {
-                    if (remainingIncome <= 0) break;
-
-                    const bracketIncome = Math.min(remainingIncome, bracket.limit - previousLimit);
-                    const bracketTax = bracketIncome * bracket.rate;
-
-                    if (bracketIncome > 0) {
-                        breakdown.push({
-                            range: bracket.label,
-                            rate: bracket.rate,
-                            income: bracketIncome,
-                            tax: bracketTax
-                        });
-
-                        taxOwed += bracketTax;
-                        remainingIncome -= bracketIncome;
-                    }
-
-                    previousLimit = bracket.limit;
-                }
-            }
-
-            const takeHome = grossIncome - taxOwed;
-            const effectiveRate = grossIncome > 0 ? (taxOwed / grossIncome) * 100 : 0;
-            const topBracket = breakdown.length > 0 ? breakdown[breakdown.length - 1].rate * 100 : 0;
-
-            // Update UI
-            document.getElementById('totalTaxOwed').textContent = formatCurrency(taxOwed);
-            document.getElementById('grossIncome').textContent = formatCurrency(grossIncome);
-            document.getElementById('taxableIncome').textContent = formatCurrency(taxableIncome);
-            document.getElementById('takeHome').textContent = formatCurrency(takeHome);
-            document.getElementById('effectiveRate').textContent = effectiveRate.toFixed(1) + '%';
-            document.getElementById('topBracket').textContent = topBracket.toFixed(0) + '%';
-
-            // SME Exemption Card
-            if (qualifiesForSME && grossIncome > 0) {
-                document.getElementById('smeExemptionCard').style.display = 'block';
-                document.getElementById('smeExemptionContent').innerHTML = `
-                    <div class="badge badge-success mb-4">You Qualify for ₦0 Tax!</div>
-                    <p class="body-sm text-muted">
-                        Your crypto gains are under ₦10M AND proceeds are under ₦150M.
-                        Under Nigeria's 2026 tax law, you qualify for the SME exemption and owe <strong>₦0 in tax</strong>.
-                    </p>
-                `;
-            } else {
-                document.getElementById('smeExemptionCard').style.display = 'none';
-            }
-
-            // Bracket Breakdown
-            if (breakdown.length > 0) {
-                let breakdownHTML = '<div style="font-size: var(--text-sm);">';
-                breakdown.forEach(b => {
-                    breakdownHTML += `
-                        <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-3); padding-bottom: var(--space-3); border-bottom: 1px solid var(--gray-200);">
-                            <span class="text-muted">${b.range} @ ${(b.rate * 100).toFixed(0)}%</span>
-                            <span class="text-bold">${formatCurrency(b.tax)}</span>
-                        </div>
-                    `;
-                });
-                breakdownHTML += '</div>';
-                document.getElementById('bracketBreakdown').innerHTML = breakdownHTML;
-            } else {
-                document.getElementById('bracketBreakdown').innerHTML = '<p class="body-sm text-muted">Enter income to see breakdown</p>';
-            }
-
-            // Deductions Summary
-            if (totalDeductions > 0) {
-                document.getElementById('deductionsCard').style.display = 'block';
-                let deductionsHTML = '<div style="font-size: var(--text-sm);">';
-                if (pensionDeduction > 0) {
-                    deductionsHTML += `<div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
-                        <span class="text-muted">Pension</span>
-                        <span class="text-bold">-${formatCurrency(pensionDeduction)}</span>
-                    </div>`;
-                }
-                if (housingDeduction > 0) {
-                    deductionsHTML += `<div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
-                        <span class="text-muted">Housing</span>
-                        <span class="text-bold">-${formatCurrency(housingDeduction)}</span>
-                    </div>`;
-                }
-                if (healthDeduction > 0) {
-                    deductionsHTML += `<div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
-                        <span class="text-muted">Health</span>
-                        <span class="text-bold">-${formatCurrency(healthDeduction)}</span>
-                    </div>`;
-                }
-                if (rentDeduction > 0) {
-                    deductionsHTML += `<div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
-                        <span class="text-muted">Rent (20%)</span>
-                        <span class="text-bold">-${formatCurrency(rentDeduction)}</span>
-                    </div>`;
-                }
-                deductionsHTML += `<div style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 2px solid var(--gray-200); display: flex; justify-content: space-between;">
-                    <span class="text-bold">Total Deductions</span>
-                    <span class="text-bold" style="color: var(--green-600);">-${formatCurrency(totalDeductions)}</span>
-                </div>`;
-                deductionsHTML += '</div>';
-                document.getElementById('deductionsContent').innerHTML = deductionsHTML;
-            } else {
-                document.getElementById('deductionsCard').style.display = 'none';
-            }
-        }
-
-        // Live calculation on input
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', calculateTax);
-        });
-
-        // Initial calculation
-        calculateTax();
-    </script>
-
+    <!-- External JavaScript (deferred for performance) -->
+    <script src="/js/calculator.js" defer></script>
 </body>
 </html>
