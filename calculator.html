@@ -205,6 +205,109 @@
             font-size: 14px;
         }
 
+        /* Tax Bracket Visualizer */
+        .bracket-visualizer {
+            margin: var(--space-6) 0;
+            padding: var(--space-6);
+            background: var(--gray-50);
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .bracket-visualizer-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: var(--space-4);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .bracket-bar-container {
+            margin-bottom: var(--space-4);
+        }
+
+        .bracket-bar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2);
+        }
+
+        .bracket-bar-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .bracket-bar-rate {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: white;
+            color: var(--gray-700);
+        }
+
+        .bracket-bar-track {
+            height: 32px;
+            background: white;
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+        }
+
+        .bracket-bar-fill {
+            height: 100%;
+            transition: width 0.6s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            position: relative;
+        }
+
+        .bracket-bar-fill.bracket-0 { background: linear-gradient(90deg, #D1D5DB 0%, #9CA3AF 100%); }
+        .bracket-bar-fill.bracket-15 { background: linear-gradient(90deg, #86EFAC 0%, #4ADE80 100%); }
+        .bracket-bar-fill.bracket-18 { background: linear-gradient(90deg, #4ADE80 0%, #22C55E 100%); }
+        .bracket-bar-fill.bracket-21 { background: linear-gradient(90deg, #22C55E 0%, #16A34A 100%); }
+        .bracket-bar-fill.bracket-23 { background: linear-gradient(90deg, #16A34A 0%, #15803D 100%); }
+        .bracket-bar-fill.bracket-25 { background: linear-gradient(90deg, #15803D 0%, #166534 100%); }
+
+        .bracket-bar-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4px;
+            font-size: 11px;
+            color: var(--gray-600);
+        }
+
+        .bracket-explainer {
+            margin-top: var(--space-4);
+            padding: var(--space-3);
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .bracket-explainer-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .bracket-explainer-text {
+            font-size: 12px;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
         /* Mobile responsive */
         @media (max-width: 768px) {
             .split-container {
@@ -776,6 +879,21 @@
                         Tax Breakdown by Bracket
                     </h2>
 
+                    <!-- Tax Bracket Visualizer -->
+                    <div id="bracketVisualizer" class="bracket-visualizer" style="display: none;">
+                        <div class="bracket-visualizer-title">
+                            <span>📊</span>
+                            <span>How Your Income Flows Through Tax Brackets</span>
+                        </div>
+                        <div id="bracketBars"></div>
+                        <div class="bracket-explainer">
+                            <div class="bracket-explainer-title">💡 Understanding Progressive Tax</div>
+                            <div class="bracket-explainer-text">
+                                You're NOT taxed at one rate on all your income. Each portion is taxed at its bracket's rate. The bars above show exactly how much of your income falls into each bracket and the tax you pay on that portion.
+                            </div>
+                        </div>
+                    </div>
+
                     <table class="breakdown-table">
                         <thead>
                             <tr>
@@ -990,6 +1108,71 @@
             }
 
             return { totalTax, breakdown };
+        }
+
+        // Render tax bracket visualizer
+        function renderBracketVisualizer(taxableIncome, breakdown) {
+            const visualizer = document.getElementById('bracketVisualizer');
+            const barsContainer = document.getElementById('bracketBars');
+
+            if (taxableIncome <= 0 || breakdown.length === 0) {
+                visualizer.style.display = 'none';
+                return;
+            }
+
+            visualizer.style.display = 'block';
+            barsContainer.innerHTML = '';
+
+            let remainingIncome = taxableIncome;
+            let previousLimit = 0;
+            const maxBracketWidth = taxableIncome; // For percentage calculations
+
+            for (let i = 0; i < TAX_BRACKETS.length; i++) {
+                const bracket = TAX_BRACKETS[i];
+
+                if (remainingIncome <= 0) break;
+
+                const bracketIncome = Math.min(remainingIncome, bracket.limit - previousLimit);
+                const bracketTax = bracketIncome * bracket.rate;
+                const widthPercentage = (bracketIncome / maxBracketWidth) * 100;
+
+                // Determine bracket label
+                let rangeLabel;
+                if (bracket.limit === 800000) {
+                    rangeLabel = 'First ₦800k';
+                } else if (bracket.limit === Infinity) {
+                    rangeLabel = `Above ₦${(previousLimit / 1000000).toFixed(0)}M`;
+                } else {
+                    rangeLabel = `₦${(previousLimit / 1000000).toFixed(previousLimit >= 1000000 ? 0 : 1)}M - ₦${(bracket.limit / 1000000).toFixed(0)}M`;
+                }
+
+                // Only render if there's income in this bracket
+                if (bracketIncome > 0) {
+                    const barHTML = `
+                        <div class="bracket-bar-container">
+                            <div class="bracket-bar-header">
+                                <span class="bracket-bar-label">${rangeLabel}</span>
+                                <span class="bracket-bar-rate">${(bracket.rate * 100).toFixed(0)}% rate</span>
+                            </div>
+                            <div class="bracket-bar-track">
+                                <div class="bracket-bar-fill bracket-${(bracket.rate * 100).toFixed(0)}"
+                                     style="width: ${widthPercentage}%">
+                                    ${bracketIncome >= 100000 ? formatCurrency(bracketTax) : ''}
+                                </div>
+                            </div>
+                            <div class="bracket-bar-info">
+                                <span>Income: ${formatCurrency(bracketIncome)}</span>
+                                <span>Tax: ${formatCurrency(bracketTax)}</span>
+                            </div>
+                        </div>
+                    `;
+
+                    barsContainer.innerHTML += barHTML;
+                }
+
+                remainingIncome -= bracketIncome;
+                previousLimit = bracket.limit;
+            }
         }
 
         // Generate optimization tips based on income
@@ -1221,6 +1404,9 @@
                         </tr>
                     `).join('');
                 }
+
+                // Render bracket visualizer
+                renderBracketVisualizer(taxableIncome, breakdown);
 
                 // Update optimization tips
                 const tips = getOptimizationTips(totalIncome, incomeData);
