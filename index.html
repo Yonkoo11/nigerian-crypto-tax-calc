@@ -3,894 +3,978 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nigerian Crypto Tax Calculator 2026</title>
+    <meta name="description" content="Calculate your exact Nigerian cryptocurrency tax liability for 2026 in real-time">
 
-    <!-- SEO Meta Tags -->
-    <title>Nigerian Crypto Tax Calculator 2026 - Calculate Your Tax in 60 Seconds</title>
-    <meta name="description" content="Free Nigerian crypto tax calculator for the 2026 law. Calculate your exact tax liability instantly with SME savings comparison and optimization tips. Used by Nigerian crypto traders.">
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';
+                   script-src 'self' 'unsafe-inline' https://plausible.io;
+                   style-src 'self' 'unsafe-inline';
+                   img-src 'self' data:;
+                   connect-src https://plausible.io;
+                   font-src 'self';
+                   frame-ancestors 'none';
+                   base-uri 'self';
+                   form-action 'none';">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nigerian-crypto-tax-calc.netlify.app/">
-    <meta property="og:title" content="Nigerian Crypto Tax Calculator 2026 🇳🇬">
-    <meta property="og:description" content="Free calculator for Nigeria's new crypto tax law. Get your exact tax liability in 60 seconds + learn how to legally minimize what you owe.">
-    <meta property="og:image" content="https://nigerian-crypto-tax-calc.netlify.app/og-image.png">
+    <!-- Note: Tailwind CSS removed - not used in this calculator (all styles are custom CSS) -->
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://nigerian-crypto-tax-calc.netlify.app/">
-    <meta property="twitter:title" content="Nigerian Crypto Tax Calculator 2026 🇳🇬">
-    <meta property="twitter:description" content="Free calculator for Nigeria's new crypto tax law. Get your exact tax liability in 60 seconds.">
-    <meta property="twitter:image" content="https://nigerian-crypto-tax-calc.netlify.app/og-image.png">
-
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇳🇬</text></svg>">
-
-    <!-- Plausible Analytics (Privacy-friendly, GDPR compliant) -->
-    <script defer data-domain="nigerian-crypto-tax-calc.netlify.app" src="https://plausible.io/js/script.js"></script>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Plausible Analytics - Privacy-friendly (no cookies, GDPR compliant) -->
+    <script defer data-domain="YOUR-DOMAIN.com" src="https://plausible.io/js/script.js"></script>
 
     <style>
+        /* Custom Design System for Split-Screen Layout */
         :root {
-            --primary-50: #ecfdf5;
-            --primary-100: #d1fae5;
-            --primary-200: #a7f3d0;
-            --primary-500: #10b981;
-            --primary-600: #059669;
-            --primary-700: #047857;
-            --primary-900: #064e3b;
+            /* Colors */
+            --primary: #059669;
+            --primary-dark: #047857;
+            --primary-light: #10b981;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
 
-            --purple-500: #8b5cf6;
-            --purple-600: #7c3aed;
+            /* Typography */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
 
-            --blue-500: #3b82f6;
-            --blue-600: #2563eb;
+            /* Spacing */
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-12: 48px;
+        }
 
-            --amber-500: #f59e0b;
-            --amber-600: #d97706;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            font-family: var(--font-sans);
+            color: var(--gray-900);
+            background: white;
+            overflow-x: hidden;
         }
 
-        .gradient-hero {
-            background: linear-gradient(135deg, #059669 0%, #047857 50%, #064e3b 100%);
-            position: relative;
-            overflow: hidden;
+        /* Split-screen layout */
+        .split-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
         }
 
-        .gradient-hero::before {
-            content: '';
-            position: absolute;
+        /* Left panel - Inputs */
+        .left-panel {
+            background: var(--gray-50);
+            padding: var(--space-12);
+            overflow-y: auto;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 1;
+            height: 100vh;
         }
 
+        /* Right panel - Results */
+        .right-panel {
+            background: white;
+            padding: var(--space-12);
+            border-left: 1px solid var(--gray-200);
+        }
+
+        /* Input styling */
         .input-group {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: var(--space-6);
         }
 
-        .input-group:focus-within {
-            transform: translateY(-2px);
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: var(--space-2);
         }
 
         .input-field {
-            transition: all 0.2s ease;
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            font-family: var(--font-mono);
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            transition: all 0.2s;
+            background: white;
         }
 
         .input-field:focus {
-            transform: scale(1.01);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
         }
 
+        /* Result cards */
         .result-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-        }
-
-        .result-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: linear-gradient(90deg, var(--primary-500), var(--primary-600));
-            border-radius: 9999px;
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
-        }
-
-        .income-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
             border-radius: 12px;
-            font-size: 20px;
-            transition: all 0.2s ease;
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
         }
 
-        .income-icon:hover {
-            transform: scale(1.1) rotate(5deg);
+        .result-card.highlight {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border: none;
         }
 
-        @keyframes countUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .result-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            opacity: 0.7;
+            margin-bottom: var(--space-2);
         }
 
-        .count-up {
-            animation: countUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        .result-value {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            line-height: 1.2;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .result-value.large {
+            font-size: 48px;
         }
 
-        .slide-in {
-            animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        /* Live update indicator */
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(5, 150, 105, 0.1);
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: var(--space-4);
         }
 
-        .pulse-button {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
         }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+            50% { opacity: 0.4; }
         }
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 12px;
-            border-radius: 9999px;
-            font-size: 12px;
+        /* Breakdown table */
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--space-4);
+        }
+
+        .breakdown-table th {
+            text-align: left;
+            padding: 12px;
+            background: var(--gray-50);
+            border-bottom: 2px solid var(--gray-200);
+            font-size: 13px;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-600);
         }
 
+        .breakdown-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--gray-200);
+            font-family: var(--font-mono);
+            font-size: 14px;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .split-container {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                position: relative;
+                height: auto;
+                padding: var(--space-6);
+            }
+
+            .right-panel {
+                padding: var(--space-6);
+                border-left: none;
+                border-top: 1px solid var(--gray-200);
+            }
+
+            .result-value.large {
+                font-size: 36px;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Print Styles for PDF Export */
         @media print {
-            .no-print { display: none; }
-            .result-card { box-shadow: none; }
-        }
+            body {
+                background: white;
+                padding: 20px;
+            }
 
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
+            /* Hide interactive elements */
+            .live-badge,
+            #exportButton,
+            .left-panel,
+            #smeNotice,
+            #unrealisticWarning {
+                display: none !important;
+            }
 
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
+            /* Show only results in single column */
+            .split-container {
+                display: block;
+            }
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-500);
-            border-radius: 5px;
-        }
+            .right-panel {
+                border: none;
+                padding: 0;
+                max-width: 100%;
+            }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-600);
+            /* Add print header */
+            .right-panel::before {
+                content: "Nigerian Crypto Tax Calculation Report";
+                display: block;
+                font-size: 24px;
+                font-weight: 700;
+                margin-bottom: 20px;
+                color: var(--gray-900);
+            }
+
+            /* Add generated timestamp */
+            .right-panel::after {
+                content: "Generated: " attr(data-timestamp);
+                display: block;
+                font-size: 12px;
+                color: var(--gray-600);
+                margin-top: 40px;
+                padding-top: 20px;
+                border-top: 1px solid var(--gray-200);
+            }
+
+            /* Optimize result cards for print */
+            .result-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .result-card.highlight {
+                background: var(--primary) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            /* Hide FAQ and tips for concise PDF */
+            #optimizationTips,
+            .right-panel > div > div:last-child {
+                display: none;
+            }
+
+            /* Page breaks */
+            h2 {
+                page-break-after: avoid;
+            }
+
+            table {
+                page-break-inside: avoid;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body>
 
-    <!-- Hero Section -->
-    <header class="gradient-hero text-white py-16 px-4 relative">
-        <div class="max-w-5xl mx-auto">
-            <!-- Trust Badge -->
-            <div class="text-center mb-6">
-                <span class="badge bg-white/20 text-white">
-                    <span class="w-2 h-2 bg-green-300 rounded-full animate-pulse"></span>
-                    Law went live TODAY - January 1, 2026
-                </span>
-            </div>
-
-            <!-- Main Headline -->
-            <div class="text-center mb-8">
-                <h1 class="text-5xl md:text-6xl font-bold mb-4 leading-tight">
-                    Calculate Your<br>
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-200 to-emerald-200">Nigerian Crypto Tax</span><br>
-                    in 60 Seconds
+    <!-- JavaScript Required Notice (shown only if JS is disabled) -->
+    <noscript>
+        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+            <div style="max-width: 480px; text-align: center; padding: 48px; background: #FEE2E2; border-radius: 12px; border: 2px solid #DC2626;">
+                <h1 style="font-size: 24px; font-weight: 700; color: #991B1B; margin-bottom: 16px;">
+                    JavaScript Required
                 </h1>
-                <p class="text-xl md:text-2xl text-green-50 max-w-3xl mx-auto leading-relaxed">
-                    Free calculator for Nigeria's 2026 crypto tax law.<br class="hidden md:block">
-                    Get your exact tax liability + learn how to <strong class="text-green-200">legally pay ₦0</strong>.
+                <p style="font-size: 16px; color: #7F1D1D; line-height: 1.6;">
+                    This calculator requires JavaScript to function. All calculations happen in your browser for privacy - no data is sent to any server.
+                </p>
+                <p style="font-size: 14px; color: #991B1B; margin-top: 16px;">
+                    Please enable JavaScript in your browser settings to use this tool.
                 </p>
             </div>
+        </div>
+    </noscript>
 
-            <!-- Value Props -->
-            <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                    <div class="text-3xl mb-3">🎯</div>
-                    <h3 class="font-semibold text-lg mb-2">Verified Calculations</h3>
-                    <p class="text-green-100 text-sm">Based on official Nigeria Tax Act, 2025 progressive brackets (0% to 25%)</p>
+    <!-- Split-Screen Layout -->
+    <div class="split-container">
+
+        <!-- LEFT PANEL: Inputs -->
+        <div class="left-panel">
+            <div style="max-width: 480px; margin: 0 auto;">
+
+                <!-- Header -->
+                <div style="margin-bottom: var(--space-8);">
+                    <div style="display: inline-block; padding: 4px 12px; background: rgba(5, 150, 105, 0.1); border-radius: 9999px; font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: var(--space-4);">
+                        Law Effective: Jan 1, 2026
+                    </div>
+                    <h1 style="font-size: 28px; font-weight: 700; line-height: 1.2; margin-bottom: var(--space-3); color: var(--gray-900);">
+                        Nigerian Crypto Tax Calculator
+                    </h1>
+                    <p style="font-size: 15px; color: var(--gray-600); line-height: 1.5;">
+                        Enter your crypto income below. Your tax calculation updates in real-time on the right.
+                    </p>
                 </div>
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                    <div class="text-3xl mb-3">🔒</div>
-                    <h3 class="font-semibold text-lg mb-2">100% Private</h3>
-                    <p class="text-green-100 text-sm">All calculations happen in your browser. No data stored or sent.</p>
+
+                <!-- Income Inputs Form -->
+                <form id="taxForm" style="margin-bottom: var(--space-8);">
+
+                    <!-- Trading Profit -->
+                    <div class="input-group">
+                        <label for="tradingProfit" class="input-label">
+                            Trading Profit
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Binance, Bybit, Coinbase, etc.
+                        </p>
+                        <input
+                            type="number"
+                            id="tradingProfit"
+                            class="input-field"
+                            value="0"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                            aria-label="Trading profit from crypto exchanges"
+                            oninput="calculateTaxLive()"
+                        >
+                    </div>
+
+                    <!-- Staking & Interest -->
+                    <div class="input-group">
+                        <label for="stakingIncome" class="input-label">
+                            Staking & Interest
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            DeFi protocols, lending platforms
+                        </p>
+                        <input
+                            type="number"
+                            id="stakingIncome"
+                            class="input-field"
+                            value="0"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                            aria-label="Staking and interest income from DeFi"
+                            oninput="calculateTaxLive()"
+                        >
+                    </div>
+
+                    <!-- Airdrops & Bounties -->
+                    <div class="input-group">
+                        <label for="airdropsIncome" class="input-label">
+                            Airdrops & Bounties
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Free tokens, rewards, campaigns
+                        </p>
+                        <input
+                            type="number"
+                            id="airdropsIncome"
+                            class="input-field"
+                            value="0"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                            aria-label="Income from airdrops and bounties"
+                            oninput="calculateTaxLive()"
+                        >
+                    </div>
+
+                    <!-- Freelance & Salary -->
+                    <div class="input-group">
+                        <label for="freelanceIncome" class="input-label">
+                            Freelance & Salary
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Paid in crypto for work
+                        </p>
+                        <input
+                            type="number"
+                            id="freelanceIncome"
+                            class="input-field"
+                            value="0"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                            aria-label="Freelance and salary income in crypto"
+                            oninput="calculateTaxLive()"
+                        >
+                    </div>
+
+                    <!-- NFT Sales -->
+                    <div class="input-group">
+                        <label for="nftIncome" class="input-label">
+                            NFT Sales
+                        </label>
+                        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: var(--space-2);">
+                            Profit from NFT trading
+                        </p>
+                        <input
+                            type="number"
+                            id="nftIncome"
+                            class="input-field"
+                            value="0"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                            aria-label="Profit from NFT sales"
+                            oninput="calculateTaxLive()"
+                        >
+                    </div>
+
+                </form>
+
+                <!-- Data Privacy Note -->
+                <div style="padding: var(--space-4); background: rgba(5, 150, 105, 0.05); border-radius: 8px; border-left: 3px solid var(--primary);">
+                    <p style="font-size: 13px; color: var(--gray-700); line-height: 1.5; margin-bottom: var(--space-2);">
+                        <strong>100% Private:</strong> All calculations happen in your browser. No income data is sent to any server.
+                    </p>
+                    <p style="font-size: 11px; color: var(--gray-600); line-height: 1.4;">
+                        Zero external dependencies • Privacy-friendly analytics (no cookies, no personal data) • Your income data never leaves your device.
+                    </p>
                 </div>
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                    <div class="text-3xl mb-3">💰</div>
-                    <h3 class="font-semibold text-lg mb-2">Save Thousands</h3>
-                    <p class="text-green-100 text-sm">Learn small player exemption to pay ₦0 if gains &lt; ₦10M</p>
-                </div>
+
             </div>
         </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="max-w-5xl mx-auto px-4 py-12">
+        <!-- RIGHT PANEL: Live Results -->
+        <div class="right-panel">
+            <div style="max-width: 540px;">
 
-        <!-- Input Section -->
-        <section class="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold mb-2 text-gray-900">Enter Your 2025 Crypto Income</h2>
-                <p class="text-gray-600">All amounts in Nigerian Naira (₦). Leave blank if not applicable.</p>
-            </div>
-
-            <form id="taxForm" class="space-y-6">
-
-                <!-- Trading Profit -->
-                <div class="input-group">
-                    <label for="tradingProfit" class="flex items-center gap-3 mb-3">
-                        <div class="income-icon bg-gradient-to-br from-green-50 to-green-100">
-                            <span>💹</span>
-                        </div>
-                        <div>
-                            <div class="text-sm font-semibold text-gray-900">Trading Profit</div>
-                            <div class="text-xs text-gray-500">Binance, Bybit, crypto exchanges</div>
-                        </div>
-                    </label>
-                    <input type="number" id="tradingProfit" min="0" step="0.01" placeholder="5,000,000"
-                           class="input-field w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition font-mono text-lg">
+                <!-- Live Update Badge -->
+                <div class="live-badge">
+                    <span class="live-dot"></span>
+                    <span>Live Calculation</span>
                 </div>
 
-                <!-- Staking/Interest -->
-                <div class="input-group">
-                    <label for="stakingIncome" class="flex items-center gap-3 mb-3">
-                        <div class="income-icon bg-gradient-to-br from-blue-50 to-blue-100">
-                            <span>🏦</span>
-                        </div>
-                        <div>
-                            <div class="text-sm font-semibold text-gray-900">Staking & Interest</div>
-                            <div class="text-xs text-gray-500">DeFi, liquidity pools, yield farming</div>
-                        </div>
-                    </label>
-                    <input type="number" id="stakingIncome" min="0" step="0.01" placeholder="500,000"
-                           class="input-field w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition font-mono text-lg">
+                <!-- Main Tax Result (Highlighted) -->
+                <div class="result-card highlight" role="region" aria-label="Tax calculation results">
+                    <div class="result-label">Total Tax Owed</div>
+                    <div class="result-value large" id="totalTax" role="status" aria-live="polite" aria-atomic="true">₦0</div>
+
+                    <!-- Export Button -->
+                    <button
+                        onclick="window.print()"
+                        style="margin-top: 16px; padding: 10px 20px; background: white; color: var(--primary); border: 2px solid white; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px;"
+                        onmouseover="this.style.background='rgba(255,255,255,0.9)'; this.style.transform='translateY(-1px)'"
+                        onmouseout="this.style.background='white'; this.style.transform='translateY(0)'"
+                        id="exportButton">
+                        <span>📄</span>
+                        <span>Export Tax Summary</span>
+                    </button>
                 </div>
 
-                <!-- Airdrops/Bounties -->
-                <div class="input-group">
-                    <label for="airdropsIncome" class="flex items-center gap-3 mb-3">
-                        <div class="income-icon bg-gradient-to-br from-purple-50 to-purple-100">
-                            <span>🎁</span>
-                        </div>
-                        <div>
-                            <div class="text-sm font-semibold text-gray-900">Airdrops & Bounties</div>
-                            <div class="text-xs text-gray-500">Tokens received, testnet rewards</div>
-                        </div>
-                    </label>
-                    <input type="number" id="airdropsIncome" min="0" step="0.01" placeholder="2,000,000"
-                           class="input-field w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition font-mono text-lg">
+                <!-- Secondary Results Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-8);">
+
+                    <div class="result-card">
+                        <div class="result-label" style="color: var(--gray-600);">Total Income</div>
+                        <div class="result-value" id="totalIncome" style="color: var(--gray-900);" aria-live="polite">₦0</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label" style="color: var(--gray-600);">Take Home</div>
+                        <div class="result-value" id="takeHome" style="color: var(--gray-900);" aria-live="polite">₦0</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label" style="color: var(--gray-600);">Effective Rate</div>
+                        <div class="result-value" id="effectiveRate" style="color: var(--gray-900);" aria-live="polite">0%</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-label" style="color: var(--gray-600);">Tax Bracket</div>
+                        <div class="result-value" id="taxBracket" style="color: var(--gray-900); font-size: 24px;" aria-live="polite">0%</div>
+                    </div>
+
                 </div>
 
-                <!-- Freelance/Salary -->
-                <div class="input-group">
-                    <label for="freelanceIncome" class="flex items-center gap-3 mb-3">
-                        <div class="income-icon bg-gradient-to-br from-amber-50 to-amber-100">
-                            <span>💼</span>
-                        </div>
-                        <div>
-                            <div class="text-sm font-semibold text-gray-900">Freelance & Salary</div>
-                            <div class="text-xs text-gray-500">DAO work, crypto payments, consulting</div>
-                        </div>
-                    </label>
-                    <input type="number" id="freelanceIncome" min="0" step="0.01" placeholder="3,000,000"
-                           class="input-field w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition font-mono text-lg">
+                <!-- SME Exemption Notice -->
+                <div id="smeNotice" style="display: none; padding: var(--space-4); background: rgba(5, 150, 105, 0.1); border-radius: 8px; margin-bottom: var(--space-8); border: 1px solid var(--primary);">
+                    <div style="font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 4px;">
+                        ✓ SME Tax Exemption Applies
+                    </div>
+                    <p style="font-size: 13px; color: var(--gray-700); line-height: 1.5;">
+                        Your gains are under ₦10M and revenue under ₦150M. You qualify for full tax exemption.
+                    </p>
                 </div>
 
-                <!-- NFT Sales -->
-                <div class="input-group">
-                    <label for="nftIncome" class="flex items-center gap-3 mb-3">
-                        <div class="income-icon bg-gradient-to-br from-pink-50 to-pink-100">
-                            <span>🖼️</span>
-                        </div>
-                        <div>
-                            <div class="text-sm font-semibold text-gray-900">NFT Sales Profit</div>
-                            <div class="text-xs text-gray-500">Sale price minus purchase cost</div>
-                        </div>
-                    </label>
-                    <input type="number" id="nftIncome" min="0" step="0.01" placeholder="1,000,000"
-                           class="input-field w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition font-mono text-lg">
+                <!-- Unrealistic Input Warning -->
+                <div id="unrealisticWarning" style="display: none; padding: var(--space-4); background: rgba(251, 191, 36, 0.1); border-radius: 8px; margin-bottom: var(--space-8); border: 1px solid #f59e0b;" role="alert">
+                    <div style="font-size: 14px; font-weight: 600; color: #92400e; margin-bottom: 4px;">
+                        ⚠️ Please Verify Your Input
+                    </div>
+                    <p style="font-size: 13px; color: var(--gray-700); line-height: 1.5;">
+                        The total income you entered (over ₦1 billion) is very high. Please double-check your numbers to ensure they're correct.
+                    </p>
                 </div>
 
-                <!-- SME Checkbox -->
-                <div class="pt-6 border-t-2 border-gray-100">
-                    <label class="flex items-start gap-4 cursor-pointer group">
-                        <input type="checkbox" id="isSME" class="mt-1 w-6 h-6 text-green-600 border-2 border-gray-300 rounded focus:ring-green-500 cursor-pointer">
-                        <div class="flex-1">
-                            <div class="text-sm font-semibold text-gray-900 group-hover:text-green-600 transition">
-                                ✅ Small player exemption (BOTH conditions required)
-                            </div>
-                            <p class="text-sm text-gray-600 mt-1">
-                                You qualify ONLY if <strong class="text-green-600">BOTH</strong> conditions are met:<br>
-                                1️⃣ Total gains (profit) under <strong>₦10M</strong> in 12 months<br>
-                                2️⃣ Total sale proceeds under <strong>₦150M</strong> in 12 months<br>
-                                <span class="text-xs text-gray-500 mt-1 block italic">Proceeds = total amount you received from selling crypto (before subtracting costs)</span>
+                <!-- Detailed Breakdown -->
+                <div style="margin-top: var(--space-8);">
+                    <h2 style="font-size: 18px; font-weight: 600; margin-bottom: var(--space-4); color: var(--gray-900);">
+                        Tax Breakdown by Bracket
+                    </h2>
+
+                    <table class="breakdown-table">
+                        <thead>
+                            <tr>
+                                <th>Income Range</th>
+                                <th>Rate</th>
+                                <th>Tax Owed</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdownTable">
+                            <tr>
+                                <td colspan="3" style="text-align: center; color: var(--gray-600); font-family: var(--font-sans);">
+                                    Enter income to see breakdown
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Optimization Tips -->
+                <div style="margin-top: var(--space-12);">
+                    <h2 style="font-size: 18px; font-weight: 600; margin-bottom: var(--space-4); color: var(--gray-900);">
+                        Legal Ways to Reduce Your Tax
+                    </h2>
+                    <div id="optimizationTips" style="display: flex; flex-direction: column; gap: var(--space-4);">
+                        <!-- Populated by JavaScript -->
+                        <div style="padding: var(--space-4); background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--primary);">
+                            <p style="font-size: 14px; color: var(--gray-700); line-height: 1.5;">
+                                Enter your income to see personalized tax optimization strategies.
                             </p>
                         </div>
-                    </label>
+                    </div>
                 </div>
 
-                <!-- Calculate Button -->
-                <button type="submit" class="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-5 px-8 rounded-xl transition transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl text-lg">
-                    Calculate My Tax →
-                </button>
+                <!-- FAQ Section -->
+                <div style="margin-top: var(--space-12);">
+                    <h2 style="font-size: 20px; font-weight: 600; margin-bottom: var(--space-6); color: var(--gray-900);">
+                        Frequently Asked Questions
+                    </h2>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-6);">
 
-            </form>
-        </section>
-
-        <!-- Results Section (Hidden by default) -->
-        <div id="results" class="hidden space-y-8">
-
-            <!-- Summary Card -->
-            <section class="gradient-hero rounded-2xl shadow-2xl p-8 result-card relative overflow-hidden">
-                <div class="relative z-10">
-                    <h2 class="text-2xl font-bold mb-6 text-white">Your 2026 Tax Summary</h2>
-                    <div class="grid md:grid-cols-3 gap-6">
-                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                            <p class="text-green-100 text-sm mb-2 font-medium">Total Crypto Income</p>
-                            <p id="totalIncome" class="text-4xl font-bold font-mono count-up text-white">₦0</p>
+                        <div style="padding-bottom: var(--space-6); border-bottom: 1px solid var(--gray-200);">
+                            <h3 style="font-size: 16px; font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-3);">
+                                Is this calculator accurate?
+                            </h3>
+                            <p style="font-size: 14px; color: var(--gray-600); line-height: 1.6;">
+                                Yes. The calculator uses Nigeria's official 2026 progressive tax brackets (0% to 25%) from the Nigeria Tax Act, 2025, verified against EY, PWC, and KPMG analyses. However, this is an educational tool - for your specific situation, please consult a qualified tax professional.
+                            </p>
                         </div>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                            <p class="text-green-100 text-sm mb-2 font-medium">Total Tax Owed</p>
-                            <p id="totalTax" class="text-4xl font-bold font-mono count-up text-white">₦0</p>
+
+                        <div style="padding-bottom: var(--space-6); border-bottom: 1px solid var(--gray-200);">
+                            <h3 style="font-size: 16px; font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-3);">
+                                Is my data safe? Do you store my information?
+                            </h3>
+                            <p style="font-size: 14px; color: var(--gray-600); line-height: 1.6;">
+                                100% private. All calculations happen entirely in your browser using JavaScript. We don't have a backend server, database, or analytics tracking your income data. Nothing is stored or transmitted.
+                            </p>
                         </div>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                            <p class="text-green-100 text-sm mb-2 font-medium">Effective Tax Rate</p>
-                            <p id="effectiveRate" class="text-4xl font-bold font-mono count-up text-white">0%</p>
+
+                        <div style="padding-bottom: var(--space-6); border-bottom: 1px solid var(--gray-200);">
+                            <h3 style="font-size: 16px; font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-3);">
+                                What is the small player exemption?
+                            </h3>
+                            <p style="font-size: 14px; color: var(--gray-600); line-height: 1.6; margin-bottom: var(--space-3);">
+                                To qualify for the small player exemption (pay ₦0 tax), you must meet <strong>BOTH</strong> conditions in any 12-month period:
+                            </p>
+                            <ul style="font-size: 14px; color: var(--gray-600); line-height: 1.6; margin-left: 20px; margin-bottom: var(--space-3);">
+                                <li><strong>Gains under ₦10 million</strong> (your profit = sale price - purchase cost)</li>
+                                <li><strong>Proceeds under ₦150 million</strong> (total amount you received from selling)</li>
+                            </ul>
+                            <p style="font-size: 14px; color: var(--gray-600); line-height: 1.6;">
+                                <strong>Example:</strong> If you sold ₦200M of crypto but only made ₦5M profit, you do NOT qualify (proceeds too high). Both thresholds must be met. Consult a tax professional to confirm your eligibility.
+                            </p>
                         </div>
-                    </div>
-                    <div id="smeBadge" class="hidden mt-6">
-                        <span class="badge bg-white text-green-600 text-sm">
-                            ✓ SME Exemption Applied - You Pay ₦0!
-                        </span>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Income Breakdown -->
-            <section class="bg-white rounded-2xl shadow-xl p-8 result-card border border-gray-100">
-                <h3 class="text-2xl font-bold mb-6 text-gray-900">Income & Tax Breakdown</h3>
-                <div class="space-y-4" id="incomeBreakdownVisual">
-                    <!-- Populated by JavaScript with progress bars -->
-                </div>
-            </section>
+                        <div style="padding-bottom: var(--space-6); border-bottom: 1px solid var(--gray-200);">
+                            <h3 style="font-size: 16px; font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-3);">
+                                What if I made over ₦50M?
+                            </h3>
+                            <p style="font-size: 14px; color: var(--gray-600); line-height: 1.6;">
+                                At high income levels (₦50M+), professional tax planning becomes crucial. Consider consulting a crypto-savvy tax advisor who can help with strategies like corporate structures, business expenses, and other legal optimization methods.
+                            </p>
+                        </div>
 
-            <!-- Tax Bracket Visualization -->
-            <section class="bg-white rounded-2xl shadow-xl p-8 result-card border border-gray-100">
-                <h3 class="text-2xl font-bold mb-4 text-gray-900">How Progressive Tax Works</h3>
-                <p class="text-gray-600 mb-6">You only pay the higher rate on income above each threshold (not your entire income).</p>
-                <div class="space-y-4" id="bracketBreakdownVisual">
-                    <!-- Populated by JavaScript with visual bars -->
-                </div>
-            </section>
+                        <div style="padding-bottom: var(--space-6); border-bottom: 1px solid var(--gray-200);">
+                            <h3 style="font-size: 16px; font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-3);">
+                                Do I still need an accountant?
+                            </h3>
+                            <p style="font-size: 14px; color: var(--gray-600); line-height: 1.6;">
+                                This calculator helps you understand your tax liability, but you'll still need professional help for actual tax filing, especially if you have complex transactions, multiple income sources, or want personalized tax planning advice.
+                            </p>
+                        </div>
 
-            <!-- SME Comparison -->
-            <section id="smeComparison" class="hidden bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-8 result-card">
-                <div class="flex items-start gap-4 mb-6">
-                    <div class="text-4xl">💡</div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-green-900 mb-2">You Could Save Money!</h3>
-                        <p class="text-gray-700">By registering as an SME business, you could pay significantly less tax:</p>
-                    </div>
-                </div>
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-white rounded-xl p-6 border border-green-200">
-                        <p class="text-sm text-gray-600 mb-2">Your Current Tax (Non-SME)</p>
-                        <p id="nonSmeTax" class="text-3xl font-bold text-gray-900 font-mono">₦0</p>
-                    </div>
-                    <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white">
-                        <p class="text-sm text-green-100 mb-2">If You Register as SME</p>
-                        <p id="smeTax" class="text-3xl font-bold font-mono">₦0</p>
+                        <div style="padding-bottom: var(--space-6);">
+                            <h3 style="font-size: 16px; font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-3);">
+                                What are the 2026 tax brackets?
+                            </h3>
+                            <p style="font-size: 14px; color: var(--gray-600); line-height: 1.6; margin-bottom: var(--space-3);">
+                                Nigeria's 2026 crypto tax uses progressive brackets (official rates):
+                            </p>
+                            <ul style="font-size: 14px; color: var(--gray-600); line-height: 1.6; margin-left: 20px; margin-bottom: var(--space-3);">
+                                <li>₦0 - ₦800k: <strong>0%</strong> (tax-free)</li>
+                                <li>₦800k - ₦3M: <strong>15%</strong></li>
+                                <li>₦3M - ₦12M: <strong>18%</strong></li>
+                                <li>₦12M - ₦25M: <strong>21%</strong></li>
+                                <li>₦25M - ₦50M: <strong>23%</strong></li>
+                                <li>Above ₦50M: <strong>25%</strong></li>
+                            </ul>
+                            <p style="font-size: 13px; color: var(--gray-600); line-height: 1.6;">
+                                Source: Taiwo Oyedele, Presidential Fiscal Policy and Tax Reforms Committee
+                            </p>
+                        </div>
+
                     </div>
                 </div>
-                <div class="bg-white rounded-xl p-6 border-2 border-green-300">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-lg font-semibold text-gray-900">Your Savings:</span>
-                        <span id="smeSavings" class="text-3xl font-bold text-green-600 font-mono">₦0</span>
-                    </div>
-                    <p id="smePercent" class="text-gray-600"></p>
-                </div>
-                <a href="#faq-sme" class="inline-block mt-4 text-green-600 hover:text-green-700 font-semibold underline">
-                    Learn how to register as SME →
-                </a>
-            </section>
 
-            <!-- Optimization Tips -->
-            <section class="bg-white rounded-2xl shadow-xl p-8 result-card border border-gray-100">
-                <h3 class="text-2xl font-bold mb-6 text-gray-900">💰 Legal Ways to Reduce Your Tax</h3>
-                <div id="optimizationTips" class="space-y-4">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </section>
-
-            <!-- Copy Results Button -->
-            <div class="text-center no-print">
-                <button id="copyButton" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-xl transition transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl inline-flex items-center gap-3">
-                    <span class="text-2xl">📋</span>
-                    <span>Copy Results to Clipboard</span>
-                </button>
-                <p id="copyConfirmation" class="hidden mt-3 text-green-600 font-semibold">✓ Copied to clipboard!</p>
-            </div>
-
-        </div>
-
-        <!-- FAQ Section -->
-        <section class="mt-16 bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-            <h2 class="text-3xl font-bold mb-8 text-gray-900 text-center">Frequently Asked Questions</h2>
-            <div class="space-y-6 max-w-3xl mx-auto">
-
-                <div class="border-b border-gray-200 pb-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Is this calculator accurate?</h3>
-                    <p class="text-gray-600">Yes. The calculator uses Nigeria's official 2026 progressive tax brackets (0% to 25%) from the Nigeria Tax Act, 2025, verified against EY, PWC, and KPMG analyses. However, this is an educational tool - for your specific situation, please consult a qualified tax professional.</p>
-                </div>
-
-                <div class="border-b border-gray-200 pb-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Is my data safe? Do you store my information?</h3>
-                    <p class="text-gray-600">100% private. All calculations happen entirely in your browser using JavaScript. We don't have a backend server, database, or analytics tracking your income data. Nothing is stored or transmitted.</p>
-                </div>
-
-                <div id="faq-sme" class="border-b border-gray-200 pb-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">What is the small player exemption?</h3>
-                    <p class="text-gray-600 mb-3">To qualify for the small player exemption (pay ₦0 tax), you must meet <strong>BOTH</strong> conditions in any 12-month period:</p>
-                    <ul class="text-gray-600 space-y-2 text-sm mb-3 ml-4">
-                        <li>✅ <strong>Gains under ₦10 million</strong> (your profit = sale price - purchase cost)</li>
-                        <li>✅ <strong>Proceeds under ₦150 million</strong> (total amount you received from selling)</li>
-                    </ul>
-                    <p class="text-gray-600 text-sm"><strong>Example:</strong> If you sold ₦200M of crypto but only made ₦5M profit, you do NOT qualify (proceeds too high). Both thresholds must be met. Consult a tax professional to confirm your eligibility.</p>
-                </div>
-
-                <div class="border-b border-gray-200 pb-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">What if I made over ₦50M?</h3>
-                    <p class="text-gray-600">At high income levels (₦50M+), professional tax planning becomes crucial. Consider consulting a crypto-savvy tax advisor who can help with strategies like corporate structures, business expenses, and other legal optimization methods.</p>
-                </div>
-
-                <div class="border-b border-gray-200 pb-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Do I still need an accountant?</h3>
-                    <p class="text-gray-600">This calculator helps you understand your tax liability, but you'll still need professional help for actual tax filing, especially if you have complex transactions, multiple income sources, or want personalized tax planning advice.</p>
-                </div>
-
-                <div class="pb-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">What are the 2026 tax brackets?</h3>
-                    <p class="text-gray-600 mb-3">Nigeria's 2026 crypto tax uses progressive brackets (official rates):</p>
-                    <ul class="text-gray-600 space-y-1 text-sm">
-                        <li>• ₦0 - ₦800k: <strong>0%</strong> (tax-free)</li>
-                        <li>• ₦800k - ₦3M: <strong>15%</strong></li>
-                        <li>• ₦3M - ₦12M: <strong>18%</strong></li>
-                        <li>• ₦12M - ₦25M: <strong>21%</strong></li>
-                        <li>• ₦25M - ₦50M: <strong>23%</strong></li>
-                        <li>• Above ₦50M: <strong>25%</strong></li>
-                    </ul>
-                    <p class="text-gray-600 mt-3 text-sm">Source: Taiwo Oyedele, Presidential Fiscal Policy and Tax Reforms Committee</p>
-                </div>
-
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Disclaimer -->
-    <section class="bg-gradient-to-r from-amber-50 to-orange-50 border-t-4 border-amber-400 py-10 px-4 mt-16">
-        <div class="max-w-4xl mx-auto">
-            <div class="flex gap-4">
-                <div class="text-3xl flex-shrink-0">⚠️</div>
-                <div>
-                    <h3 class="text-xl font-bold text-amber-900 mb-3">Important Disclaimer</h3>
-                    <div class="text-sm text-gray-700 space-y-2 leading-relaxed">
+                <!-- Legal Disclaimer -->
+                <div style="margin-top: var(--space-12); padding: var(--space-6); background: rgba(251, 191, 36, 0.1); border-radius: 8px; border-left: 4px solid #f59e0b;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #92400e; margin-bottom: var(--space-3);">
+                        Important Disclaimer
+                    </h3>
+                    <div style="font-size: 13px; color: var(--gray-700); line-height: 1.6; display: flex; flex-direction: column; gap: var(--space-2);">
                         <p><strong>This calculator is an educational tool only</strong> and does not constitute professional tax, legal, or financial advice.</p>
                         <p><strong>Limitations:</strong> This calculator provides simplified estimates and does not account for: business expenses, capital losses carried forward, token-to-token swaps, staking rewards timing, mining income, international tax treaties, or other complex scenarios that may affect your actual tax liability.</p>
-                        <p><strong>Small player exemption:</strong> The exemption requires BOTH conditions to be met (gains &lt; ₦10M AND proceeds &lt; ₦150M). This calculator cannot verify your total sale proceeds - you must determine your eligibility independently.</p>
+                        <p><strong>Small player exemption:</strong> The exemption requires BOTH conditions to be met (gains < ₦10M AND proceeds < ₦150M). This calculator cannot verify your total sale proceeds - you must determine your eligibility independently.</p>
                         <p>Tax laws are complex and individual circumstances vary. The calculations are based on the Nigeria Tax Act, 2025 as publicly available. Tax regulations may change or be subject to interpretation.</p>
                         <p>For specific tax advice tailored to your situation, please consult a qualified tax professional or accountant familiar with Nigerian crypto taxation.</p>
                         <p>By using this calculator, you acknowledge that you understand this is not professional advice and you are solely responsible for your own tax compliance and decisions.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-12 px-4 mt-16">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center space-y-4">
-                <p class="text-white font-semibold text-lg">Built for Nigerian crypto users 🇳🇬</p>
-                <p class="text-sm max-w-2xl mx-auto">
-                    This is a free community tool to help Nigerian crypto traders understand the 2026 tax law.
-                    Not affiliated with any government agency.
-                </p>
-                <p class="text-xs text-gray-500 max-w-2xl mx-auto">
-                    Tax rates verified from official sources: <a href="https://tat.gov.ng/Nigeria-Tax-Act-2025.pdf" target="_blank" class="hover:text-gray-300 underline">Nigeria Tax Act, 2025 (Official PDF)</a>,
-                    <a href="https://www.ey.com/en_gl/technical/tax-alerts/nigeria-tax-act-2025-has-been-signed-highlights" target="_blank" class="hover:text-gray-300 underline">EY Analysis</a>,
-                    <a href="https://www.pwc.com/ng/en/publications/the-nigerian-tax-reform-acts.html" target="_blank" class="hover:text-gray-300 underline">PWC Nigeria</a>,
-                    <a href="https://africacheck.org/fact-checks/factsheets/factsheet-vat-income-tax-how-nigerias-new-tax-rules-affect-you" target="_blank" class="hover:text-gray-300 underline">Africa Check</a>
-                </p>
-                <div class="flex justify-center gap-4 text-sm">
-                    <a href="https://twitter.com/intent/tweet?text=Just%20calculated%20my%202026%20crypto%20tax%20with%20this%20free%20Nigerian%20calculator%20%F0%9F%87%B3%F0%9F%87%AC&url=https://nigerian-crypto-tax-calc.netlify.app"
-                       target="_blank"
-                       class="hover:text-white underline transition">
-                        Share on Twitter
-                    </a>
-                    <span>•</span>
-                    <a href="https://github.com/Yonkoo11/nigerian-crypto-tax-calc"
-                       target="_blank"
-                       class="hover:text-white underline transition">
-                        View on GitHub
-                    </a>
+                <!-- Footer -->
+                <div style="margin-top: var(--space-12); padding-top: var(--space-6); border-top: 1px solid var(--gray-200); text-align: center;">
+                    <p style="font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-2);">
+                        Built for Nigerian crypto users 🇳🇬
+                    </p>
+                    <p style="font-size: 13px; color: var(--gray-600); line-height: 1.6; margin-bottom: var(--space-4);">
+                        This is a free community tool to help Nigerian crypto traders understand the 2026 tax law. Not affiliated with any government agency.
+                    </p>
+                    <div style="font-size: 12px; color: var(--gray-600);">
+                        <p style="margin-bottom: var(--space-2);"><strong>Official Data Sources:</strong></p>
+                        <p>
+                            <a href="https://tat.gov.ng" style="color: var(--primary); text-decoration: underline;" target="_blank" rel="noopener noreferrer">Nigeria Tax Act 2025 (Official PDF)</a> •
+                            <a href="https://www.pwc.com/ng/en/publications/nigeria-tax-guide.html" style="color: var(--primary); text-decoration: underline;" target="_blank" rel="noopener noreferrer">PWC Nigeria Tax Guide</a> •
+                            <a href="https://www.ey.com/en_ng/tax" style="color: var(--primary); text-decoration: underline;" target="_blank" rel="noopener noreferrer">EY Nigeria Tax</a>
+                        </p>
+                        <p style="margin-top: var(--space-4); color: var(--gray-500);">
+                            Found a bug? <a href="https://github.com/yourusername/nigerian-crypto-tax-calc/issues" style="color: var(--primary); text-decoration: underline;" target="_blank" rel="noopener noreferrer">Report it on GitHub</a>
+                        </p>
+                        <p style="margin-top: var(--space-4); color: var(--gray-500); font-size: 11px;">
+                            <strong>Version 1.0.0</strong> • Last updated: January 2, 2026<br>
+                            100% client-side • Zero dependencies • <a href="https://github.com/yourusername/nigerian-crypto-tax-calc" style="color: var(--primary); text-decoration: underline;" target="_blank" rel="noopener noreferrer">Verify source code</a>
+                        </p>
+                    </div>
                 </div>
-                <p class="text-xs text-gray-500 pt-4">
-                    © 2026 Nigerian Crypto Tax Calculator • Open Source • MIT License
-                </p>
+
             </div>
         </div>
-    </footer>
 
-    <!-- JavaScript -->
+    </div>
+
     <script>
-        // Utility: Format currency
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('en-NG', {
-                style: 'currency',
-                currency: 'NGN',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(amount);
-        }
+        // TAX CALCULATION LOGIC (copied from old file, NOT layout code)
 
-        // Utility: Format number with commas
-        function formatNumber(num, decimals = 0) {
-            return new Intl.NumberFormat('en-US', {
-                minimumFractionDigits: decimals,
-                maximumFractionDigits: decimals
-            }).format(num);
-        }
-
-        // Animate number count-up
-        function animateValue(element, start, end, duration = 1000) {
-            const startTime = Date.now();
-            const isPercentage = element.id === 'effectiveRate';
-
-            function update() {
-                const currentTime = Date.now();
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-
-                // Easing function
-                const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-                const current = start + (end - start) * easeOutCubic;
-
-                if (isPercentage) {
-                    element.textContent = current.toFixed(1) + '%';
-                } else {
-                    element.textContent = formatCurrency(current);
-                }
-
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                }
-            }
-
-            update();
-        }
-
-        // Tax bracket structure (2026 Nigerian law - OFFICIAL)
-        // Source: Taiwo Oyedele, Presidential Fiscal Policy and Tax Reforms Committee
+        // Official 2026 tax brackets (Nigeria Tax Act 2025)
         const TAX_BRACKETS = [
-            { min: 0, max: 800000, rate: 0.00, label: '₦0 - ₦800k', color: 'bg-gray-400' },
-            { min: 800000, max: 3000000, rate: 0.15, label: '₦800k - ₦3M', color: 'bg-green-400' },
-            { min: 3000000, max: 12000000, rate: 0.18, label: '₦3M - ₦12M', color: 'bg-green-500' },
-            { min: 12000000, max: 25000000, rate: 0.21, label: '₦12M - ₦25M', color: 'bg-blue-500' },
-            { min: 25000000, max: 50000000, rate: 0.23, label: '₦25M - ₦50M', color: 'bg-purple-500' },
-            { min: 50000000, max: Infinity, rate: 0.25, label: 'Above ₦50M', color: 'bg-red-500' }
+            { limit: 800000, rate: 0 },       // First ₦800k exempt
+            { limit: 3000000, rate: 0.15 },   // ₦800k - ₦3M: 15%
+            { limit: 12000000, rate: 0.18 },  // ₦3M - ₦12M: 18%
+            { limit: 25000000, rate: 0.21 },  // ₦12M - ₦25M: 21%
+            { limit: 50000000, rate: 0.23 },  // ₦25M - ₦50M: 23%
+            { limit: Infinity, rate: 0.25 }   // Above ₦50M: 25%
         ];
 
-        // Small player exemption threshold (gains, not total income)
-        const SMALL_PLAYER_GAINS_THRESHOLD = 10000000; // ₦10M in gains
-        const SME_THRESHOLD = 10000000; // Keep for compatibility, but represents gains exemption
+        // SME exemption thresholds
+        const SME_GAIN_EXEMPTION = 10000000;   // ₦10M
+        const SME_REVENUE_EXEMPTION = 150000000; // ₦150M
 
-        // Calculate tax using progressive brackets
-        function calculateTax(income, isSME) {
-            if (isSME && income <= SME_THRESHOLD) {
-                return 0;
+        // Format currency
+        function formatCurrency(amount) {
+            return '₦' + Math.round(amount).toLocaleString('en-NG');
+        }
+
+        // Calculate progressive tax
+        function calculateProgressiveTax(totalIncome) {
+            if (totalIncome <= 0) return { totalTax: 0, breakdown: [] };
+
+            let remainingIncome = totalIncome;
+            let totalTax = 0;
+            let breakdown = [];
+            let previousLimit = 0;
+
+            for (let bracket of TAX_BRACKETS) {
+                if (remainingIncome <= 0) break;
+
+                const bracketIncome = Math.min(remainingIncome, bracket.limit - previousLimit);
+                const bracketTax = bracketIncome * bracket.rate;
+
+                totalTax += bracketTax;
+
+                if (bracketIncome > 0) {
+                    breakdown.push({
+                        range: previousLimit === 0
+                            ? `First ${formatCurrency(bracket.limit)}`
+                            : `${formatCurrency(previousLimit)} - ${formatCurrency(bracket.limit)}`,
+                        rate: (bracket.rate * 100).toFixed(0) + '%',
+                        tax: formatCurrency(bracketTax)
+                    });
+                }
+
+                remainingIncome -= bracketIncome;
+                previousLimit = bracket.limit;
             }
 
-            let totalTax = 0;
-            for (let bracket of TAX_BRACKETS) {
-                if (income > bracket.min) {
-                    const taxableInBracket = Math.min(income, bracket.max) - bracket.min;
-                    const taxForBracket = taxableInBracket * bracket.rate;
-                    totalTax += taxForBracket;
+            return { totalTax, breakdown };
+        }
+
+        // Generate optimization tips based on income
+        function getOptimizationTips(totalIncome, incomeData) {
+            const tips = [];
+
+            // SME exemption tip (if under threshold)
+            if (totalIncome > 0 && totalIncome < SME_GAIN_EXEMPTION) {
+                const { totalTax } = calculateProgressiveTax(totalIncome);
+                if (totalTax > 0) {
+                    tips.push(
+                        `✓ You may qualify for small player exemption and save ${formatCurrency(totalTax)} in taxes if your sale proceeds are also under ₦150M. Consult a tax professional to confirm eligibility.`
+                    );
                 }
             }
 
-            return totalTax;
-        }
-
-        // Get tax breakdown by bracket
-        function getTaxBreakdown(income) {
-            const breakdown = [];
-            for (let bracket of TAX_BRACKETS) {
-                const amountInBracket = income > bracket.min ? Math.min(income, bracket.max) - bracket.min : 0;
-                const taxForBracket = amountInBracket * bracket.rate;
-
-                breakdown.push({
-                    bracket: bracket.label,
-                    rate: (bracket.rate * 100).toFixed(0) + '%',
-                    amount: amountInBracket,
-                    tax: taxForBracket,
-                    color: bracket.color,
-                    percentage: income > 0 ? (amountInBracket / income * 100) : 0
-                });
-            }
-            return breakdown;
-        }
-
-        // Get optimization tips
-        function getOptimizationTips(totalIncome, isSME, incomeData) {
-            const tips = [];
-
-            if (!isSME && totalIncome < SME_THRESHOLD && totalIncome > 0) {
-                const savings = calculateTax(totalIncome, false) - 0;
-                tips.push({
-                    icon: '🎯',
-                    text: `If your gains are under ₦10M, you may qualify for small player exemption and save ${formatCurrency(savings)} in taxes. Check with a tax professional.`
-                });
+            // High income tax planning
+            if (totalIncome > SME_GAIN_EXEMPTION) {
+                tips.push(
+                    '💼 For gains above ₦10M, professional tax planning becomes important. Consider consulting a crypto-savvy tax advisor for optimization strategies.'
+                );
             }
 
-            if (totalIncome > SME_THRESHOLD) {
-                tips.push({
-                    icon: '📊',
-                    text: 'For gains above ₦10M, professional tax planning becomes important. Consider consulting a crypto-savvy tax advisor for optimization strategies.'
-                });
-            }
-
+            // Staking income tip
             const stakingPercent = totalIncome > 0 ? (incomeData.staking / totalIncome) : 0;
             if (stakingPercent > 0.3 && incomeData.staking > 1000000) {
-                tips.push({
-                    icon: '🏦',
-                    text: 'Your staking income is significant. Consult a tax professional about potential different treatment under certain business structures.'
-                });
+                tips.push(
+                    '🏦 Your staking income is significant (>30% of total). Consult a tax professional about potential different treatment under certain business structures.'
+                );
             }
 
+            // Large airdrops tip
             if (incomeData.airdrops > 3000000) {
-                tips.push({
-                    icon: '🎁',
-                    text: 'For large airdrops, consult a tax professional about proper cost basis valuation and timing of recognition.'
-                });
+                tips.push(
+                    '🎁 For large airdrops, consult a tax professional about proper cost basis valuation and timing of recognition.'
+                );
             }
 
-            tips.push({
-                icon: '📝',
-                text: 'Keep detailed records of all crypto transactions, including dates, amounts, and sources. Essential for tax filing and audits.'
-            });
+            // Record keeping (always show)
+            tips.push(
+                '📝 Keep detailed records of all crypto transactions, including dates, amounts, and sources. Essential for tax filing and audits.'
+            );
 
-            if (totalIncome > 51200000) {
-                tips.push({
-                    icon: '💼',
-                    text: 'At your income level, professional tax planning can save significant amounts. Consider consulting a crypto-savvy tax advisor.'
-                });
+            // Very high income tip
+            if (totalIncome > 50000000) {
+                tips.push(
+                    '💰 At your income level (₦50M+), professional tax planning can save significant amounts through legal strategies like corporate structures and business expense optimization.'
+                );
             }
 
-            return tips.slice(0, 4);
+            return tips.slice(0, 4); // Show max 4 tips
         }
 
-        // Calculate SME savings
-        function calculateSMESavings(income) {
-            const taxNonSME = calculateTax(income, false);
-            const taxSME = calculateTax(income, true);
-            const savings = taxNonSME - taxSME;
-            const percentSaved = taxNonSME > 0 ? (savings / taxNonSME * 100).toFixed(1) : 0;
+        // Live calculation (runs on every input change)
+        function calculateTaxLive() {
+            try {
+                // Get all income values
+                const tradingProfit = parseFloat(document.getElementById('tradingProfit').value) || 0;
+                const stakingIncome = parseFloat(document.getElementById('stakingIncome').value) || 0;
+                const airdropsIncome = parseFloat(document.getElementById('airdropsIncome').value) || 0;
+                const freelanceIncome = parseFloat(document.getElementById('freelanceIncome').value) || 0;
+                const nftIncome = parseFloat(document.getElementById('nftIncome').value) || 0;
 
-            return { savings, percentSaved, taxSME, taxNonSME };
+                // Calculate total income
+                const totalIncome = tradingProfit + stakingIncome + airdropsIncome + freelanceIncome + nftIncome;
+
+                // Check for unrealistic inputs (> ₦1 billion)
+                const isUnrealistic = totalIncome > 1000000000;
+
+                // Income data object for optimization tips
+                const incomeData = {
+                    trading: tradingProfit,
+                    staking: stakingIncome,
+                    airdrops: airdropsIncome,
+                    freelance: freelanceIncome,
+                    nft: nftIncome
+                };
+
+                // Check SME exemption
+                const smeExempt = totalIncome > 0 && totalIncome < SME_GAIN_EXEMPTION;
+
+                // Calculate tax
+                const { totalTax, breakdown } = smeExempt ? { totalTax: 0, breakdown: [] } : calculateProgressiveTax(totalIncome);
+
+                // Calculate metrics
+                const effectiveRate = totalIncome > 0 ? (totalTax / totalIncome * 100).toFixed(1) : 0;
+                const takeHome = totalIncome - totalTax;
+                const topBracket = totalIncome > 50000000 ? 25 :
+                                   totalIncome > 25000000 ? 23 :
+                                   totalIncome > 12000000 ? 21 :
+                                   totalIncome > 3000000 ? 18 :
+                                   totalIncome > 800000 ? 15 : 0;
+
+                // Update UI
+                document.getElementById('totalTax').textContent = formatCurrency(totalTax);
+                document.getElementById('totalIncome').textContent = formatCurrency(totalIncome);
+                document.getElementById('takeHome').textContent = formatCurrency(takeHome);
+                document.getElementById('effectiveRate').textContent = effectiveRate + '%';
+                document.getElementById('taxBracket').textContent = topBracket + '%';
+
+                // Show/hide SME notice
+                document.getElementById('smeNotice').style.display = smeExempt ? 'block' : 'none';
+
+                // Show/hide unrealistic input warning
+                document.getElementById('unrealisticWarning').style.display = isUnrealistic ? 'block' : 'none';
+
+                // Update breakdown table
+                const breakdownTableBody = document.getElementById('breakdownTable');
+                if (breakdown.length === 0) {
+                    breakdownTableBody.innerHTML = `
+                        <tr>
+                            <td colspan="3" style="text-align: center; color: var(--gray-600); font-family: var(--font-sans);">
+                                ${totalIncome === 0 ? 'Enter income to see breakdown' : 'Tax exempt (SME exemption applies)'}
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    breakdownTableBody.innerHTML = breakdown.map(item => `
+                        <tr>
+                            <td>${item.range}</td>
+                            <td>${item.rate}</td>
+                            <td>${item.tax}</td>
+                        </tr>
+                    `).join('');
+                }
+
+                // Update optimization tips
+                const tips = getOptimizationTips(totalIncome, incomeData);
+                const optimizationTipsContainer = document.getElementById('optimizationTips');
+                if (tips.length === 0 || totalIncome === 0) {
+                    optimizationTipsContainer.innerHTML = `
+                        <div style="padding: var(--space-4); background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--primary);">
+                            <p style="font-size: 14px; color: var(--gray-700); line-height: 1.5;">
+                                Enter your income to see personalized tax optimization strategies.
+                            </p>
+                        </div>
+                    `;
+                } else {
+                    optimizationTipsContainer.innerHTML = tips.map((tip, index) => `
+                        <div style="padding: var(--space-4); background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--primary);">
+                            <p style="font-size: 14px; color: var(--gray-700); line-height: 1.5;">
+                                ${tip}
+                            </p>
+                        </div>
+                    `).join('');
+                }
+
+                // Save state to URL for bookmarking/sharing
+                saveStateToURL();
+
+            } catch (error) {
+                // Error boundary - prevent calculation crashes
+                console.error('Tax calculation error:', error);
+
+                // Display user-friendly error message
+                const totalTaxElement = document.getElementById('totalTax');
+                if (totalTaxElement) {
+                    totalTaxElement.textContent = 'Error - Please refresh';
+                    totalTaxElement.style.fontSize = '20px';
+                }
+
+                // Show error in console for debugging
+                console.log('If you see this error, please report it at: https://github.com/yourusername/nigerian-crypto-tax-calc/issues');
+            }
         }
 
-        // Handle form submission
-        document.getElementById('taxForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // URL State Persistence - Save inputs to URL for bookmarking/sharing
+        function saveStateToURL() {
+            const params = new URLSearchParams();
 
-            // Get input values
-            const tradingProfit = parseFloat(document.getElementById('tradingProfit').value) || 0;
-            const stakingIncome = parseFloat(document.getElementById('stakingIncome').value) || 0;
-            const airdropsIncome = parseFloat(document.getElementById('airdropsIncome').value) || 0;
-            const freelanceIncome = parseFloat(document.getElementById('freelanceIncome').value) || 0;
-            const nftIncome = parseFloat(document.getElementById('nftIncome').value) || 0;
-            const isSME = document.getElementById('isSME').checked;
+            const tradingProfit = document.getElementById('tradingProfit').value;
+            const stakingIncome = document.getElementById('stakingIncome').value;
+            const airdropsIncome = document.getElementById('airdropsIncome').value;
+            const freelanceIncome = document.getElementById('freelanceIncome').value;
+            const nftIncome = document.getElementById('nftIncome').value;
 
-            const totalIncome = tradingProfit + stakingIncome + airdropsIncome + freelanceIncome + nftIncome;
+            // Only add non-zero values to keep URL clean
+            if (tradingProfit && tradingProfit !== '0') params.set('trading', tradingProfit);
+            if (stakingIncome && stakingIncome !== '0') params.set('staking', stakingIncome);
+            if (airdropsIncome && airdropsIncome !== '0') params.set('airdrops', airdropsIncome);
+            if (freelanceIncome && freelanceIncome !== '0') params.set('freelance', freelanceIncome);
+            if (nftIncome && nftIncome !== '0') params.set('nft', nftIncome);
 
-            if (totalIncome === 0) {
-                alert('Please enter at least one income amount to calculate your tax.');
-                return;
-            }
+            // Update URL without reloading page
+            const newURL = params.toString() ? `?${params.toString()}` : window.location.pathname;
+            window.history.replaceState({}, '', newURL);
+        }
 
-            const totalTax = calculateTax(totalIncome, isSME);
-            const effectiveRate = totalIncome > 0 ? (totalTax / totalIncome * 100) : 0;
+        // Load state from URL on page load
+        function loadStateFromURL() {
+            const params = new URLSearchParams(window.location.search);
 
-            const incomeData = {
-                trading: tradingProfit,
-                staking: stakingIncome,
-                airdrops: airdropsIncome,
-                freelance: freelanceIncome,
-                nft: nftIncome
-            };
+            if (params.has('trading')) document.getElementById('tradingProfit').value = params.get('trading');
+            if (params.has('staking')) document.getElementById('stakingIncome').value = params.get('staking');
+            if (params.has('airdrops')) document.getElementById('airdropsIncome').value = params.get('airdrops');
+            if (params.has('freelance')) document.getElementById('freelanceIncome').value = params.get('freelance');
+            if (params.has('nft')) document.getElementById('nftIncome').value = params.get('nft');
+        }
 
-            const bracketBreakdown = getTaxBreakdown(totalIncome);
-            const optimizationTips = getOptimizationTips(totalIncome, isSME, incomeData);
-            const smeSavings = calculateSMESavings(totalIncome);
-
-            // Animate summary numbers
-            animateValue(document.getElementById('totalIncome'), 0, totalIncome);
-            animateValue(document.getElementById('totalTax'), 0, totalTax);
-            animateValue(document.getElementById('effectiveRate'), 0, effectiveRate);
-
-            // Show/hide SME badge
-            const smeBadge = document.getElementById('smeBadge');
-            if (isSME && totalIncome <= SME_THRESHOLD) {
-                smeBadge.classList.remove('hidden');
-            } else {
-                smeBadge.classList.add('hidden');
-            }
-
-            // Populate income breakdown with visual progress bars
-            const incomeItems = [
-                { label: 'Trading Profit', icon: '💹', amount: tradingProfit, color: 'green' },
-                { label: 'Staking & Interest', icon: '🏦', amount: stakingIncome, color: 'blue' },
-                { label: 'Airdrops & Bounties', icon: '🎁', amount: airdropsIncome, color: 'purple' },
-                { label: 'Freelance & Salary', icon: '💼', amount: freelanceIncome, color: 'amber' },
-                { label: 'NFT Sales', icon: '🖼️', amount: nftIncome, color: 'pink' }
-            ].filter(item => item.amount > 0);
-
-            const maxIncome = Math.max(...incomeItems.map(item => item.amount));
-
-            const incomeBreakdownHtml = incomeItems.map(item => {
-                const itemTax = item.amount > 0 ? calculateTax(item.amount, isSME) : 0;
-                const percentage = (item.amount / totalIncome * 100).toFixed(1);
-                const barWidth = (item.amount / totalIncome * 100).toFixed(1);
-
-                return `
-                    <div class="slide-in">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">${item.icon}</span>
-                                <div>
-                                    <div class="font-semibold text-gray-900">${item.label}</div>
-                                    <div class="text-sm text-gray-500">${percentage}% of total income</div>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <div class="font-mono font-semibold text-gray-900">${formatCurrency(item.amount)}</div>
-                                <div class="text-sm text-gray-600">Tax: ${formatCurrency(itemTax)}</div>
-                            </div>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                            <div class="progress-bar bg-${item.color}-500 h-3" style="width: ${barWidth}%"></div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('incomeBreakdownVisual').innerHTML = incomeBreakdownHtml;
-
-            // Populate bracket breakdown with visual bars
-            const bracketBreakdownHtml = bracketBreakdown.filter(item => item.amount > 0).map((item, index) => {
-                const barWidth = Math.min((item.amount / totalIncome * 100), 100).toFixed(1);
-
-                return `
-                    <div class="slide-in" style="animation-delay: ${index * 0.1}s">
-                        <div class="flex items-center justify-between mb-2">
-                            <div>
-                                <div class="font-semibold text-gray-900">${item.bracket}</div>
-                                <div class="text-sm text-gray-500">Rate: ${item.rate}</div>
-                            </div>
-                            <div class="text-right">
-                                <div class="font-mono font-semibold text-gray-900">${formatCurrency(item.amount)}</div>
-                                <div class="text-sm text-gray-600">Tax: ${formatCurrency(item.tax)}</div>
-                            </div>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                            <div class="${item.color} h-3 rounded-full transition-all duration-1000" style="width: ${barWidth}%"></div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('bracketBreakdownVisual').innerHTML = bracketBreakdownHtml;
-
-            // Show/hide SME comparison
-            const smeComparisonSection = document.getElementById('smeComparison');
-            if (!isSME && totalIncome > 0) {
-                smeComparisonSection.classList.remove('hidden');
-                document.getElementById('nonSmeTax').textContent = formatCurrency(smeSavings.taxNonSME);
-                document.getElementById('smeTax').textContent = formatCurrency(smeSavings.taxSME);
-                document.getElementById('smeSavings').textContent = formatCurrency(smeSavings.savings);
-                document.getElementById('smePercent').textContent = `That's ${smeSavings.percentSaved}% savings! ${smeSavings.taxSME === 0 ? 'You would pay ₦0 tax.' : ''}`;
-            } else {
-                smeComparisonSection.classList.add('hidden');
-            }
-
-            // Populate optimization tips
-            const tipsHtml = optimizationTips.map((tip, index) => `
-                <div class="flex gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition slide-in" style="animation-delay: ${index * 0.1}s">
-                    <span class="text-3xl flex-shrink-0">${tip.icon}</span>
-                    <p class="text-gray-700">${tip.text}</p>
-                </div>
-            `).join('');
-
-            document.getElementById('optimizationTips').innerHTML = tipsHtml;
-
-            // Show results section with smooth scroll
-            const resultsSection = document.getElementById('results');
-            resultsSection.classList.remove('hidden');
-
-            setTimeout(() => {
-                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
-
-            // Update button text
-            document.querySelector('button[type="submit"]').innerHTML = '🔄 Recalculate';
-        });
-
-        // Copy results to clipboard
-        document.getElementById('copyButton').addEventListener('click', function() {
-            const totalIncome = document.getElementById('totalIncome').textContent;
-            const totalTax = document.getElementById('totalTax').textContent;
-            const effectiveRate = document.getElementById('effectiveRate').textContent;
-            const isSME = document.getElementById('isSME').checked;
-
-            const copyText = `
-=================================
-NIGERIAN CRYPTO TAX CALCULATION
-2026 Tax Law
-=================================
-
-TOTAL INCOME: ${totalIncome}
-TOTAL TAX OWED: ${totalTax}
-EFFECTIVE TAX RATE: ${effectiveRate}
-SME STATUS: ${isSME ? 'Yes' : 'No'}
-
-⚠️ Disclaimer: Educational estimate only. Consult tax professional.
-
-Calculated using: nigerian-crypto-tax-calc.netlify.app
-=================================
-            `.trim();
-
-            navigator.clipboard.writeText(copyText).then(() => {
-                const confirmation = document.getElementById('copyConfirmation');
-                confirmation.classList.remove('hidden');
-                setTimeout(() => {
-                    confirmation.classList.add('hidden');
-                }, 3000);
-            }).catch(err => {
-                alert('Failed to copy to clipboard. Please copy manually.');
-            });
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStateFromURL(); // Load from URL first
+            calculateTaxLive(); // Then calculate with loaded values
         });
     </script>
 
