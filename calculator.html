@@ -876,7 +876,7 @@
             <!-- Save Calculation Prompt (Optional, Dismissible) -->
             <div id="savePrompt" class="save-prompt" style="display: none;">
                 <div class="save-prompt-content">
-                    <button class="save-prompt-close" onclick="dismissSavePrompt()" aria-label="Close">×</button>
+                    <button class="save-prompt-close" aria-label="Close">×</button>
                     <div class="save-prompt-icon">💾</div>
                     <h3 class="save-prompt-title">Save This Calculation?</h3>
                     <p class="save-prompt-text">Access your results anytime by emailing yourself this link</p>
@@ -887,20 +887,20 @@
                                class="save-email-input"
                                placeholder="your@email.com"
                                aria-label="Email address">
-                        <button class="btn-primary" onclick="emailCalculation()">
+                        <button class="btn-primary" id="emailCalculationBtn">
                             Email Me This Link
                         </button>
                     </div>
 
                     <p class="save-prompt-note">
-                        Or <a href="#" onclick="copyCalculationURL(event)" class="text-green-600">copy the link</a> to save it yourself
+                        Or <a href="#" id="copyCalculationLink" class="text-green-600">copy the link</a> to save it yourself
                     </p>
                 </div>
             </div>
 
             <!-- Income Section (Collapsible) -->
             <section class="section">
-                <div class="section-header" onclick="toggleSection('income')" aria-expanded="true">
+                <div class="section-header" data-section="income" aria-expanded="true">
                     <h2 class="section-title">Income Sources</h2>
                     <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -1042,7 +1042,7 @@
 
             <!-- Deductions Section (Collapsible) -->
             <section class="section">
-                <div class="section-header" onclick="toggleSection('deductions')" aria-expanded="true">
+                <div class="section-header" data-section="deductions" aria-expanded="true">
                     <h2 class="section-title">Tax Deductions</h2>
                     <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -1132,7 +1132,7 @@
 
             <!-- FAQ Section -->
             <section class="section">
-                <div class="section-header" onclick="toggleSection('faq')" aria-expanded="false">
+                <div class="section-header" data-section="faq" aria-expanded="false">
                     <h2 class="section-title">Frequently Asked Questions</h2>
                     <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -1140,7 +1140,7 @@
                 </div>
                 <div class="section-content" id="faqContent">
                     <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(0)" aria-expanded="false">
+                        <div class="faq-question" data-faq-index="0" aria-expanded="false">
                             <span class="faq-question-text">Is this calculator accurate?</span>
                             <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -1154,7 +1154,7 @@
                     </div>
 
                     <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(1)" aria-expanded="false">
+                        <div class="faq-question" data-faq-index="1" aria-expanded="false">
                             <span class="faq-question-text">What is the small player exemption?</span>
                             <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -1168,7 +1168,7 @@
                     </div>
 
                     <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(2)" aria-expanded="false">
+                        <div class="faq-question" data-faq-index="2" aria-expanded="false">
                             <span class="faq-question-text">What deductions can I claim?</span>
                             <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -1182,7 +1182,7 @@
                     </div>
 
                     <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(3)" aria-expanded="false">
+                        <div class="faq-question" data-faq-index="3" aria-expanded="false">
                             <span class="faq-question-text">Do I need to report airdrops?</span>
                             <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -1196,7 +1196,7 @@
                     </div>
 
                     <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(4)" aria-expanded="false">
+                        <div class="faq-question" data-faq-index="4" aria-expanded="false">
                             <span class="faq-question-text">What if I made over ₦50M?</span>
                             <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -1210,7 +1210,7 @@
                     </div>
 
                     <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFAQ(5)" aria-expanded="false">
+                        <div class="faq-question" data-faq-index="5" aria-expanded="false">
                             <span class="faq-question-text">When do I pay my taxes?</span>
                             <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>

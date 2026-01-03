@@ -923,6 +923,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Initialize section toggle listeners (CSP-safe)
+    document.querySelectorAll('.section-header[data-section]').forEach(header => {
+        const sectionName = header.getAttribute('data-section');
+        header.addEventListener('click', () => toggleSection(sectionName));
+        header.setAttribute('role', 'button');
+        header.setAttribute('tabindex', '0');
+        header.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleSection(sectionName);
+            }
+        });
+    });
+
+    // Initialize FAQ toggle listeners (CSP-safe)
+    document.querySelectorAll('.faq-question[data-faq-index]').forEach(question => {
+        const index = parseInt(question.getAttribute('data-faq-index'));
+        question.addEventListener('click', () => toggleFAQ(index));
+        question.setAttribute('role', 'button');
+        question.setAttribute('tabindex', '0');
+        question.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleFAQ(index);
+            }
+        });
+    });
+
+    // Initialize save prompt listeners (CSP-safe)
+    const savePromptClose = document.querySelector('.save-prompt-close');
+    if (savePromptClose) {
+        savePromptClose.addEventListener('click', dismissSavePrompt);
+    }
+
+    const emailBtn = document.getElementById('emailCalculationBtn');
+    if (emailBtn) {
+        emailBtn.addEventListener('click', emailCalculation);
+    }
+
+    const copyLink = document.getElementById('copyCalculationLink');
+    if (copyLink) {
+        copyLink.addEventListener('click', copyCalculationURL);
+    }
+
     // On desktop, expand all sections by default
     if (window.innerWidth >= 768) {
         document.querySelectorAll('.section-content').forEach(content => {
