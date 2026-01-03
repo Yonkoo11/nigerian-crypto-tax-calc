@@ -10,17 +10,17 @@
     <link rel="dns-prefetch" href="https://plausible.io">
     <link rel="preconnect" href="https://plausible.io" crossorigin>
 
-    <!-- Content Security Policy -->
+    <!-- Content Security Policy - Secure configuration -->
     <meta http-equiv="Content-Security-Policy"
           content="default-src 'self';
-                   script-src 'self' 'unsafe-inline' https://plausible.io;
+                   script-src 'self' https://plausible.io;
                    style-src 'self' 'unsafe-inline';
                    img-src 'self' data:;
-                   connect-src https://plausible.io;
+                   connect-src 'self' https://plausible.io;
                    font-src 'self';
                    frame-ancestors 'none';
                    base-uri 'self';
-                   form-action 'none';">
+                   form-action 'self';">
 
     <!-- Plausible Analytics - Privacy-friendly (no cookies, GDPR compliant) -->
     <script defer data-domain="nigerian-crypto-tax-calc.netlify.app" src="https://plausible.io/js/script.js"></script>

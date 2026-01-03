@@ -184,11 +184,13 @@ function showInputWarning(input, message) {
     warningMsg.textContent = message;
 }
 
-// Validate exchange rate (warn if unusual)
+// Validate exchange rate (strict validation to prevent calculation errors)
 function validateExchangeRate(input) {
     const value = parseFloat(input.value);
     const typicalMin = 1500;
     const typicalMax = 2000;
+    const absoluteMin = 100;    // Reject unrealistic rates
+    const absoluteMax = 10000;  // Reject unrealistic rates
 
     clearInputError(input);
 
@@ -197,7 +199,13 @@ function validateExchangeRate(input) {
         return false;
     }
 
-    // Warn if outside typical range
+    // Hard limit: Reject completely unrealistic rates
+    if (value < absoluteMin || value > absoluteMax) {
+        showInputError(input, `Exchange rate must be between ₦${absoluteMin}-₦${absoluteMax}/USD`);
+        return false;
+    }
+
+    // Warn if outside typical range (but still allow)
     if (value < typicalMin || value > typicalMax) {
         showInputWarning(input, `Unusual rate (typical range: ₦${typicalMin}-₦${typicalMax}/USD)`);
     }
@@ -205,17 +213,33 @@ function validateExchangeRate(input) {
     return true;
 }
 
-// Create notification toast
+// Create notification toast (XSS-safe)
 function createNotification({ type = 'error', title, message, duration = 5000 }) {
     // Create notification element
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
 
-    notification.innerHTML = `
-        <button class="notification-close" onclick="this.parentElement.remove()">×</button>
-        <div class="notification-title">${title}</div>
-        <div class="notification-message">${message}</div>
-    `;
+    // Create close button (no inline onclick)
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'notification-close';
+    closeBtn.textContent = '×';
+    closeBtn.setAttribute('aria-label', 'Close notification');
+    closeBtn.addEventListener('click', () => notification.remove());
+
+    // Create title (textContent prevents XSS)
+    const titleEl = document.createElement('div');
+    titleEl.className = 'notification-title';
+    titleEl.textContent = title;
+
+    // Create message (textContent prevents XSS)
+    const messageEl = document.createElement('div');
+    messageEl.className = 'notification-message';
+    messageEl.textContent = message;
+
+    // Assemble notification
+    notification.appendChild(closeBtn);
+    notification.appendChild(titleEl);
+    notification.appendChild(messageEl);
 
     // Add to page
     document.body.appendChild(notification);
@@ -533,9 +557,25 @@ let factRotationInterval;
 
 function initializeFacts() {
     const factNav = document.getElementById('factNav');
-    factNav.innerHTML = taxFacts.map((_, index) =>
-        `<span class="fact-dot ${index === 0 ? 'active' : ''}" onclick="showFact(${index})"></span>`
-    ).join('');
+    // Clear existing content
+    factNav.innerHTML = '';
+
+    // Create fact dots without inline onclick (CSP-safe)
+    taxFacts.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.className = `fact-dot ${index === 0 ? 'active' : ''}`;
+        dot.setAttribute('role', 'button');
+        dot.setAttribute('aria-label', `Show fact ${index + 1}`);
+        dot.setAttribute('tabindex', '0');
+        dot.addEventListener('click', () => showFact(index));
+        dot.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                showFact(index);
+            }
+        });
+        factNav.appendChild(dot);
+    });
 
     startFactRotation();
 }
@@ -709,24 +749,51 @@ function showMobileTooltip(data, id) {
     const overlay = document.createElement('div');
     overlay.className = 'tooltip-overlay';
     overlay.dataset.tooltipId = id;
-    overlay.onclick = closeTooltip;
+    overlay.addEventListener('click', closeTooltip);
 
     // Create modal content
     const modal = document.createElement('div');
     modal.className = 'tooltip-modal';
-    modal.onclick = (e) => e.stopPropagation();
+    modal.addEventListener('click', (e) => e.stopPropagation());
 
-    modal.innerHTML = `
-        <div class="tooltip-modal-header">
-            <h3 class="tooltip-modal-title">${data.header}</h3>
-            <button class="tooltip-close" onclick="closeTooltip()" aria-label="Close tooltip">×</button>
-        </div>
-        <div class="tooltip-modal-body">
-            <p class="tooltip-body-text">${data.body}</p>
-            ${data.example ? `<p class="tooltip-example"><strong>Example:</strong> ${data.example}</p>` : ''}
-        </div>
-    `;
+    // Create header
+    const header = document.createElement('div');
+    header.className = 'tooltip-modal-header';
 
+    const title = document.createElement('h3');
+    title.className = 'tooltip-modal-title';
+    title.textContent = data.header;
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'tooltip-close';
+    closeBtn.textContent = '×';
+    closeBtn.setAttribute('aria-label', 'Close tooltip');
+    closeBtn.addEventListener('click', closeTooltip);
+
+    header.appendChild(title);
+    header.appendChild(closeBtn);
+
+    // Create body
+    const body = document.createElement('div');
+    body.className = 'tooltip-modal-body';
+
+    const bodyText = document.createElement('p');
+    bodyText.className = 'tooltip-body-text';
+    bodyText.textContent = data.body;
+    body.appendChild(bodyText);
+
+    if (data.example) {
+        const exampleP = document.createElement('p');
+        exampleP.className = 'tooltip-example';
+        const strong = document.createElement('strong');
+        strong.textContent = 'Example: ';
+        exampleP.appendChild(strong);
+        exampleP.appendChild(document.createTextNode(data.example));
+        body.appendChild(exampleP);
+    }
+
+    modal.appendChild(header);
+    modal.appendChild(body);
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
     activeTooltip = overlay;
@@ -741,16 +808,33 @@ function showDesktopTooltip(event, data, id) {
     const trigger = event.currentTarget;
     const rect = trigger.getBoundingClientRect();
 
-    // Create tooltip element
+    // Create tooltip element (XSS-safe)
     const tooltip = document.createElement('div');
     tooltip.className = 'tooltip-popup';
     tooltip.dataset.tooltipId = id;
 
-    tooltip.innerHTML = `
-        <div class="tooltip-header">${data.header}</div>
-        <div class="tooltip-body">${data.body}</div>
-        ${data.example ? `<div class="tooltip-example"><strong>Example:</strong> ${data.example}</div>` : ''}
-    `;
+    // Create header
+    const header = document.createElement('div');
+    header.className = 'tooltip-header';
+    header.textContent = data.header;
+    tooltip.appendChild(header);
+
+    // Create body
+    const body = document.createElement('div');
+    body.className = 'tooltip-body';
+    body.textContent = data.body;
+    tooltip.appendChild(body);
+
+    // Create example if exists
+    if (data.example) {
+        const exampleDiv = document.createElement('div');
+        exampleDiv.className = 'tooltip-example';
+        const strong = document.createElement('strong');
+        strong.textContent = 'Example: ';
+        exampleDiv.appendChild(strong);
+        exampleDiv.appendChild(document.createTextNode(data.example));
+        tooltip.appendChild(exampleDiv);
+    }
 
     document.body.appendChild(tooltip);
     activeTooltip = tooltip;
@@ -830,9 +914,15 @@ document.addEventListener('DOMContentLoaded', () => {
 // EMAIL SAVING FEATURE (OPTIONAL, NO FRICTION)
 // ============================================
 
-// Check if user has dismissed save prompt before
+// Check if user has dismissed save prompt before (with error handling)
 function hasDismissedSavePrompt() {
-    return localStorage.getItem('savePromptDismissed') === 'true';
+    try {
+        return localStorage.getItem('savePromptDismissed') === 'true';
+    } catch (e) {
+        // localStorage unavailable (private browsing, quota exceeded, disabled)
+        console.warn('localStorage unavailable:', e);
+        return false; // Fail gracefully - show prompt
+    }
 }
 
 // Show save prompt after calculation (if not dismissed)
@@ -854,7 +944,12 @@ function dismissSavePrompt() {
         prompt.style.display = 'none';
     }
     // Remember dismissal (don't annoy user)
-    localStorage.setItem('savePromptDismissed', 'true');
+    try {
+        localStorage.setItem('savePromptDismissed', 'true');
+    } catch (e) {
+        // localStorage unavailable - continue without saving preference
+        console.warn('localStorage unavailable:', e);
+    }
 }
 
 // Email calculation link to user
@@ -863,7 +958,11 @@ function emailCalculation() {
     const email = emailInput ? emailInput.value.trim() : '';
 
     if (!email || !email.includes('@')) {
-        alert('Please enter a valid email address');
+        createNotification({
+            type: 'error',
+            title: 'Invalid Email',
+            message: 'Please enter a valid email address'
+        });
         return;
     }
 
@@ -894,7 +993,11 @@ function copyCalculationURL(event) {
     // Modern clipboard API
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(() => {
-            alert('✅ Link copied to clipboard!');
+            createNotification({
+                type: 'success',
+                title: 'Success',
+                message: 'Link copied to clipboard!'
+            });
             dismissSavePrompt();
         }).catch(() => {
             // Fallback for clipboard errors
@@ -917,11 +1020,20 @@ function fallbackCopyURL(url) {
 
     try {
         document.execCommand('copy');
-        alert('✅ Link copied to clipboard!');
+        createNotification({
+            type: 'success',
+            title: 'Success',
+            message: 'Link copied to clipboard!'
+        });
         dismissSavePrompt();
     } catch (err) {
-        // Ultimate fallback: show URL in prompt
-        prompt('Copy this link:', url);
+        // Ultimate fallback: show notification with manual copy instruction
+        createNotification({
+            type: 'info',
+            title: 'Copy Failed',
+            message: 'Please copy the URL from your browser address bar',
+            duration: 8000
+        });
     }
 
     document.body.removeChild(textArea);
