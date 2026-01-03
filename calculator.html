@@ -25,8 +25,8 @@
     <!-- Plausible Analytics - Privacy-friendly (no cookies, GDPR compliant) -->
     <script defer data-domain="nigerian-crypto-tax-calc.pages.dev" src="https://plausible.io/js/script.js"></script>
 
-    <!-- Design System CSS -->
-    <link rel="stylesheet" href="/css/design-system.css">
+    <!-- Design System v2.0 CSS -->
+    <link rel="stylesheet" href="/css/design-system-v2.css">
 
     <style>
         /* Calculator-specific styles */
@@ -40,7 +40,7 @@
 
         /* Header */
         .calculator-header {
-            background: linear-gradient(135deg, var(--green-700) 0%, var(--green-900) 100%);
+            background: linear-gradient(135deg, var(--navy-900) 0%, var(--purple-900) 100%);
             color: white;
             padding: var(--space-8) var(--space-4);
             text-align: center;
@@ -82,14 +82,14 @@
 
         /* Hero metric card (results-first) */
         .hero-metric {
-            background: linear-gradient(135deg, var(--green-700) 0%, var(--green-900) 100%);
+            background: var(--purple-600);
             color: white;
             border-radius: var(--radius-lg);
             padding: var(--space-8);
             text-align: center;
             margin-top: calc(-1 * var(--space-12));
             margin-bottom: var(--space-6);
-            box-shadow: var(--shadow-xl);
+            box-shadow: var(--shadow-purple-lg);
         }
 
         .hero-metric-label {
@@ -825,7 +825,7 @@
             <div class="hero-metric slide-in" id="heroMetricCard">
                 <!-- Empty State -->
                 <div id="heroEmptyState" class="empty-state">
-                    <div class="empty-state-icon">📊</div>
+                    <div class="empty-state-icon"></div>
                     <div class="empty-state-title">Ready to Calculate</div>
                     <div class="empty-state-text">
                         Enter your crypto income below to see your tax liability instantly
@@ -877,7 +877,7 @@
             <div id="savePrompt" class="save-prompt" style="display: none;">
                 <div class="save-prompt-content">
                     <button class="save-prompt-close" aria-label="Close">×</button>
-                    <div class="save-prompt-icon">💾</div>
+                    <div class="save-prompt-icon"></div>
                     <h3 class="save-prompt-title">Save This Calculation?</h3>
                     <p class="save-prompt-text">Access your results anytime by emailing yourself this link</p>
 
@@ -920,6 +920,9 @@
                                        class="input input-mono"
                                        id="tradingProfit"
                                        placeholder="0"
+                                       min="0"
+                                       step="0.01"
+                                       inputmode="decimal"
                                        oninput="calculateTaxLiveDebounced()"
                                        onblur="validateNumericInput(this)">
                                 <select class="currency-select" id="tradingCurrency" onchange="calculateTaxLiveDebounced()">
