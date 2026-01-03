@@ -4,7 +4,7 @@
 
 ## Live Demo
 
-**🔗 https://nigerian-crypto-tax-calc.netlify.app**
+**🔗 https://nigerian-crypto-tax-calc.pages.dev**
 
 Calculate your 2026 crypto tax in 60 seconds!
 
@@ -68,7 +68,7 @@ Pay **₦0 tax** if BOTH conditions are met:
 ## Tech Stack
 
 - **Frontend**: HTML + Tailwind CSS + Vanilla JavaScript
-- **Deployment**: Netlify
+- **Deployment**: Cloudflare Pages (unlimited bandwidth)
 - **No Backend**: 100% client-side for privacy and speed
 
 ## Local Development
