@@ -967,6 +967,18 @@ document.addEventListener('DOMContentLoaded', () => {
         copyLink.addEventListener('click', copyCalculationURL);
     }
 
+    // Initialize exchange rate validation (CSP-safe)
+    const exchangeRateInput = document.getElementById('exchangeRate');
+    if (exchangeRateInput) {
+        exchangeRateInput.addEventListener('blur', () => validateExchangeRate(exchangeRateInput));
+        exchangeRateInput.addEventListener('input', () => {
+            // Clear error on input so user can correct it
+            if (exchangeRateInput.classList.contains('input-error')) {
+                clearInputError(exchangeRateInput);
+            }
+        });
+    }
+
     // On desktop, expand all sections by default
     if (window.innerWidth >= 768) {
         document.querySelectorAll('.section-content').forEach(content => {
