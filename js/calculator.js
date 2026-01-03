@@ -902,6 +902,27 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeFacts();
     calculateTaxLive(); // Initial calculation
 
+    // Initialize all tooltip triggers (CSP-safe)
+    document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+        const tooltipId = trigger.getAttribute('data-tooltip-id');
+        if (tooltipId) {
+            trigger.addEventListener('click', (event) => {
+                event.stopPropagation();
+                toggleTooltip(event, tooltipId);
+            });
+            trigger.setAttribute('role', 'button');
+            trigger.setAttribute('aria-label', `More info about ${tooltipId}`);
+            trigger.setAttribute('tabindex', '0');
+            trigger.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleTooltip(e, tooltipId);
+                }
+            });
+        }
+    });
+
     // On desktop, expand all sections by default
     if (window.innerWidth >= 768) {
         document.querySelectorAll('.section-content').forEach(content => {

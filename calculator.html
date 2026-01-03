@@ -839,7 +839,7 @@
                 <div id="heroResultContent" class="result-content" style="display: none;">
                     <div class="hero-metric-label">
                         Total Tax Owed
-                        <span class="tooltip-trigger tooltip-trigger-light ml-2" onclick="event.stopPropagation(); toggleTooltip(event, 'taxOwed')">i</span>
+                        <span class="tooltip-trigger tooltip-trigger-light ml-2" data-tooltip-id="taxOwed">i</span>
                     </div>
                     <div class="hero-metric-value" id="heroTaxValue">₦0</div>
                     <div class="badge badge-live mt-4">
@@ -853,21 +853,21 @@
                 <div class="stat-card slide-in">
                     <div class="stat-label">
                         Gross Income
-                        <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'grossIncome')">i</span>
+                        <span class="tooltip-trigger" data-tooltip-id="grossIncome">i</span>
                     </div>
                     <div class="stat-value" id="statGrossIncome">₦0</div>
                 </div>
                 <div class="stat-card slide-in">
                     <div class="stat-label">
                         Taxable Income
-                        <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'taxableIncome')">i</span>
+                        <span class="tooltip-trigger" data-tooltip-id="taxableIncome">i</span>
                     </div>
                     <div class="stat-value" id="statTaxableIncome">₦0</div>
                 </div>
                 <div class="stat-card slide-in">
                     <div class="stat-label">
                         Take Home
-                        <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'takeHome')">i</span>
+                        <span class="tooltip-trigger" data-tooltip-id="takeHome">i</span>
                     </div>
                     <div class="stat-value" id="statTakeHome">₦0</div>
                 </div>
@@ -912,7 +912,7 @@
                         <div class="input-group">
                             <label class="input-label">
                                 Trading Profit
-                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'trading')">i</span>
+                                <span class="tooltip-trigger" data-tooltip-id="trading">i</span>
                             </label>
                             <p class="input-helper">Net gains from buying/selling crypto</p>
                             <div class="input-wrapper">
@@ -936,7 +936,7 @@
                         <div class="input-group">
                             <label class="input-label">
                                 Staking Income
-                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'staking')">i</span>
+                                <span class="tooltip-trigger" data-tooltip-id="staking">i</span>
                             </label>
                             <p class="input-helper">Rewards from staking/yield farming</p>
                             <div class="input-wrapper">
@@ -960,7 +960,7 @@
                         <div class="input-group">
                             <label class="input-label">
                                 Airdrops Income
-                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'airdrops')">i</span>
+                                <span class="tooltip-trigger" data-tooltip-id="airdrops">i</span>
                             </label>
                             <p class="input-helper">Free tokens received from projects</p>
                             <div class="input-wrapper">
@@ -983,7 +983,7 @@
                         <div class="input-group">
                             <label class="input-label">
                                 Freelance Income
-                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'freelance')">i</span>
+                                <span class="tooltip-trigger" data-tooltip-id="freelance">i</span>
                             </label>
                             <p class="input-helper">Crypto payments for services</p>
                             <div class="input-wrapper">
@@ -1006,7 +1006,7 @@
                         <div class="input-group">
                             <label class="input-label">
                                 NFT Income
-                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'nft')">i</span>
+                                <span class="tooltip-trigger" data-tooltip-id="nft">i</span>
                             </label>
                             <p class="input-helper">Profits from NFT sales</p>
                             <div class="input-wrapper">
@@ -1054,7 +1054,7 @@
                         <div class="input-group">
                             <label class="input-label">
                                 Pension Contributions
-                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'pension')">i</span>
+                                <span class="tooltip-trigger" data-tooltip-id="pension">i</span>
                             </label>
                             <p class="input-helper">100% deductible, no limit</p>
                             <input type="number"
@@ -1068,7 +1068,7 @@
                         <div class="input-group">
                             <label class="input-label">
                                 NHF/Housing Contributions
-                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'housing')">i</span>
+                                <span class="tooltip-trigger" data-tooltip-id="housing">i</span>
                             </label>
                             <p class="input-helper">100% deductible</p>
                             <input type="number"
@@ -1082,7 +1082,7 @@
                         <div class="input-group">
                             <label class="input-label">
                                 Health Insurance Premiums
-                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'health')">i</span>
+                                <span class="tooltip-trigger" data-tooltip-id="health">i</span>
                             </label>
                             <p class="input-helper">100% deductible</p>
                             <input type="number"
@@ -1096,7 +1096,7 @@
                         <div class="input-group">
                             <label class="input-label">
                                 Annual Rent Paid
-                                <span class="tooltip-trigger" onclick="event.stopPropagation(); toggleTooltip(event, 'rent')">i</span>
+                                <span class="tooltip-trigger" data-tooltip-id="rent">i</span>
                             </label>
                             <p class="input-helper">20% deductible (max ₦500k)</p>
                             <input type="number"
