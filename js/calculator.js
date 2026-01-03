@@ -1040,7 +1040,7 @@ function emailCalculation() {
         `Here's your saved tax calculation:\n\n${calculationURL}\n\n` +
         `Access this link anytime to view your results.\n\n` +
         `Nigerian Crypto Tax Calculator\n` +
-        `https://nigerian-crypto-tax-calc.netlify.app`
+        `https://nigerian-crypto-tax-calc.pages.dev`
     );
 
     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
