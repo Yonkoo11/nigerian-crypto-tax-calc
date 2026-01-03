@@ -822,14 +822,29 @@
         <!-- Main Content -->
         <main class="calculator-content">
             <!-- Hero Metric Card (Results-First) -->
-            <div class="hero-metric slide-in">
-                <div class="hero-metric-label">
-                    Total Tax Owed
-                    <span class="tooltip-trigger tooltip-trigger-light ml-2" onclick="event.stopPropagation(); toggleTooltip(event, 'taxOwed')">i</span>
+            <div class="hero-metric slide-in" id="heroMetricCard">
+                <!-- Empty State -->
+                <div id="heroEmptyState" class="empty-state">
+                    <div class="empty-state-icon">📊</div>
+                    <div class="empty-state-title">Ready to Calculate</div>
+                    <div class="empty-state-text">
+                        Enter your crypto income below to see your tax liability instantly
+                    </div>
+                    <div class="empty-state-hint">
+                        👇 Start with Income Sources
+                    </div>
                 </div>
-                <div class="hero-metric-value" id="heroTaxValue">₦0</div>
-                <div class="badge badge-live mt-4">
-                    <span>Live Updates</span>
+
+                <!-- Result Content (hidden initially) -->
+                <div id="heroResultContent" class="result-content" style="display: none;">
+                    <div class="hero-metric-label">
+                        Total Tax Owed
+                        <span class="tooltip-trigger tooltip-trigger-light ml-2" onclick="event.stopPropagation(); toggleTooltip(event, 'taxOwed')">i</span>
+                    </div>
+                    <div class="hero-metric-value" id="heroTaxValue">₦0</div>
+                    <div class="badge badge-live mt-4">
+                        <span>Live Updates</span>
+                    </div>
                 </div>
             </div>
 
@@ -905,8 +920,9 @@
                                        class="input input-mono"
                                        id="tradingProfit"
                                        placeholder="0"
-                                       oninput="calculateTaxLive()">
-                                <select class="currency-select" id="tradingCurrency" onchange="calculateTaxLive()">
+                                       oninput="calculateTaxLiveDebounced()"
+                                       onblur="validateNumericInput(this)">
+                                <select class="currency-select" id="tradingCurrency" onchange="calculateTaxLiveDebounced()">
                                     <option value="NGN">NGN</option>
                                     <option value="USD">USD</option>
                                 </select>
@@ -928,8 +944,9 @@
                                        class="input input-mono"
                                        id="stakingIncome"
                                        placeholder="0"
-                                       oninput="calculateTaxLive()">
-                                <select class="currency-select" id="stakingCurrency" onchange="calculateTaxLive()">
+                                       oninput="calculateTaxLiveDebounced()"
+                                       onblur="validateNumericInput(this)">
+                                <select class="currency-select" id="stakingCurrency" onchange="calculateTaxLiveDebounced()">
                                     <option value="NGN">NGN</option>
                                     <option value="USD">USD</option>
                                 </select>
@@ -951,8 +968,8 @@
                                        class="input input-mono"
                                        id="airdropsIncome"
                                        placeholder="0"
-                                       oninput="calculateTaxLive()">
-                                <select class="currency-select" id="airdropsCurrency" onchange="calculateTaxLive()">
+                                       oninput="calculateTaxLiveDebounced()">
+                                <select class="currency-select" id="airdropsCurrency" onchange="calculateTaxLiveDebounced()">
                                     <option value="NGN">NGN</option>
                                     <option value="USD">USD</option>
                                 </select>
@@ -974,8 +991,8 @@
                                        class="input input-mono"
                                        id="freelanceIncome"
                                        placeholder="0"
-                                       oninput="calculateTaxLive()">
-                                <select class="currency-select" id="freelanceCurrency" onchange="calculateTaxLive()">
+                                       oninput="calculateTaxLiveDebounced()">
+                                <select class="currency-select" id="freelanceCurrency" onchange="calculateTaxLiveDebounced()">
                                     <option value="NGN">NGN</option>
                                     <option value="USD">USD</option>
                                 </select>
@@ -997,8 +1014,8 @@
                                        class="input input-mono"
                                        id="nftIncome"
                                        placeholder="0"
-                                       oninput="calculateTaxLive()">
-                                <select class="currency-select" id="nftCurrency" onchange="calculateTaxLive()">
+                                       oninput="calculateTaxLiveDebounced()">
+                                <select class="currency-select" id="nftCurrency" onchange="calculateTaxLiveDebounced()">
                                     <option value="NGN">NGN</option>
                                     <option value="USD">USD</option>
                                 </select>
@@ -1017,7 +1034,7 @@
                                    id="exchangeRate"
                                    value="1650"
                                    placeholder="1650"
-                                   oninput="calculateTaxLive()">
+                                   oninput="calculateTaxLiveDebounced()">
                         </div>
                     </div>
                 </div>
@@ -1044,7 +1061,7 @@
                                    class="input input-mono"
                                    id="pensionDeduction"
                                    placeholder="0"
-                                   oninput="calculateTaxLive()">
+                                   oninput="calculateTaxLiveDebounced()">
                         </div>
 
                         <!-- Housing Deduction -->
@@ -1058,7 +1075,7 @@
                                    class="input input-mono"
                                    id="housingDeduction"
                                    placeholder="0"
-                                   oninput="calculateTaxLive()">
+                                   oninput="calculateTaxLiveDebounced()">
                         </div>
 
                         <!-- Health Deduction -->
@@ -1072,7 +1089,7 @@
                                    class="input input-mono"
                                    id="healthDeduction"
                                    placeholder="0"
-                                   oninput="calculateTaxLive()">
+                                   oninput="calculateTaxLiveDebounced()">
                         </div>
 
                         <!-- Rent Paid -->
@@ -1086,7 +1103,7 @@
                                    class="input input-mono"
                                    id="rentPaid"
                                    placeholder="0"
-                                   oninput="calculateTaxLive()">
+                                   oninput="calculateTaxLiveDebounced()">
                         </div>
                     </div>
                 </div>

@@ -57,6 +57,203 @@ function calculateProgressiveTax(totalIncome) {
     return { totalTax, breakdown };
 }
 
+// ============================================
+// LOADING STATES & DEBOUNCING
+// ============================================
+
+let calculationTimeout;
+
+// Debounced calculation wrapper
+function calculateTaxLiveDebounced() {
+    clearTimeout(calculationTimeout);
+    showCalculatingState();
+
+    calculationTimeout = setTimeout(() => {
+        calculateTaxLive();
+        hideCalculatingState();
+    }, 300); // 300ms debounce for smooth typing
+}
+
+// Show calculating indicator
+function showCalculatingState() {
+    const heroValue = document.getElementById('heroTaxValue');
+    if (heroValue) {
+        heroValue.classList.add('calculating');
+    }
+}
+
+// Hide calculating indicator
+function hideCalculatingState() {
+    const heroValue = document.getElementById('heroTaxValue');
+    if (heroValue) {
+        heroValue.classList.remove('calculating');
+    }
+}
+
+// ============================================
+// INPUT VALIDATION & ERROR HANDLING
+// ============================================
+
+// Validate numeric input
+function validateNumericInput(input) {
+    const value = parseFloat(input.value);
+    const min = 0;
+    const max = 999999999999; // 999 billion max
+
+    // Clear any existing errors first
+    clearInputError(input);
+
+    // Skip validation if empty (allowed)
+    if (!input.value || input.value.trim() === '') {
+        return true;
+    }
+
+    // Check if not a number
+    if (isNaN(value)) {
+        showInputError(input, 'Please enter a valid number');
+        return false;
+    }
+
+    // Check if negative
+    if (value < min) {
+        showInputError(input, 'Amount cannot be negative');
+        return false;
+    }
+
+    // Check if exceeds maximum
+    if (value > max) {
+        showInputError(input, 'Amount is too large (max: ₦999B)');
+        return false;
+    }
+
+    return true;
+}
+
+// Show inline error message below input
+function showInputError(input, message) {
+    // Add error class to input
+    input.classList.add('input-error');
+
+    // Check if error message already exists
+    let errorMsg = input.parentElement.querySelector('.input-error-msg');
+    if (!errorMsg) {
+        // Create error message element
+        errorMsg = document.createElement('div');
+        errorMsg.className = 'input-error-msg';
+        input.parentElement.appendChild(errorMsg);
+    }
+
+    // Set error message text
+    errorMsg.textContent = message;
+
+    // Announce to screen readers
+    announceToScreenReader(message, 'assertive');
+}
+
+// Clear error message from input
+function clearInputError(input) {
+    input.classList.remove('input-error');
+    input.classList.remove('input-warning');
+
+    const errorMsg = input.parentElement.querySelector('.input-error-msg');
+    if (errorMsg) {
+        errorMsg.remove();
+    }
+
+    const warningMsg = input.parentElement.querySelector('.input-warning-msg');
+    if (warningMsg) {
+        warningMsg.remove();
+    }
+}
+
+// Show inline warning message below input
+function showInputWarning(input, message) {
+    // Add warning class to input
+    input.classList.add('input-warning');
+
+    // Check if warning message already exists
+    let warningMsg = input.parentElement.querySelector('.input-warning-msg');
+    if (!warningMsg) {
+        // Create warning message element
+        warningMsg = document.createElement('div');
+        warningMsg.className = 'input-warning-msg';
+        input.parentElement.appendChild(warningMsg);
+    }
+
+    // Set warning message text
+    warningMsg.textContent = message;
+}
+
+// Validate exchange rate (warn if unusual)
+function validateExchangeRate(input) {
+    const value = parseFloat(input.value);
+    const typicalMin = 1500;
+    const typicalMax = 2000;
+
+    clearInputError(input);
+
+    if (isNaN(value) || value <= 0) {
+        showInputError(input, 'Exchange rate must be greater than 0');
+        return false;
+    }
+
+    // Warn if outside typical range
+    if (value < typicalMin || value > typicalMax) {
+        showInputWarning(input, `Unusual rate (typical range: ₦${typicalMin}-₦${typicalMax}/USD)`);
+    }
+
+    return true;
+}
+
+// Create notification toast
+function createNotification({ type = 'error', title, message, duration = 5000 }) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+
+    notification.innerHTML = `
+        <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+        <div class="notification-title">${title}</div>
+        <div class="notification-message">${message}</div>
+    `;
+
+    // Add to page
+    document.body.appendChild(notification);
+
+    // Auto-dismiss after duration
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, duration);
+
+    // Announce to screen readers
+    announceToScreenReader(`${title}: ${message}`, 'assertive');
+}
+
+// Announce to screen readers
+function announceToScreenReader(message, priority = 'polite') {
+    let announcer = document.getElementById('errorAnnouncer');
+    if (!announcer) {
+        announcer = document.createElement('div');
+        announcer.id = 'errorAnnouncer';
+        announcer.className = 'sr-only';
+        announcer.setAttribute('role', 'status');
+        announcer.setAttribute('aria-live', priority);
+        announcer.setAttribute('aria-atomic', 'true');
+        document.body.appendChild(announcer);
+    }
+
+    // Update aria-live priority
+    announcer.setAttribute('aria-live', priority);
+
+    // Clear and set message (triggers screen reader)
+    announcer.textContent = '';
+    setTimeout(() => {
+        announcer.textContent = message;
+    }, 100);
+}
+
 // Live calculation (runs on every input change)
 function calculateTaxLive() {
     try {
@@ -146,6 +343,20 @@ function calculateTaxLive() {
         // Calculate take home
         const takeHome = grossIncome - totalTax;
 
+        // Toggle empty state vs results
+        const heroEmptyState = document.getElementById('heroEmptyState');
+        const heroResultContent = document.getElementById('heroResultContent');
+
+        if (grossIncome > 0) {
+            // Show results, hide empty state
+            if (heroEmptyState) heroEmptyState.style.display = 'none';
+            if (heroResultContent) heroResultContent.style.display = 'block';
+        } else {
+            // Show empty state, hide results
+            if (heroEmptyState) heroEmptyState.style.display = 'block';
+            if (heroResultContent) heroResultContent.style.display = 'none';
+        }
+
         // Update hero metric
         document.getElementById('heroTaxValue').textContent = formatCurrency(totalTax);
 
@@ -197,7 +408,19 @@ function renderBracketVisualizer(taxableIncome, breakdown) {
     const barsContainer = document.getElementById('bracketBars');
 
     if (taxableIncome <= 0 || breakdown.length === 0) {
-        visualizer.style.display = 'none';
+        // Show empty state instead of hiding
+        visualizer.style.display = 'block';
+        barsContainer.innerHTML = `
+            <div class="bracket-empty-state">
+                <p class="text-base text-gray-700 mb-2" style="font-weight: 600; color: var(--gray-900); margin-bottom: var(--space-3);">
+                    Your tax breakdown will appear here once you enter income.
+                </p>
+                <p class="text-sm text-gray-500" style="color: var(--gray-600); font-size: var(--text-sm); line-height: 1.6;">
+                    Nigeria uses progressive tax brackets - you'll see exactly
+                    how your income is taxed at each level.
+                </p>
+            </div>
+        `;
         return;
     }
 

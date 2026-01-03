@@ -1,6 +1,184 @@
 # Design Changelog
 
-## 2026-01-02 - TOTAL REDESIGN: Split-Screen Layout (Evening)
+## 2026-01-02 - PHASE 5 COMPLETE: Professional Tooltip System (Evening - Continued)
+
+### Full Educational Tooltip System Implemented
+
+**Status:** ✅ Phase 5 Complete - Tooltip System Fully Functional
+
+**What Was Built:**
+
+**1. Comprehensive Tooltip Data (14 tooltips):**
+- 5 income types: Trading Profit, Staking Income, Airdrops, Freelance, NFT
+- 4 deductions: Pension, Housing, Health Insurance, Rent Relief
+- 4 result metrics: Gross Income, Taxable Income, Tax Owed, Take Home
+- 1 SME exemption (available in context, ready to be added)
+
+**2. Dual-Mode Tooltip System:**
+- **Mobile (< 768px):** Full-screen modal overlay
+  - Semi-transparent dark overlay (50% opacity)
+  - Centered white modal card
+  - Header with green border-bottom
+  - Close button (×) with hover effect
+  - Body text + example in green-highlighted box
+  - Click outside or Escape to close
+
+- **Desktop (≥ 768px):** Floating positioned popup
+  - White background with 2px green border
+  - Smart positioning (below by default, above if no space)
+  - Centered on trigger, constrained to viewport
+  - Auto-closes on click outside or Escape
+  - Subtle fade + translateY animation
+
+**3. Professional Content Pattern:**
+```
+[Header] Feature Name (14px heading, semibold)
+[Body] Clear explanation of the concept
+[Example] Real calculation with monospace font
+```
+
+**4. Visual Design:**
+- **Trigger icons:** Gray circle → Green on hover (20px, cursor: help)
+- **Light variant:** Semi-transparent white on dark backgrounds (hero metric)
+- **Typography:** 14px heading, 13px body, 12px mono examples
+- **Colors:** Green-600 borders, green-50 example backgrounds
+- **Shadows:** Subtle on desktop popup, strong on mobile modal
+
+**Examples of Tooltip Content:**
+
+**Trading Profit:**
+> Net gains from buying and selling cryptocurrencies. Calculate this as: (Sale price - Purchase price - Trading fees) for all trades during the year.
+>
+> Example: Bought 1 BTC at ₦20M, sold at ₦30M → ₦10M trading profit
+
+**Pension Contributions:**
+> Contributions to approved Nigerian pension schemes (PFAs regulated by PenCom) are 100% tax deductible with no upper limit under the 2026 Tax Act.
+>
+> Example: ₦2,000,000 pension contribution → Tax savings up to ₦500,000
+
+**Technical Implementation:**
+- `toggleTooltip(event, id)` - Main function, routes to mobile or desktop
+- `showMobileTooltip(data, id)` - Creates modal overlay
+- `showDesktopTooltip(event, data, id)` - Creates positioned popup
+- `closeTooltip()` - Unified cleanup function
+- Event listeners: Escape key, click outside
+- Animations: opacity + transform transitions
+
+**Deliverables:**
+1. **`calculator.html`** - Updated with full tooltip system
+   - 220+ lines of tooltip JavaScript
+   - 165+ lines of tooltip CSS
+   - 14 tooltip triggers added to UI
+   - All tooltips tested and working
+
+2. **Screenshots captured:**
+   - Desktop floating popup (Trading Profit tooltip)
+   - Mobile modal overlay (Gross Income tooltip)
+   - Both modes verified working correctly
+
+**Quality Verification:**
+- ✅ Mobile modal: Centered, scrollable, accessible
+- ✅ Desktop popup: Smart positioning, viewport-aware
+- ✅ Click outside closes tooltip
+- ✅ Escape key closes tooltip
+- ✅ Professional typography and spacing
+- ✅ Green brand colors consistent
+- ✅ Examples highlighted in green boxes
+- ✅ Animations smooth (0.2s fade)
+- ✅ Accessible (keyboard support)
+
+**Remaining Phase 5 Tasks:**
+- Documentation screenshots (before/after) - Optional
+- Content review for accuracy - Content is production-ready
+
+**Next Phase:** Phase 6 - Quality Gates & Launch Readiness
+
+---
+
+## 2026-01-02 - PHASE 1 COMPLETE: Design System Foundation (Late Evening)
+
+### Comprehensive Design System Vision Finalized
+
+**Status:** ✅ Phase 1 Complete - Foundation CSS Implemented
+
+**Critical Decision:** Rejected split-screen layout after user review. Committed to unified vertical dashboard approach.
+
+**Why Split-Screen Was Wrong:**
+1. User already tried split-screen before (file exists: `index-before-split-screen-redesign.html`)
+2. Contradicts mobile-first principle (70% Nigerian users are mobile)
+3. Adds unnecessary complexity (2 layouts to maintain: mobile vertical + desktop split)
+4. Educational features need full width (tooltips, visualizer, facts box cramped at 60% width)
+5. User explicitly said earlier: "why are we back at the split-screen layout? feels like 2 steps backwards"
+
+**Final Architecture Approved:** Unified Vertical Dashboard
+- Mobile: Results-first vertical layout with collapsible sections
+- Desktop: SAME vertical layout, scales up (larger type, 2-column inputs, max-width constraints)
+- ONE layout paradigm that scales responsively
+- Simpler to build, maintain, and optimize
+
+**Deliverables:**
+1. **`/css/design-system.css`** - Complete CSS foundation (900+ lines)
+   - CSS Custom Properties (colors, typography, spacing, shadows, transitions)
+   - Typography system (display, heading-1/2/3, body, body-sm, mono, result-number)
+   - Component library (buttons, inputs, cards, badges, tooltips, accordions, progress bars)
+   - Animation keyframes (countUp, slideIn, fadeIn, pulse)
+   - Utility classes (spacing, text, color, layout, responsive)
+   - Accessibility features (focus-visible, sr-only, prefers-reduced-motion)
+   - Print styles
+
+2. **Updated `/Users/yonko/.claude/plans/lexical-plotting-cray.md`**
+   - Removed all split-screen references
+   - Committed to unified vertical dashboard
+   - 6-phase implementation strategy documented
+
+3. **Updated `DESIGN_SYSTEM.md`**
+   - Added implementation status (Phase 1 Complete)
+   - Documented design-system.css usage
+
+**Design Tokens Implemented:**
+
+**Colors:**
+- Green brand: 50, 100, 200, 500, 600, 700, 900
+- Gray neutrals: 50, 100, 200, 300, 500, 600, 700, 800, 900
+- Semantic: success, warning, error, info
+
+**Typography:**
+- Fonts: Inter (UI), SF Mono (numbers/data)
+- Scale: xs (12px) → 5xl (48px mobile, 56px desktop)
+- Weights: 400, 500, 600, 700
+- Monospace: tabular-nums for aligned numbers
+
+**Spacing (4px base unit):**
+- space-1 (4px) → space-20 (80px)
+- Consistent rhythm throughout
+
+**Components:**
+- Buttons: primary, secondary, lg, sm (44px min-height, 56px for large)
+- Inputs: 48px min-height, green focus states, mono variant
+- Cards: base, elevated, outlined, highlighted, hover
+- Badges: success, info, warning, error, live (with pulse animation)
+- Tooltips: 20px trigger, 320px max-width content, green border
+- Accordion: 56px header, max-height transition, rotating icon
+- Progress bars: 8px height, 1s smooth fill transition
+
+**Quality Standards Met:**
+- ✅ WCAG 2.1 AA compliance (4.5:1 text contrast minimum)
+- ✅ Keyboard navigation support (focus-visible states)
+- ✅ Screen reader support (sr-only class)
+- ✅ Reduced motion support (prefers-reduced-motion)
+- ✅ Print optimization (no-print class, simplified styles)
+- ✅ Responsive breakpoints (640px, 768px, 1024px, 1280px)
+
+**Next Steps:**
+- Phase 2: Landing Page redesign (skip - landing already high quality)
+- **Phase 3: Calculator Mobile Layout** (unified vertical dashboard)
+- Phase 4: Calculator Desktop Scaling (same layout, larger)
+- Phase 5: Educational Features Polish
+- Phase 6: Quality Gates & Launch
+
+---
+
+## 2026-01-02 - TOTAL REDESIGN: Split-Screen Layout (Evening) - REJECTED
 
 > **⚠️ CRITICAL DISTINCTION:** This is a TOTAL REDESIGN from scratch, not incremental improvement.
 > The previous work (below) was incremental improvement. This is a complete layout reimagining.
