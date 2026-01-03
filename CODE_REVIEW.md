@@ -198,22 +198,55 @@ try {
 ### 6. Weak Exchange Rate Validation 🟠 → ✅
 **Severity:** HIGH
 **Risk:** Incorrect tax calculations with unrealistic rates
-**Status:** FIXED in commit 9371492
+**Status:** FIXED in commits 9371492 + 0935fb1
 
+**Initial Fix (9371492):** Created `validateExchangeRate()` function
 **Location:** `js/calculator.js:187-214`
 
-**Fix:** Added hard limits to prevent calculation errors
+**Problem Discovered During Testing:**
+- Function `validateExchangeRate()` existed but was never called
+- No event listeners attached to exchange rate input
+- Users could still enter unrealistic values without validation
+
+**Complete Fix (0935fb1):** Wired up validation to input events
+**Location:** `js/calculator.js:970-980`
 
 **Before:**
 - Only warned if unusual (1500-2000 range)
-- Allowed rates like 0.01 or 999,999
+- Allowed rates like ₦0.01 or ₦999,999/USD
+- Validation function existed but wasn't called
 
 **After:**
+```javascript
+// Event listeners added in DOMContentLoaded
+const exchangeRateInput = document.getElementById('exchangeRate');
+if (exchangeRateInput) {
+    // Validate on blur (when user leaves input)
+    exchangeRateInput.addEventListener('blur', () =>
+        validateExchangeRate(exchangeRateInput));
+
+    // Clear error on input (while user corrects)
+    exchangeRateInput.addEventListener('input', () => {
+        if (exchangeRateInput.classList.contains('input-error')) {
+            clearInputError(exchangeRateInput);
+        }
+    });
+}
+```
+
+**Validation Rules:**
 - Hard reject rates < ₦100/USD or > ₦10,000/USD
+- Shows error: "Exchange rate must be between ₦100-₦10000/USD"
 - Still warns if outside typical range (1500-2000)
 - Prevents catastrophic calculation errors
 
-**Impact:** Protects against user typos causing wildly incorrect tax calculations
+**Testing Performed:**
+- ✅ Local testing: Value 50 (below min) → Shows error
+- ✅ Local testing: Value 15,000 (above max) → Shows error
+- ✅ Local testing: Value 1,650 (valid) → Clears error
+- ✅ Production testing: All three scenarios verified working
+
+**Impact:** Fully protects against user typos causing wildly incorrect tax calculations
 
 ---
 
@@ -272,11 +305,11 @@ try {
 - [ ] Mobile Chrome
 
 ### Manual QA Checklist
-- [ ] All tooltips open/close correctly
-- [ ] Fact navigation dots clickable
-- [ ] Notifications appear (no alerts)
+- [x] All tooltips open/close correctly
+- [x] Fact navigation dots clickable
+- [x] Notifications appear (no alerts)
 - [ ] Copy URL works
-- [ ] Exchange rate validation rejects extremes
+- [x] Exchange rate validation rejects extremes
 - [ ] Calculator works in private browsing mode
 
 ---
@@ -312,7 +345,10 @@ try {
 
 ### Related Commits
 - **f761d74** - Design system updates (code being reviewed)
-- **9371492** - SECURITY: Fix critical XSS and CSP violations (this review's fixes)
+- **9371492** - SECURITY: Fix critical XSS and CSP violations (initial fixes)
+- **d868d72** - SECURITY: Remove all inline onclick handlers from HTML
+- **b6002df** - CRITICAL FIX: Correct tax brackets with official data
+- **0935fb1** - FIX: Wire up exchange rate validation to prevent calculation errors
 
 ---
 
@@ -327,11 +363,11 @@ try {
 - Can be addressed in future sprints without blocking release
 
 **Next Steps:**
-1. ✅ Commit fixes (DONE - commit 9371492)
-2. ⏳ Run manual QA testing
-3. ⏳ Deploy to staging
-4. ⏳ Final smoke test
-5. ⏳ Ship to production
+1. ✅ Commit fixes (DONE - commits 9371492, d868d72, 0935fb1)
+2. ✅ Run manual QA testing (DONE - tooltips, fact nav, validation)
+3. ✅ Deploy to production (DONE - Cloudflare Pages auto-deploy)
+4. ✅ Final smoke test (DONE - all validation tests passed)
+5. ✅ Ship to production (DONE - live at nigerian-crypto-tax-calc.pages.dev)
 6. 📋 Log medium/low issues as tech debt for future sprint
 
 ---
