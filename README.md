@@ -86,11 +86,15 @@ No build step, no dependencies needed!
 
 ## Data Sources
 
-All tax rates verified against official sources:
-- [Nigeria Tax Act, 2025 (Official PDF)](https://tat.gov.ng/Nigeria-Tax-Act-2025.pdf)
+**Verification Status**: Under verification (Last updated: January 4, 2026)
+
+All tax rates cross-referenced with official sources:
+- [Nigeria Tax Act, 2025 (Official PDF)](https://tat.gov.ng/Nigeria-Tax-Act-2025.pdf) - Section 41 (tax brackets)
 - [EY Global Tax Alert](https://www.ey.com/en_gl/technical/tax-alerts/nigeria-tax-act-2025-has-been-signed-highlights)
 - [PWC Nigeria Analysis](https://www.pwc.com/ng/en/publications/the-nigerian-tax-reform-acts.html)
 - [Africa Check Fact-Checking](https://africacheck.org/fact-checks/factsheets/factsheet-vat-income-tax-how-nigerias-new-tax-rules-affect-you)
+
+**See [SOURCES.md](SOURCES.md) for detailed verification status and exact section references.**
 
 ## Bug Reports & Feedback
 
@@ -100,11 +104,37 @@ Found an issue? Have suggestions?
 
 ## Disclaimer
 
-⚠️ **Important**: This calculator is an educational tool only and does not constitute professional tax, legal, or financial advice.
+⚠️ **Critical Legal Disclaimer**
 
-**Limitations**: This calculator does not account for business expenses, capital losses, token swaps, mining income, or other complex scenarios. The small player exemption requires BOTH thresholds to be met - you must verify your eligibility independently.
+**This calculator is for educational purposes only and does NOT constitute professional tax, legal, or financial advice.**
 
-For specific tax advice tailored to your situation, consult a qualified tax professional familiar with Nigerian crypto taxation.
+### Data Verification Status
+- Based on Nigeria Tax Act, 2025 (Section 41)
+- Last updated: **January 4, 2026**
+- Verification status: **Under verification** (see [SOURCES.md](SOURCES.md))
+- Cross-checked with: FIRS, PWC, EY, Africa Check
+
+### Limitations
+This calculator does NOT account for:
+- Business expenses or capital losses
+- Token swaps or mining income
+- Complex tax scenarios
+- Individual circumstances
+
+The small player exemption requires **BOTH** thresholds to be met:
+- Total gains (profit) < ₦10,000,000 **AND**
+- Total sale proceeds < ₦150,000,000
+
+You must verify your eligibility independently.
+
+### ⚠️ WARNING
+Incorrect tax filing can result in:
+- Penalties and interest charges
+- **Potential criminal prosecution under Nigerian law**
+
+**ALWAYS consult a licensed Nigerian tax professional before filing your tax return.**
+
+This calculator is NOT a substitute for professional tax advice from a chartered accountant or tax lawyer familiar with Nigerian crypto taxation.
 
 ## License
 
